@@ -1,12 +1,13 @@
 import pygame
 from graphics import Superficie
+from settings import *
 from sys import exit
 
 # Inicializando o PyGame
 pygame.init()
 # Definindo o tamanho da tela
 # O display (tela do jogo) é uma superficie onde tudo que está sendo mostrado ao jogador ficará
-screen = pygame.display.set_mode((800,600)) 
+screen = pygame.display.set_mode((LARGURA,ALTURA)) 
 # Definindo o titulo e o icon para a janela onde o jogo será executado
 pygame.display.set_caption("Jogo maneirasso")
 icon = pygame.image.load("projeto/assets\icone-placeholder.png")
