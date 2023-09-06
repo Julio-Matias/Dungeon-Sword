@@ -13,7 +13,7 @@ pygame.display.set_icon(icon)
 # Criando um objeto de relógio que ajudara a controlar o tempo percorrido no jogo
 clock = pygame.time.Clock()
 # Decidindo uma fornte para colocar em uma superficie
-fonte = pygame.font.Font('projeto/fonts\Pixeltype.ttf', 50)
+fonte = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
 
 
 # Uma superficie é a forma de inserir uma imagem no display. Aqui estou criando uma superficie de teste e dando uma cor a ela para que ela aparece contra o fundo preto
