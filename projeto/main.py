@@ -2,6 +2,7 @@ import pygame
 from graphics import Superficie
 from settings import *
 from sys import exit
+from player import Player
 
 # Inicializando o PyGame
 pygame.init()
@@ -17,6 +18,10 @@ clock = pygame.time.Clock()
 
 
 
+
+
+
+
 class Game:
     def __init__(self) -> None:
         pass
@@ -27,10 +32,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-            
+                posicao_player = Player.movimento_jogador(event)
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
             screen.blit(Superficie.sup_fundo, (0,0))
-            screen.blit(Superficie.sup_jogador,(300,200))
+            screen.blit(Superficie.sup_jogador, posicao_player)
             screen.blit(Superficie.sup_texto, (300, 10))
 
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
