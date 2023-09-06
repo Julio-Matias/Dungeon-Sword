@@ -14,5 +14,6 @@ class Superficie:
     sup_fundo = pygame.image.load('projeto/assets/background-placeholder.png')
     sup_fundo = pygame.transform.scale(sup_fundo, (LARGURA_TELA, 1440))
     sup_texto = fonte.render('JOGO MANEIRO', False, 'Black')
+    sup_inimigo = pygame.Surface((50, 50))
     def __init__(self) -> None:
         pass

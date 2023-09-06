@@ -7,6 +7,9 @@ y_jogador = 200
 class Player: 
     def __init__(self) -> None:
         pass
+    def hitbox_jogador(posicao_jogador):
+        player_rect = Superficie.sup_jogador.get_rect(topleft= posicao_jogador)
+        return player_rect
     def movimento_jogador(evento):
         global x_jogador
         global y_jogador

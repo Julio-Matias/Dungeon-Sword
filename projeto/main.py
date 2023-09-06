@@ -3,6 +3,7 @@ from graphics import Superficie
 from settings import *
 from sys import exit
 from player import Player
+from enemy import Inimigo
 
 # Inicializando o PyGame
 pygame.init()
@@ -28,11 +29,14 @@ class Game:
                     pygame.quit()
                     exit()
             posicao_jogador = Player.movimento_jogador(event)
+            jogador_rect = Player.hitbox_jogador(posicao_jogador) 
+            inimigo_rect = Inimigo.hitbox_inimigo()
+            print(jogador_rect.colliderect(inimigo_rect))
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
             tela.blit(Superficie.sup_fundo, (0,0))
             tela.blit(Superficie.sup_jogador, posicao_jogador)
             tela.blit(Superficie.sup_texto, (300, 10))
-
+            tela.blit(Superficie.sup_inimigo, (20, 40))
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
