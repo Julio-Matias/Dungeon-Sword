@@ -8,6 +8,7 @@ pygame.init()
 # Posição do jogador
 x_jogador = 300
 y_jogador = 200
+pos_jogador = [x_jogador, y_jogador]
 # Criando uma class de player que vai conter as caracteristicas do personagem do jogador
 class Player: 
     def __init__(self):
