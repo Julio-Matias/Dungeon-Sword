@@ -3,7 +3,7 @@ from graphics import Superficie
 from settings import *
 from sys import exit
 from player import Player
-from level import Mapa
+from level import Mapa, hitbox_tilemap
 from enemy import Enemy
 
 # Inicializando o PyGame
@@ -28,13 +28,16 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-            # A cada loop checamos a posição do personagem, e colocamos as imagens do personagem, texto, inimigo e 
-            posicao_jogador = Player.movimento_jogador(event)
+            # A cada loop checamos a posição do personagem, e colocamos as imagens do personagem, texto, e inimigo 
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
             inimigo = Enemy()
             jogador = Player()
             TELA.fill(Cor.PRETO)
+            colisao = jogador.checando_colisao()
+            posicao_jogador = Player.movimento_jogador(colisao)
             Mapa.desenhar_mapa(TELA)
+            if colisao:
+                print(colisao)
             """TELA.blit(Superficie.im_fundo, (0,0))"""
             TELA.blit(jogador.imagem, posicao_jogador)
             TELA.blit(Superficie.sup_texto, (300, 10))

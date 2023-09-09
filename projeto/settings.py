@@ -1,6 +1,7 @@
 # Dimensões do jogador
 LARGURA_JOGADOR, ALTURA_JOGADOR = 100, 100
 # Caracteristicas da tela
+TAMANHO_TILE = 50
 LARGURA_TELA, ALTURA_TELA = 1200, 700
 FPS = 60
 # Cores

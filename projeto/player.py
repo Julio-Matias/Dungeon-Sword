@@ -1,5 +1,6 @@
 from graphics import Superficie
 from settings import *
+from level import hitbox_tilemap
 import pygame
 pygame.init()
 
@@ -14,18 +15,22 @@ class Player:
     def __init__(self):
         self.imagem = pygame.Surface((LARGURA_JOGADOR, ALTURA_JOGADOR))
         self.imagem.fill(Cor.VERMELHO)
-        self.hitbox = self.imagem.get_rect(topleft=(x_jogador, y_jogador))
-    def movimento_jogador(evento):
-        global x_jogador
-        global y_jogador
+        self.hitbox = self.imagem.get_rect(topleft=(pos_jogador))
+    def movimento_jogador(colisao):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_UP]:
-            y_jogador -= 10
+            pos_jogador[1] -= 10
         if teclas[pygame.K_DOWN]:
-            y_jogador += 10
+            pos_jogador[1] += 10
         if teclas[pygame.K_LEFT]:
-            x_jogador -= 10
+            pos_jogador[0] -= 10
         if teclas[pygame.K_RIGHT]:
-            x_jogador += 10
-        return (x_jogador, y_jogador)
+            pos_jogador[0] += 10
+        return pos_jogador
+    def checando_colisao(self):
+        colidiu = False
+        for tile in hitbox_tilemap:
+            if self.hitbox.colliderect(tile):
+                colidiu = True
+        return colidiu
