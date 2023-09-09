@@ -34,7 +34,7 @@ class Game:
             jogador = Player()
             TELA.fill(Cor.PRETO)
             colisao = jogador.checando_colisao()
-            posicao_jogador = Player.movimento_jogador(colisao)
+            posicao_jogador = jogador.movimento_jogador()
             Mapa.desenhar_mapa(TELA)
             if colisao:
                 print(colisao)
