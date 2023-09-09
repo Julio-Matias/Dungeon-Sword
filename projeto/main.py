@@ -35,10 +35,8 @@ class Game:
             jogador = Player()
             TELA.fill(Cor.PRETO)
             colisao = jogador.checando_colisao(mapa)
-            posicao_jogador = jogador.movimento_jogador()
+            posicao_jogador = (jogador.movimento_jogador(colisao))
             mapa.desenhar_mapa(TELA)
-            if colisao:
-                print(colisao)
             """TELA.blit(Superficie.im_fundo, (0,0))"""
             TELA.blit(jogador.imagem, posicao_jogador)
             TELA.blit(Superficie.sup_texto, (300, 10))
