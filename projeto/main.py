@@ -7,7 +7,6 @@ from enemy import Inimigo
 
 # Inicializando o PyGame
 pygame.init()
-# Definindo o tamanho da tela
 # O display (tela do jogo) é uma superficie onde tudo que está sendo mostrado ao jogador ficará
 tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA)) 
 # Definindo o titulo e o icon para a janela onde o jogo será executado
@@ -28,10 +27,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+            # A cada loop checamos a posição do personagem, e colocamos as imagens do personagem, texto, inimigo e 
             posicao_jogador = Player.movimento_jogador(event)
             jogador_rect = Player.hitbox_jogador(posicao_jogador) 
             inimigo_rect = Inimigo.hitbox_inimigo()
-            print(jogador_rect.colliderect(inimigo_rect))
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
             tela.blit(Superficie.sup_fundo, (0,0))
             tela.blit(Superficie.sup_jogador, posicao_jogador)

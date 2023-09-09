@@ -1,3 +1,4 @@
+# Caracteristicas da programação dos inimigos
 from graphics import Superficie
 import pygame
 pygame.init()
