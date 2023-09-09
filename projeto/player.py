@@ -1,6 +1,6 @@
 from graphics import Superficie
 from settings import *
-from level import hitbox_tilemap
+from level import Mapa
 import pygame
 pygame.init()
 
@@ -33,9 +33,9 @@ class Player:
         pos_jogador[0] += self.velocidade_x
         pos_jogador[1] += self.velocidade_y
         return pos_jogador
-    def checando_colisao(self):
+    def checando_colisao(self, mapa):
         colidiu = False
-        for tile in hitbox_tilemap:
-            if self.hitbox.colliderect(tile):
+        for tile in mapa.mapa_tiles:
+            if tile.tipo == 'parede' and self.hitbox.colliderect(tile.hitbox):
                 colidiu = True
         return colidiu

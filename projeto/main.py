@@ -3,7 +3,7 @@ from graphics import Superficie
 from settings import *
 from sys import exit
 from player import Player
-from level import Mapa, hitbox_tilemap
+from level import Mapa
 from enemy import Enemy
 
 # Inicializando o PyGame
@@ -23,6 +23,7 @@ class Game:
         pass
     def running(self):
         # Rodando o loop do jogo
+        mapa = Mapa()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -33,9 +34,9 @@ class Game:
             inimigo = Enemy()
             jogador = Player()
             TELA.fill(Cor.PRETO)
-            colisao = jogador.checando_colisao()
+            colisao = jogador.checando_colisao(mapa)
             posicao_jogador = jogador.movimento_jogador()
-            Mapa.desenhar_mapa(TELA)
+            mapa.desenhar_mapa(TELA)
             if colisao:
                 print(colisao)
             """TELA.blit(Superficie.im_fundo, (0,0))"""

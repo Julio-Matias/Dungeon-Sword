@@ -24,19 +24,22 @@ mapa = [
     "PPPPPPPPPPPPPPPPPPPPPPPP"
 ]
 class Tile:
-    def __init__(self, superficie):
+    def __init__(self, superficie, x, y, tipo_do_tile):
         self.imagem = pygame.transform.scale(superficie, (TAMANHO_TILE, TAMANHO_TILE))
-tile_parede = Tile(Superficie.im_parede)
-tile_chao = Tile(Superficie.im_chao)
-hitbox_tilemap = []
+        self.hitbox = pygame.Rect((x * TAMANHO_TILE, y * TAMANHO_TILE), (TAMANHO_TILE, TAMANHO_TILE))
+        self.tipo = tipo_do_tile
+
 class Mapa:
-    def __init__(self) -> None:
-        pass
-    def desenhar_mapa(TELA):
+    def __init__(self):
+        self.mapa_tiles = []
+    def desenhar_mapa(self, TELA):
         for y, linha in enumerate(mapa):
             for x, tile in enumerate(linha):
                 if tile == "P":
+                    tile_parede = Tile(Superficie.im_parede, x, y, 'parede')
                     TELA.blit(tile_parede.imagem, (x * TAMANHO_TILE, y * TAMANHO_TILE))
-                    hitbox_tilemap.append(pygame.Rect((x * TAMANHO_TILE, y * TAMANHO_TILE), (TAMANHO_TILE, TAMANHO_TILE)))
+                    self.mapa_tiles.append(tile_parede)
                 elif tile == "0":
+                    tile_chao = Tile(Superficie.im_chao, x, y, 'chao')
                     TELA.blit(tile_chao.imagem, (x * TAMANHO_TILE, y * TAMANHO_TILE))
+                    self.mapa_tiles.append(tile_chao)
