@@ -8,7 +8,7 @@ from enemy import Inimigo
 # Inicializando o PyGame
 pygame.init()
 # O display (tela do jogo) é uma superficie onde tudo que está sendo mostrado ao jogador ficará
-tela = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA)) 
+TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA)) 
 # Definindo o titulo e o icon para a janela onde o jogo será executado
 pygame.display.set_caption("Jogo maneirasso")
 icone = pygame.image.load("projeto/assets\icone-placeholder.png")
@@ -32,12 +32,16 @@ class Game:
             jogador_rect = Player.hitbox_jogador(posicao_jogador) 
             inimigo_rect = Inimigo.hitbox_inimigo()
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
-            tela.blit(Superficie.sup_fundo, (0,0))
-            tela.blit(Superficie.sup_jogador, posicao_jogador)
-            tela.blit(Superficie.sup_texto, (300, 10))
-            tela.blit(Superficie.sup_inimigo, (20, 40))
+            TELA.fill(COR_FUNDO)
+            TELA.blit(Superficie.sup_fundo, (0,0))
+            TELA.blit(Superficie.sup_jogador, posicao_jogador)
+            TELA.blit(Superficie.sup_texto, (300, 10))
+            TELA.blit(Superficie.sup_inimigo, (20, 40))
+            print(jogador_rect.colliderect(inimigo_rect))
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
-            relogio.tick(60)
-Game().running()
+            relogio.tick(FPS)
+
+if __name__ == '__main__':    
+    Game().running()
