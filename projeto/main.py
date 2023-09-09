@@ -34,13 +34,15 @@ class Game:
             inimigo = Enemy()
             jogador = Player()
             TELA.fill(Cor.PRETO)
-            colisao = jogador.checando_colisao(mapa)
-            posicao_jogador = (jogador.movimento_jogador(colisao))
+            colisao = jogador.hitbox.colliderect(inimigo.hitbox)
+            if colisao:
+                print(colisao)
+            jogador.movimento_jogador(colisao)
             mapa.desenhar_mapa(TELA)
             """TELA.blit(Superficie.im_fundo, (0,0))"""
-            TELA.blit(jogador.imagem, posicao_jogador)
+            TELA.blit(jogador.imagem, jogador.hitbox)
             TELA.blit(Superficie.sup_texto, (300, 10))
-            TELA.blit(inimigo.imagem, (20, 40))
+            TELA.blit(inimigo.imagem, inimigo.hitbox)
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas

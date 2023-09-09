@@ -6,27 +6,11 @@ from settings import *
 
 pygame.init()
 
-# Definição do mapa (cada caractere representa uma imagem)
-mapa = [
-    "PPPPPPPPPPPPPPPPPPPPPPPP",
-    "P000000000P000000000000P",
-    "P000000000P000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P0000000000000000000000P",
-    "P000000000P000000000000P",
-    "PPPPPPPPPPPPPPPPPPPPPPPP"
-]
+# Definição do mapa (cada caractere representa um tile)
 class Tile:
     def __init__(self, superficie, x, y, tipo_do_tile):
         self.imagem = pygame.transform.scale(superficie, (TAMANHO_TILE, TAMANHO_TILE))
-        self.hitbox = pygame.Rect((x * TAMANHO_TILE, y * TAMANHO_TILE), (TAMANHO_TILE, TAMANHO_TILE))
+        self.hitbox = self.imagem.get_rect(topleft= (TAMANHO_TILE, TAMANHO_TILE))
         self.tipo = tipo_do_tile
 
 class Mapa:

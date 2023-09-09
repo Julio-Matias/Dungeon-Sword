@@ -4,8 +4,6 @@ from level import Mapa
 import pygame
 pygame.init()
 
-
-
 # Posição do jogador
 x_jogador = 300
 y_jogador = 200
@@ -13,15 +11,14 @@ y_jogador = 200
 class Player: 
     distancia_movida = 10
     def __init__(self):
-        self.imagem = pygame.Surface((LARGURA_JOGADOR, ALTURA_JOGADOR))
+        self.imagem = pygame.transform.scale(pygame.image.load('projeto/assets\Link1.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR))
         self.imagem.fill(Cor.VERMELHO)
-        self.hitbox = pygame.Rect((x_jogador, y_jogador), (LARGURA_JOGADOR+2, ALTURA_JOGADOR+2))
+        self.hitbox = self.imagem.get_rect(topleft=(x_jogador, y_jogador))
         self.velocidade_x = 0
         self.velocidade_y = 0
     def movimento_jogador(self, colisao):
         global x_jogador
         global y_jogador
-        x_inicial, y_inicial = int(x_jogador), int(y_jogador)
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
         # Defini uma velocidade antes de aplicalá ao x ou y para 'salvar' qual foi a ultima direção em que o personagem se moveu
@@ -35,9 +32,6 @@ class Player:
             self.velocidade_x += Player.distancia_movida
         x_jogador += self.velocidade_x
         y_jogador += self.velocidade_y
-        if colisao:
-            x_jogador -= self.velocidade_x
-            y_jogador -= self.velocidade_y
         return x_jogador, y_jogador
     def checando_colisao(self, mapa):
         colidiu = False
