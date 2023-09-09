@@ -1,11 +1,10 @@
 # Caracteristicas da programação dos inimigos
-from graphics import Superficie
+from settings import *
 import pygame
 pygame.init()
 
-class Inimigo:
-    def __init__(self) -> None:
-        pass
-    def hitbox_inimigo():
-        inimigo_rect = Superficie.sup_inimigo.get_rect(topleft= (50, 50))
-        return inimigo_rect
+class Enemy:
+    def __init__(self):
+        self.imagem = pygame.Surface((50, 50))
+        self.imagem.fill(Cor.BRANCO)
+        self.hitbox = self.imagem.get_rect(topleft=(20, 40))
