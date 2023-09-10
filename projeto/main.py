@@ -5,6 +5,7 @@ from sys import exit
 from player import Player
 from level import Mapa
 from enemy import Enemy
+from debug import debug
 
 # Inicializando o PyGame
 pygame.init()
@@ -34,10 +35,8 @@ class Game:
             inimigo = Enemy()
             jogador = Player()
             TELA.fill(Cor.PRETO)
-            colisao = jogador.hitbox.colliderect(inimigo.hitbox)
-            if colisao:
-                print(colisao)
-            jogador.movimento_jogador(colisao)
+            debug(jogador.hitbox.colliderect(inimigo.hitbox))
+            jogador.atualizar()
             mapa.desenhar_mapa(TELA)
             """TELA.blit(Superficie.im_fundo, (0,0))"""
             TELA.blit(jogador.imagem, jogador.hitbox)
