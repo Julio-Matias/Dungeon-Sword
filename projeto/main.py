@@ -9,8 +9,6 @@ from debug import debug
 
 # Inicializando o PyGame
 pygame.init()
-# O display (tela do jogo) é uma superficie onde tudo que está sendo mostrado ao jogador ficará
-TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA)) 
 # Definindo o titulo e o icon para a janela onde o jogo será executado
 pygame.display.set_caption("Jogo maneirasso")
 icone = pygame.image.load("projeto/assets\icone-placeholder.png")
@@ -35,13 +33,13 @@ class Game:
             inimigo = Enemy()
             jogador = Player()
             TELA.fill(Cor.PRETO)
-            debug(jogador.hitbox.colliderect(inimigo.hitbox))
             jogador.atualizar()
             mapa.desenhar_mapa(TELA)
             """TELA.blit(Superficie.im_fundo, (0,0))"""
             TELA.blit(jogador.imagem, jogador.hitbox)
             TELA.blit(Superficie.sup_texto, (300, 10))
             TELA.blit(inimigo.imagem, inimigo.hitbox)
+            debug(jogador.hitbox.colliderect(inimigo.hitbox))
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas

@@ -17,7 +17,7 @@ class Superficie:
     sup_texto = fonte.render('JOGO MANEIRO', False, Cor.BRANCO)
     im_inimigo = pygame.Surface((50, 50))
     im_inimigo.fill(Cor.BRANCO)
-    im_parede = pygame.image.load("projeto/assets/parede.png")
+    im_parede = pygame.image.load("projeto/assets\parede-placeholder.png")
     im_chao = pygame.Surface((50, 50))
     im_chao.fill(Cor.PRETO)
     def __init__(self) -> None:
