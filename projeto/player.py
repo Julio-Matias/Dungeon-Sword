@@ -11,8 +11,9 @@ y_jogador = 200
 class Player: 
     distancia_movida = 10
     def __init__(self):
-        self.imagem = pygame.transform.scale(pygame.image.load('projeto/assets\playerfront-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR))
+        self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
         self.hitbox = self.imagem.get_rect(topleft=(x_jogador, y_jogador))
+        self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         self.direcao = pygame.math.Vector2()
         self.velocidade = 10
     def input(self):

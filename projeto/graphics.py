@@ -18,7 +18,6 @@ class Superficie:
     im_inimigo = pygame.Surface((50, 50))
     im_inimigo.fill(Cor.BRANCO)
     im_parede = pygame.image.load("projeto/assets\parede-placeholder.png")
-    im_chao = pygame.Surface((50, 50))
-    im_chao.fill(Cor.PRETO)
+    im_chao = pygame.image.load("projeto/assets\chao-placeholder.jpg")
     def __init__(self) -> None:
         pass
