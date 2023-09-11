@@ -34,7 +34,7 @@ class Player:
             self.direcao.x = -1
             self.olhando_direcao = 'esquerda'
         elif teclas[pygame.K_d] or teclas[pygame.K_RIGHT]:
-            self.direcao.x += 1
+            self.direcao.x = +1
             self.olhando_direcao = 'direita'
         else:
             self.direcao.x = 0
@@ -73,6 +73,7 @@ class Player:
     def atualizar(self, mapa):
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         TELA.blit(self.imagem, self.hitbox)
+        self.ataque_hitbox = pygame.Rect((0,0), (0,0))
         self.input()
         self.movimento(self.velocidade, mapa)
         

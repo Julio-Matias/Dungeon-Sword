@@ -37,7 +37,7 @@ class Game:
             TELA.blit(Superficie.sup_texto, (500, 10))
             TELA.blit(Superficie.vida, (900,10))
             jogador.atualizar(mapa)
-            TELA.blit(inimigo.imagem, inimigo.hitbox)
+            inimigo.atualizar()
             debug(jogador.olhando_direcao)
             debug(jogador.ataque_hitbox.colliderect(inimigo.hitbox), 40)
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
