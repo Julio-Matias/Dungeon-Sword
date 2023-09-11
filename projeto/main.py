@@ -38,8 +38,8 @@ class Game:
             TELA.blit(Superficie.vida, (900,10))
             jogador.atualizar(mapa)
             inimigo.atualizar()
-            debug(jogador.olhando_direcao)
-            debug(jogador.ataque_hitbox.colliderect(inimigo.hitbox), 40)
+            debug(jogador.olhando_direcao, 'Direção')
+            debug(jogador.ataque_hitbox.colliderect(inimigo.hitbox), 'Acertou o inimigo', 30)
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
