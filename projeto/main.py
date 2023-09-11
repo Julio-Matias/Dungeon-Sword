@@ -25,20 +25,21 @@ class Game:
         inimigo = Enemy()
         jogador = Player()
         while True:
+            TELA.fill(Cor.PRETO)
+            mapa.desenhar_mapa()
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
             # A cada loop checamos a posição do personagem, e colocamos as imagens do personagem, texto, e inimigo 
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
-            TELA.fill(Cor.PRETO)
-            mapa.desenhar_mapa()
             TELA.blit(Superficie.sup_texto, (500, 10))
             TELA.blit(Superficie.vida, (900,10))
-            TELA.blit(inimigo.imagem, inimigo.hitbox)
             jogador.atualizar(mapa)
             TELA.blit(inimigo.imagem, inimigo.hitbox)
             debug(jogador.olhando_direcao)
+            debug(jogador.ataque_hitbox.colliderect(inimigo.hitbox), 40)
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas

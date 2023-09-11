@@ -17,6 +17,7 @@ class Player:
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         self.direcao = pygame.math.Vector2()
         self.velocidade = 10
+        self.ataque_hitbox = pygame.Rect((0,0), (0,0))
     def input(self):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
@@ -37,6 +38,8 @@ class Player:
             self.olhando_direcao = 'direita'
         else:
             self.direcao.x = 0
+        if teclas[pygame.K_SPACE]:
+            self.ataque()
     def movimento(self, velocidade, mapa):
         if self.direcao.magnitude() != 0:
             self.direcao = self.direcao.normalize()
@@ -54,6 +57,19 @@ class Player:
         return colidiu
     def dano_inimigo(self, hitbox_inimigo):
         return self.hitbox.colliderect(hitbox_inimigo)
+    def ataque(self):
+        if self.olhando_direcao == 'direita':
+            self.ataque_hitbox = pygame.Rect(self.hitbox.topright, (TAMANHO_TILE, TAMANHO_TILE * 2))
+            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
+        elif self.olhando_direcao == 'esquerda':
+            self.ataque_hitbox = pygame.Rect((self.hitbox.left - TAMANHO_TILE, self.hitbox.top), (TAMANHO_TILE, TAMANHO_TILE * 2))
+            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
+        elif self.olhando_direcao == 'baixo':
+            self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.bottom), (TAMANHO_TILE * 2, TAMANHO_TILE))
+            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
+        elif self.olhando_direcao == 'cima':
+            self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.top - TAMANHO_TILE), (TAMANHO_TILE * 2, TAMANHO_TILE))
+            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
     def atualizar(self, mapa):
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         TELA.blit(self.imagem, self.hitbox)
