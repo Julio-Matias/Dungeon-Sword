@@ -6,5 +6,5 @@ pygame.init()
 class Enemy:
     def __init__(self):
         self.imagem = pygame.Surface((TAMANHO_TILE, TAMANHO_TILE))
-        self.imagem.fill(Cor.BRANCO)
+        self.imagem.fill(Cor.VERMELHO)
         self.hitbox = self.imagem.get_rect(topleft=(100, 100))

@@ -38,15 +38,18 @@ class Player:
         x_jogador += self.direcao.x * velocidade
         y_jogador += self.direcao.y * velocidade
         self.hitbox = self.imagem.get_rect(topleft=(x_jogador, y_jogador))
-        if self.checando_colisao(mapa):
+        if self.colisao_parede(mapa):
             x_jogador -= self.direcao.x * velocidade 
             y_jogador -= self.direcao.y * velocidade 
     def atualizar(self, mapa):
         self.input()
         self.movimento(self.velocidade, mapa)
-    def checando_colisao(self, mapa):
+    def colisao_parede(self, mapa):
         colidiu = False
         for tile in mapa.tipo_tiles['Parede']:
             if self.hitbox.colliderect(tile.hitbox):
                 colidiu = True
         return colidiu
+    def dano_inimigo(self, hitbox_inimigo):
+        return self.hitbox.colliderect(hitbox_inimigo)
+        
