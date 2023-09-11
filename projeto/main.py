@@ -13,13 +13,12 @@ pygame.init()
 pygame.display.set_caption("Jogo maneirasso")
 icone = pygame.image.load("projeto/assets\icone-placeholder.png")
 pygame.display.set_icon(icone)
-# Criando um objeto de relógio que ajudara a controlar o tempo percorrido no jogo
-relogio = pygame.time.Clock()
 
 
 class Game:
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        # Criando um objeto de relógio que ajudara a controlar o tempo percorrido no jogo
+        self.relogio = pygame.time.Clock()
     def running(self):
         # Rodando o loop do jogo
         mapa = Mapa()
@@ -43,7 +42,7 @@ class Game:
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
-            relogio.tick(FPS)
+            self.relogio.tick(FPS)
 
 # Certificando que o jogo só será rodado nesse arquivo, e não caso ele seja importado ou algo do tipo
 if __name__ == '__main__':    

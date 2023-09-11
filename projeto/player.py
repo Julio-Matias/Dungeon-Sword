@@ -44,7 +44,7 @@ class Player:
         self.movimento(self.velocidade)
     def checando_colisao(self, mapa):
         colidiu = False
-        for tile in mapa.mapa_tiles:
-            if tile.tipo == 'parede' and self.hitbox.colliderect(tile.hitbox):
+        for tile in mapa.tipo_tiles['Parede']:
+            if self.hitbox.colliderect(tile.hitbox):
                 colidiu = True
         return colidiu
