@@ -10,7 +10,7 @@ pygame.init()
 class Tile:
     def __init__(self, superficie, x, y, tipo_do_tile):
         self.imagem = pygame.transform.scale(superficie, (TAMANHO_TILE, TAMANHO_TILE))
-        self.hitbox = self.imagem.get_rect(topleft= (TAMANHO_TILE, TAMANHO_TILE))
+        self.hitbox = self.imagem.get_rect(topleft= (x * TAMANHO_TILE, y * TAMANHO_TILE))
         self.tipo = tipo_do_tile
 
 class Mapa:
