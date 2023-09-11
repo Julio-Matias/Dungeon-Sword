@@ -34,11 +34,8 @@ class Game:
             TELA.fill(Cor.PRETO)
             mapa.desenhar_mapa()
             TELA.blit(Superficie.sup_texto, (500, 10))
-<<<<<<< HEAD
-=======
             TELA.blit(Superficie.vida, (900,10))
             TELA.blit(inimigo.imagem, inimigo.hitbox)
->>>>>>> 7f91de555aaac958b50f04a2a85f6874a30f1a56
             jogador.atualizar(mapa)
             TELA.blit(inimigo.imagem, inimigo.hitbox)
             debug(jogador.olhando_direcao)
