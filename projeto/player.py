@@ -20,15 +20,15 @@ class Player:
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
         # Defini uma vetor que decidira a direção e orientação em que o personagem irá se mover para 'salvar' qual foi a ultima direção em que o personagem se moveu
-        if teclas[pygame.K_UP]:
+        if teclas[pygame.K_w]:
             self.direcao.y = -1
-        elif teclas[pygame.K_DOWN]:
+        elif teclas[pygame.K_s]:
             self.direcao.y = 1
         else:
             self.direcao.y = 0
-        if teclas[pygame.K_LEFT]:
+        if teclas[pygame.K_a]:
             self.direcao.x = -1
-        elif teclas[pygame.K_RIGHT]:
+        elif teclas[pygame.K_d]:
             self.direcao.x += 1
         else:
             self.direcao.x = 0
