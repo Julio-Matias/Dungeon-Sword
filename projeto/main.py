@@ -35,6 +35,7 @@ class Game:
             mapa.desenhar_mapa()
             TELA.blit(jogador.imagem, jogador.hitbox)
             TELA.blit(Superficie.sup_texto, (500, 10))
+            TELA.blit(Superficie.vida, (900,10))
             TELA.blit(inimigo.imagem, inimigo.hitbox)
             jogador.atualizar(mapa)
             debug(jogador.dano_inimigo(inimigo.hitbox))

@@ -15,6 +15,7 @@ class Superficie:
     im_fundo = pygame.image.load('projeto/assets/background-placeholder.png')
     im_fundo = pygame.transform.scale(im_fundo, (LARGURA_TELA, 1440))
     sup_texto = fonte.render('Testando', False, Cor.BRANCO)
+    vida = pygame.transform.scale(pygame.image.load('projeto/assets/espada.png'), (50,50))
     im_inimigo = pygame.Surface((50, 50))
     im_inimigo.fill(Cor.BRANCO)
     im_parede = pygame.image.load("projeto/assets\parede-placeholder.png")
