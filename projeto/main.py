@@ -32,10 +32,10 @@ class Game:
             inimigo = Enemy()
             jogador = Player()
             TELA.fill(Cor.PRETO)
-            jogador.atualizar()
             mapa.desenhar_mapa(TELA)
             """TELA.blit(Superficie.im_fundo, (0,0))"""
             TELA.blit(jogador.imagem, jogador.hitbox)
+            jogador.atualizar(mapa)
             TELA.blit(Superficie.sup_texto, (300, 10))
             TELA.blit(inimigo.imagem, inimigo.hitbox)
             debug(jogador.checando_colisao(mapa))
