@@ -10,15 +10,11 @@ class Enemy:
         self.imagem = pygame.Surface((TAMANHO_TILE, TAMANHO_TILE)) 
         self.imagem.fill(Cor.VERMELHO) 
         # Já nasce em um lugar aleatorio
-        self.x = random.randint(0, LARGURA_TELA - TAMANHO_TILE) 
-        self.y = random.randint(0, ALTURA_TELA - TAMANHO_TILE) 
+        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']))].hitbox
+        self.y, self.x = local_spawn.top, local_spawn.left
         self.velocidade = 1 
         self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
         # Certificando que o inimigo não vai começar dentro de uma parede
-        if self.colisao_obstaculos(mapa):
-            self.x = 0
-            self.y = 0
-            self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
     def acertado_ataque(self, jogador):
         if jogador.ataque_hitbox.colliderect(self.hitbox):
             self.vida -= 1
@@ -46,16 +42,12 @@ class Enemy:
             self.y -= direcao_y * self.velocidade 
     def renascer(self, mapa): 
         self.vida = 3 
-        # Renasce em um lugar aleatorio do mapa (falta ele determinar oq é e n é parede) 
-        self.x = random.randint(0, LARGURA_TELA - TAMANHO_TILE) 
-        self.y = random.randint(0, ALTURA_TELA - TAMANHO_TILE)
+        # Renasce em um lugar aleatorio do mapa
+        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']))].hitbox
+        self.y, self.x = local_spawn.top, local_spawn.left
         # Quando renascer o hitbox vai ficar no lugar certo 
         self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
         # Certificando que o inimigo não vai renascer dentro de uma parede
-        while self.colisao_obstaculos(mapa):
-            self.x = random.randint(0, LARGURA_TELA - TAMANHO_TILE) 
-            self.y = random.randint(0, ALTURA_TELA - TAMANHO_TILE)
-            self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y))
     def colisao_obstaculos(self, mapa):
         colidiu = False
         for tile in mapa.tipo_tiles['Parede']:
