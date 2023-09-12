@@ -20,10 +20,12 @@ class Game:
         # Criando um objeto de relógio que ajudara a controlar o tempo percorrido no jogo
         self.relogio = pygame.time.Clock()
     def running(self):
-        # Rodando o loop do jogo
+        # Decidindo uma fonte para a UI, e criando a instancia de mapa, inimigo e jogador
+        fonte = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
         mapa = Mapa()
-        inimigo = Enemy()
+        inimigo = Enemy(mapa)
         jogador = Player()
+        # Rodando o loop do jogo
         while True:
             TELA.fill(Cor.PRETO)
             mapa.desenhar_mapa()
@@ -33,16 +35,14 @@ class Game:
                     exit()
             # A cada loop checamos a posição do personagem, e colocamos as imagens do personagem, texto, e inimigo 
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
-            TELA.blit(Superficie.sup_texto, (500, 10))
+            sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, Cor.BRANCO)
+            TELA.blit(sup_pontuacao, (500, 10))
             TELA.blit(Superficie.vida, (900,10))
-            inimigo.atualizar(jogador)
-            debug((inimigo.acertado_ataque(jogador)), 'Acertou o inimigo', 30)
+            inimigo.atualizar(jogador, mapa)
             jogador.atualizar(mapa)
-            if jogador.hitbox.colliderect(inimigo.hitbox):
-                jogador.dano_inimigo(inimigo)
             debug(jogador.olhando_direcao, 'Direção')
-            debug((inimigo.vida), 'Vida inimigo', 60)
-            debug((jogador.vida), 'Vida jogador', 80)
+            debug((inimigo.vida), 'Vida inimigo', 40)
+            debug((jogador.pontuacao), 'Pontos do jogador', 80)
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas

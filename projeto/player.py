@@ -13,6 +13,7 @@ class Player:
     olhando_direcao = 'baixo'
     def __init__(self):
         self.vida = 10
+        self.pontuacao = 0
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
@@ -47,19 +48,18 @@ class Player:
         self.x_jogador += self.direcao.x * velocidade
         self.y_jogador += self.direcao.y * velocidade
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
-        if self.colisao_parede(mapa):
+        if self.colisao_obstaculos(mapa):
             self.x_jogador -= self.direcao.x * velocidade 
             self.y_jogador -= self.direcao.y * velocidade 
-    def colisao_parede(self, mapa):
+    def colisao_obstaculos(self, mapa):
         colidiu = False
         for tile in mapa.tipo_tiles['Parede']:
             if self.hitbox.colliderect(tile.hitbox):
                 colidiu = True
         return colidiu
-    def dano_inimigo(self, inimigo):
+    def colisao_inimigo(self, inimigo):
         if self.hitbox.colliderect(inimigo.hitbox):
             self.vida -= 1
-        
     def ataque(self):
         if self.olhando_direcao == 'direita':
             self.ataque_hitbox = pygame.Rect(self.hitbox.topright, (TAMANHO_TILE, TAMANHO_TILE * 2))
