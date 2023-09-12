@@ -12,6 +12,7 @@ class Player:
     distancia_movida = 10
     olhando_direcao = 'baixo'
     def __init__(self):
+        self.vida = 10
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
@@ -55,8 +56,10 @@ class Player:
             if self.hitbox.colliderect(tile.hitbox):
                 colidiu = True
         return colidiu
-    def dano_inimigo(self, hitbox_inimigo):
-        return self.hitbox.colliderect(hitbox_inimigo)
+    def dano_inimigo(self, inimigo):
+        if self.hitbox.colliderect(inimigo.hitbox):
+            self.vida -= 1
+        
     def ataque(self):
         if self.olhando_direcao == 'direita':
             self.ataque_hitbox = pygame.Rect(self.hitbox.topright, (TAMANHO_TILE, TAMANHO_TILE * 2))
@@ -71,9 +74,9 @@ class Player:
             self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.top - TAMANHO_TILE), (TAMANHO_TILE * 2, TAMANHO_TILE))
             pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
     def atualizar(self, mapa):
+        self.ataque_hitbox = pygame.Rect((0,0), (0,0))
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         TELA.blit(self.imagem, self.hitbox)
-        self.ataque_hitbox = pygame.Rect((0,0), (0,0))
         self.input()
         self.movimento(self.velocidade, mapa)
         
