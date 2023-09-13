@@ -7,6 +7,8 @@ pygame.init()
 # Posição do jogador
 # Criando uma class de player que vai conter as caracteristicas do personagem do jogador
 class Player: 
+    pontuacao = 0
+    vida = 10
     x_jogador = 300
     y_jogador = 200
     distancia_movida = 10
@@ -14,8 +16,6 @@ class Player:
     intervalo_ataque = 400
     evento_intervalo_ataque = pygame.USEREVENT + 1
     def __init__(self):
-        self.vida = 10
-        self.pontuacao = 0
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
@@ -24,6 +24,7 @@ class Player:
         self.ataque_hitbox = pygame.Rect((0,0), (0,0))
         self.pode_atacar = True
         self.sofreu_dano = False
+        self.morreu = False
     def input(self):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
@@ -77,10 +78,19 @@ class Player:
             elif self.olhando_direcao == 'cima':
                 self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.top - TAMANHO_TILE), (TAMANHO_TILE * 2, TAMANHO_TILE))
                 pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
-    def atualizar(self, mapa, inimigo):
-        self.ataque_hitbox = pygame.Rect((0,0), (0,0))
-        self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
-        TELA.blit(self.imagem, self.hitbox)
-        self.input()
-        self.movimento(self.velocidade, mapa)
+    def morte(self):
+        if self.vida <= 0:
+            self.morreu = True
+    def atualizar(self, mapa):
+        self.morte()
+        if not self.morreu:
+            self.ataque_hitbox = pygame.Rect((0,0), (0,0))
+            self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
+            TELA.blit(self.imagem, self.hitbox)
+            self.movimento(self.velocidade, mapa)
+            self.input()
+        else:
+            self.ataque_hitbox = pygame.Rect((0,0), (0,0))
+            self.hitbox = self.imagem.get_rect(topleft=(0, 0))
+        
         

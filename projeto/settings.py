@@ -30,6 +30,7 @@ class Cor:
     PRETO = (0, 0, 0)
     BRANCO = (255, 255, 255)
     VERMELHO = (255, 0, 0)
+    TRANSPARENTE = (0, 0, 0, 0)
     def __init__(self) -> None:
         pass
     

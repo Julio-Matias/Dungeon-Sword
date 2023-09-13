@@ -44,7 +44,7 @@ class Game:
             TELA.blit(sup_pontuacao, (500, 10))
             TELA.blit(Coletaveis.sword, (900,100))
             inimigo.atualizar(jogador, mapa)
-            jogador.atualizar(mapa, inimigo)
+            jogador.atualizar(mapa)
             debug(jogador.olhando_direcao, 'Direção')         
             debug((inimigo.vida), 'Vida inimigo', 30)
             debug((jogador.pontuacao), 'Pontos do jogador', 60)
