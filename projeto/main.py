@@ -27,7 +27,7 @@ class Game:
         inimigo = Enemy(mapa)
         jogador = Player()
         # Rodando o loop do jogo
-        while True:
+        while True:  
             TELA.fill(Cor.PRETO)
             mapa.desenhar_mapa()
             for event in pygame.event.get():
@@ -53,7 +53,6 @@ class Game:
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
             self.relogio.tick(FPS)
-
 # Certificando que o jogo só será rodado nesse arquivo, e não caso ele seja importado ou algo do tipo
 if __name__ == '__main__':    
     Game().running()

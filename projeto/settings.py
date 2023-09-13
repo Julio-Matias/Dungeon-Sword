@@ -1,7 +1,5 @@
 import pygame
 pygame.init()
-# Dimensões do jogador
-LARGURA_JOGADOR, ALTURA_JOGADOR = 100, 100
 # Caracteristicas da tela
 # O display (tela do jogo) é uma superficie onde tudo que está sendo mostrado ao jogador ficará
 LARGURA_TELA, ALTURA_TELA = 1200, 700
@@ -25,6 +23,8 @@ MAPA = [
     "P000000000P000000000000P",
     "PPPPPPPPPPPPPPPPPPPPPPPP"
 ]
+# Dimensões do jogador
+LARGURA_JOGADOR, ALTURA_JOGADOR = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
 # Cores
 class Cor:
     PRETO = (0, 0, 0)

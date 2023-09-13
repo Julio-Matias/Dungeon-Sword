@@ -15,7 +15,7 @@ class Enemy:
         # Já nasce em um lugar aleatorio
         local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left
-        self.velocidade = 1 
+        self.velocidade = 5
         self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
     def acertado_ataque(self, jogador):
         if jogador.ataque_hitbox.colliderect(self.hitbox) and not self.levou_ataque:
