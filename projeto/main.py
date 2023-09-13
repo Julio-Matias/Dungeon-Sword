@@ -6,6 +6,7 @@ from player import Player
 from level import Mapa
 from enemy import Enemy
 from debug import debug
+from collectibles import Coletaveis
 
 # Inicializando o PyGame
 pygame.init()
@@ -37,7 +38,7 @@ class Game:
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
             sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, Cor.BRANCO)
             TELA.blit(sup_pontuacao, (500, 10))
-            TELA.blit(Superficie.vida, (900,10))
+            TELA.blit(Coletaveis.sword, (900,100))
             inimigo.atualizar(jogador, mapa)
             jogador.atualizar(mapa)
             debug(jogador.olhando_direcao, 'Direção')
