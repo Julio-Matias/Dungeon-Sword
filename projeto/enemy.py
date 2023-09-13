@@ -5,22 +5,31 @@ import random
 pygame.init()
 
 class Enemy:
+    evento_intervalo_dano = pygame.USEREVENT + 2
+    intervalo_dano = 2000
     def __init__(self, mapa):
-        self.vida = 3 
+        self.vida = 1 
         self.imagem = pygame.Surface((TAMANHO_TILE, TAMANHO_TILE)) 
-        self.imagem.fill(Cor.VERMELHO) 
+        self.imagem.fill(Cor.VERMELHO)
+        self.levou_ataque = False 
         # Já nasce em um lugar aleatorio
-        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']))].hitbox
+        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left
         self.velocidade = 1 
         self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
-        # Certificando que o inimigo não vai começar dentro de uma parede
     def acertado_ataque(self, jogador):
-        if jogador.ataque_hitbox.colliderect(self.hitbox):
+        if jogador.ataque_hitbox.colliderect(self.hitbox) and not self.levou_ataque:
             self.vida -= 1
+            self.levou_ataque = True
             if self.vida < 0:
                 self.hitbox == pygame.Rect((0,0), (0,0))
-        return jogador.ataque_hitbox.colliderect(self.hitbox)
+        elif not jogador.ataque_hitbox.colliderect(self.hitbox):
+            self.levou_ataque = False
+    def causou_dano(self, jogador):
+        if self.hitbox.colliderect(jogador.hitbox) and not jogador.sofreu_dano:
+            jogador.sofreu_dano = True
+            pygame.time.set_timer(self.evento_intervalo_dano, self.intervalo_dano)
+            jogador.vida -= 1
     def seguir_jogador(self, jogador, mapa): 
         self.velocidade = 1 
         # Faz o calculo da direção do inimigo pro player
@@ -41,9 +50,9 @@ class Enemy:
             self.x -= direcao_x * self.velocidade 
             self.y -= direcao_y * self.velocidade 
     def renascer(self, mapa): 
-        self.vida = 3 
+        self.vida = 1 
         # Renasce em um lugar aleatorio do mapa
-        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']))].hitbox
+        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left
         # Quando renascer o hitbox vai ficar no lugar certo 
         self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
@@ -55,6 +64,7 @@ class Enemy:
                 colidiu = True
         return colidiu
     def atualizar(self, jogador, mapa): 
+        self.causou_dano(jogador)
         self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y))
         TELA.blit(self.imagem, self.hitbox)
         self.acertado_ataque(jogador) 

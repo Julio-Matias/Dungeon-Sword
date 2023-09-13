@@ -11,6 +11,8 @@ class Player:
     y_jogador = 200
     distancia_movida = 10
     olhando_direcao = 'baixo'
+    intervalo_ataque = 400
+    evento_intervalo_ataque = pygame.USEREVENT + 1
     def __init__(self):
         self.vida = 10
         self.pontuacao = 0
@@ -20,6 +22,8 @@ class Player:
         self.direcao = pygame.math.Vector2()
         self.velocidade = 10
         self.ataque_hitbox = pygame.Rect((0,0), (0,0))
+        self.pode_atacar = True
+        self.sofreu_dano = False
     def input(self):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
@@ -57,23 +61,23 @@ class Player:
             if self.hitbox.colliderect(tile.hitbox):
                 colidiu = True
         return colidiu
-    def colisao_inimigo(self, inimigo):
-        if self.hitbox.colliderect(inimigo.hitbox):
-            self.vida -= 1
     def ataque(self):
-        if self.olhando_direcao == 'direita':
-            self.ataque_hitbox = pygame.Rect(self.hitbox.topright, (TAMANHO_TILE, TAMANHO_TILE * 2))
-            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
-        elif self.olhando_direcao == 'esquerda':
-            self.ataque_hitbox = pygame.Rect((self.hitbox.left - TAMANHO_TILE, self.hitbox.top), (TAMANHO_TILE, TAMANHO_TILE * 2))
-            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
-        elif self.olhando_direcao == 'baixo':
-            self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.bottom), (TAMANHO_TILE * 2, TAMANHO_TILE))
-            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
-        elif self.olhando_direcao == 'cima':
-            self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.top - TAMANHO_TILE), (TAMANHO_TILE * 2, TAMANHO_TILE))
-            pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
-    def atualizar(self, mapa):
+        if self.pode_atacar:
+            self.pode_atacar = False
+            pygame.time.set_timer(self.evento_intervalo_ataque, self.intervalo_ataque)
+            if self.olhando_direcao == 'direita':
+                self.ataque_hitbox = pygame.Rect(self.hitbox.topright, (TAMANHO_TILE, TAMANHO_TILE * 2))
+                pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
+            elif self.olhando_direcao == 'esquerda':
+                self.ataque_hitbox = pygame.Rect((self.hitbox.left - TAMANHO_TILE, self.hitbox.top), (TAMANHO_TILE, TAMANHO_TILE * 2))
+                pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
+            elif self.olhando_direcao == 'baixo':
+                self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.bottom), (TAMANHO_TILE * 2, TAMANHO_TILE))
+                pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
+            elif self.olhando_direcao == 'cima':
+                self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - TAMANHO_TILE, self.hitbox.top - TAMANHO_TILE), (TAMANHO_TILE * 2, TAMANHO_TILE))
+                pygame.draw.rect(TELA, 'White', self.ataque_hitbox)
+    def atualizar(self, mapa, inimigo):
         self.ataque_hitbox = pygame.Rect((0,0), (0,0))
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         TELA.blit(self.imagem, self.hitbox)

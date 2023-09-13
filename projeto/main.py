@@ -34,16 +34,21 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+                elif event.type == jogador.evento_intervalo_ataque:
+                    jogador.pode_atacar = True
+                elif event.type == inimigo.evento_intervalo_dano:
+                    jogador.sofreu_dano = False
             # A cada loop checamos a posição do personagem, e colocamos as imagens do personagem, texto, e inimigo 
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
             sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, Cor.BRANCO)
             TELA.blit(sup_pontuacao, (500, 10))
             TELA.blit(Coletaveis.sword, (900,100))
             inimigo.atualizar(jogador, mapa)
-            jogador.atualizar(mapa)
-            debug(jogador.olhando_direcao, 'Direção')
-            debug((inimigo.vida), 'Vida inimigo', 40)
-            debug((jogador.pontuacao), 'Pontos do jogador', 80)
+            jogador.atualizar(mapa, inimigo)
+            debug(jogador.olhando_direcao, 'Direção')         
+            debug((inimigo.vida), 'Vida inimigo', 30)
+            debug((jogador.pontuacao), 'Pontos do jogador', 60)
+            debug((jogador.vida), 'Vida jogador', 90)
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
