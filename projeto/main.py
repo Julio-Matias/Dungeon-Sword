@@ -28,27 +28,32 @@ class Game:
         jogador = Player()
         # Rodando o loop do jogo
         while True:  
-            TELA.fill(Cor.PRETO)
+            # Isso vai 'limpar' a tela de fundo, para que as imagens que aparecem na tela não fiquem permanentemente nela 
+            TELA.fill('Black')
+            # Cria o mapa do jogo
             mapa.desenhar_mapa()
+            # Vai checar quais eventos estão ocorrendo por dentro
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                elif event.type == jogador.evento_intervalo_ataque:
+                # Ver função ataque do Player
+                elif event.type == EVENTO_INTERVALO_ATAQUE:
                     jogador.pode_atacar = True
-                elif event.type == inimigo.evento_intervalo_dano:
+                # Ver função causou_dano do Enemy
+                elif event.type == EVENTO_INTERVALO_DANO:
                     jogador.sofreu_dano = False
-            # A cada loop checamos a posição do personagem, e colocamos as imagens do personagem, texto, e inimigo 
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
-            sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, Cor.BRANCO)
+            sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, 'White')
             TELA.blit(sup_pontuacao, (500, 10))
             TELA.blit(Coletaveis.sword, (900,100))
+            # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
             inimigo.atualizar(jogador, mapa)
             jogador.atualizar(mapa)
-            debug(jogador.olhando_direcao, 'Direção')         
-            debug((inimigo.vida), 'Vida inimigo', 30)
-            debug((jogador.pontuacao), 'Pontos do jogador', 60)
-            debug((jogador.vida), 'Vida jogador', 90)
+            # Debug
+            debug(jogador.olhando_direcao, 'Direção:')         
+            debug((inimigo.vida), 'Vida inimigo:', 30)
+            debug((jogador.vida), 'Vida jogador:', 60)
             # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
             pygame.display.update()
             # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
