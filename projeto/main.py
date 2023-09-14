@@ -40,9 +40,11 @@ class Game:
                 # Ver função ataque do Player
                 elif event.type == EVENTO_INTERVALO_ATAQUE:
                     jogador.pode_atacar = True
+                    pygame.time.set_timer(EVENTO_INTERVALO_ATAQUE, 0)
                 # Ver função causou_dano do Enemy
                 elif event.type == EVENTO_INTERVALO_DANO:
                     jogador.sofreu_dano = False
+                    pygame.time.set_timer(EVENTO_INTERVALO_DANO, 0)
             # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
             sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, 'White')
             TELA.blit(sup_pontuacao, (500, 10))
