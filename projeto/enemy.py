@@ -69,7 +69,7 @@ class Enemy:
         # Se o inimigo estiver morto ele renasce e aumenta a pontuação do jogador
         if self.vida <= 0: 
             self.renascer(mapa) 
-            jogador.pontuacao += 100
+            jogador.pontuacao += 1
         # Caso contrario ele segue o jogador
         else: 
             self.seguir_jogador(jogador, mapa) 
