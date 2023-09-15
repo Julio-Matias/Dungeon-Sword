@@ -50,7 +50,8 @@ class Game:
                         pygame.time.set_timer(EVENTO_INTERVALO_DANO, 0)
                 # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
                 
-                TELA.blit(Coletaveis.sword, (900,100))
+                TELA.blit(Coletaveis.sword, (900,100)) #insere coletável da espada
+                TELA.blit(Coletaveis.shield,(200,500)) #insere coletável do escudo
                 
                 # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
                 inimigo.atualizar(jogador, mapa)
