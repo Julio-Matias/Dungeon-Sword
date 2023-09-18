@@ -10,13 +10,15 @@ class Player:
     # Caracteristicas do jogador
     pontuacao = 0
     vida = 3
+    # Posição inicial do jogador
+    x_jogador = LARGURA_TELA/2
+    y_jogador = ALTURA_TELA/2
     # Movimento
-    x_jogador = 300
-    y_jogador = 200
-    velocidade = 10
+    velocidade = 7.5
     olhando_direcao = 'baixo'
     def __init__(self):
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
+        self.alpha = 255
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         self.direcao = pygame.math.Vector2()
@@ -106,6 +108,16 @@ class Player:
             # Isso vai atualizar o jogador, vendo se o ele fez algum input, sofreu dano, se movimentou ou atacou, e após isso tudo, coloca sua superficies na tela
             self.ataque_hitbox = pygame.Rect((0,0), (0,0))
             self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
+            # Efeito de piscar caso o personagem sofra dano
+            if self.sofreu_dano and self.alpha == 255:
+                self.alpha = 0
+                self.imagem.set_alpha(self.alpha)
+            elif self.sofreu_dano and self.alpha == 0:
+                self.alpha = 255
+                self.imagem.set_alpha(self.alpha)
+            else:
+                self.alpha = 255
+                self.imagem.set_alpha(self.alpha)
             TELA.blit(self.imagem, self.hitbox)
             self.movimento(self.velocidade, mapa)
             self.input()

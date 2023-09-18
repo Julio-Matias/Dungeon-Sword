@@ -1,11 +1,11 @@
 import pygame
+import random
 from graphics import Superficie
 from graphics import fonte_hud
 from settings import *
 from sys import exit
 from player import Player
 from level import Mapa
-from enemy_slime import Enemy_slime
 from enemy import Enemy
 from debug import debug
 from collectibles import Coletaveis
@@ -27,8 +27,10 @@ class Game:
         # Decidindo uma fonte para a UI, e criando a instancia de mapa, inimigo e jogador
         fonte = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
         mapa = Mapa()
-        inimigo = Enemy(mapa)
-        inimigo_slime= Enemy_slime(mapa)
+        numero_inimigos = random.randint(3, 7)
+        for _ in range(numero_inimigos):
+            inimigo = Enemy(mapa)
+            Enemy.lista_inimigos_presentes.append(inimigo)
         jogador = Player()
         # Rodando o loop do jogo
         while True: 
@@ -56,10 +58,14 @@ class Game:
                 TELA.blit(Coletaveis.shield,(200,500)) #insere coletável do escudo
                 
                 # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
-                inimigo.atualizar(jogador, mapa)
-                inimigo_slime.atualizar(jogador, mapa)
+                for inimigo in Enemy.lista_inimigos_presentes:
+                    inimigo.atualizar(jogador, mapa)
                 jogador.atualizar(mapa)
-
+                if len(Enemy.lista_inimigos_presentes) == 0:
+                    numero_inimigos = random.randint(3, 7)
+                    for _ in range(numero_inimigos):
+                        inimigo = Enemy(mapa)
+                        Enemy.lista_inimigos_presentes.append(inimigo)
                 #A hud no momento esta só como uma imagem para conter o contador de vida e de quantos abates foram feitos"
                 sup_vida= fonte_hud.render(f'{jogador.vida}', False, "Yellow")
                 sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, 'White')

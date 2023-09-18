@@ -5,16 +5,37 @@ import random
 pygame.init()
 
 class Enemy:
+    lista_inimigos_presentes = []
+    lista_slime = {"animation": {
+    "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "01": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_01.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "02": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_02.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "03": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_03.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "04": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_04.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "05": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_05.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "06": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_06.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "07": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_07.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "08": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_08.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "09": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_09.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "10": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_10.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "11": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_11.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "12": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_12.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "13": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_13.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
+    "14": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_14.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO))
+    }}
     def __init__(self, mapa):
-        # Caracteristicas do jogador
+        # Caracteristicas do inimigo
         self.vida = VIDA_INIMIGO 
-        self.imagem = pygame.Surface((LARGURA_INIMIGO, ALTURA_INIMIGO)) 
-        self.imagem.fill('Red')
+        self.animation_frames = Enemy.lista_slime["animation"]
+        self.current_frame = "00"  # Comece com o primeiro quadro
+        self.frame_delay = 60  # Ajuste a taxa de quadros da animação
+        self.image = self.animation_frames[self.current_frame]
+        self.rect = self.image.get_rect()
         # Já nasce em um lugar aleatorio que não seja um obstaculo
-        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']) - 1)].hitbox
+        local_spawn = mapa.tipo_tiles['Spawner'][random.randint(0, len(mapa.tipo_tiles['Spawner']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left
         self.velocidade = 5
-        self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
+        self.hitbox = self.image.get_rect(topleft=(self.x, self.y)) 
     def acertado_por_ataque(self, jogador):
         # Checa se a caixa de colisão do ataque do jogador encostou nele e faz o inimgo sofrer dano. 
         if jogador.ataque_hitbox.colliderect(self.hitbox):
@@ -27,7 +48,7 @@ class Enemy:
             pygame.time.set_timer(EVENTO_INTERVALO_DANO, INTERVALO_DANO)
             jogador.vida -= 1
     def seguir_jogador(self, jogador, mapa): 
-        self.velocidade = 1
+        self.velocidade = 1 
         # Faz o calculo da direção do inimigo pro player
         direcao_x = jogador.x_jogador - self.x 
         direcao_y = jogador.y_jogador - self.y 
@@ -41,18 +62,13 @@ class Enemy:
         self.x += direcao_x * self.velocidade 
         self.y += direcao_y * self.velocidade 
         # Muda a posição do hitbox pra ficar onde o inimigo vai estar 
-        self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
+        self.hitbox = self.image.get_rect(topleft=(self.x, self.y)) 
         # Vê se após esse movimento o inimigo estaria dentro de um obstaculo, caso sim, ele volta. Isso impede que ele atravesse paredes
         if self.colisao_obstaculos(mapa):
             self.x -= direcao_x * self.velocidade 
             self.y -= direcao_y * self.velocidade 
-    def renascer(self, mapa): 
-        self.vida = VIDA_INIMIGO
-        # Renasce em um lugar aleatorio do mapa que não seja um obstaculo
-        local_spawn = mapa.tipo_tiles['Chão'][random.randint(0, len(mapa.tipo_tiles['Chão']) - 1)].hitbox
-        self.y, self.x = local_spawn.top, local_spawn.left
-        # Quando renascer o hitbox vai ficar no lugar certo 
-        self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y)) 
+    def morte(self): 
+        Enemy.lista_inimigos_presentes.remove(self)
     def colisao_obstaculos(self, mapa):
         # Checa se, para todos os obstaculos da fase há ou não colisão com o jogador
         colidiu = False
@@ -63,16 +79,25 @@ class Enemy:
     def atualizar(self, jogador, mapa): 
         # Isso vai atualizar o inimigo, checando se ele sofreu um ataque do jogador ou causou dano no mesmo, e após isso coloca sua superficie na tela
         self.causou_dano(jogador)
-        self.hitbox = self.imagem.get_rect(topleft=(self.x, self.y))
-        TELA.blit(self.imagem, self.hitbox)
-        self.acertado_por_ataque(jogador) 
-        # Se o inimigo estiver morto ele renasce e aumenta a pontuação do jogador
-        if self.vida <= 0: 
-            self.renascer(mapa) 
+        self.hitbox = self.image.get_rect(topleft=(self.x, self.y))
+        if self.frame_delay <= 0:
+            # Avance para o próximo quadro
+            current_index = int(self.current_frame)
+            current_index = (current_index + 1) % 15  # 15 é o número total de quadros
+            self.current_frame = f"{current_index:02d}"
+            self.image = self.animation_frames[self.current_frame]
+            self.frame_delay = 10  # Reinicie o contador de atraso
+        else:
+            self.frame_delay -= 1
+        self.acertado_por_ataque(jogador)
+
+        if self.vida <= 0:
+            self.morte()
             jogador.pontuacao += 1
-        # Caso contrario ele segue o jogador
-        else: 
-            self.seguir_jogador(jogador, mapa) 
+        else:
+            self.seguir_jogador(jogador, mapa)
+
+        TELA.blit(self.image, self.hitbox)
         
 """# Caracteristicas da programação dos inimigos
 from settings import * 
