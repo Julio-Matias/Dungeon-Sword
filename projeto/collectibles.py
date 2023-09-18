@@ -14,7 +14,7 @@ class Espada:
         if self.hitbox.colliderect(jogador.hitbox):
             self.hitbox = pygame.Rect((0,0), (0,0))
             self.coletado = True
-
+            jogador.dano += 1
 class Escudo:
 
     def __init__(self):
@@ -27,3 +27,4 @@ class Escudo:
         if self.hitbox.colliderect(jogador.hitbox):
             self.hitbox = pygame.Rect((0,0), (0,0))
             self.coletado = True
+            jogador.vida += 1

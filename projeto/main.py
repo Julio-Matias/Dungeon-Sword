@@ -1,6 +1,5 @@
 import pygame
 import random
-from graphics import Superficie
 from graphics import fonte_hud
 from settings import *
 from sys import exit
@@ -14,8 +13,8 @@ from tela_morte import Tela_morte
 # Inicializando o PyGame
 pygame.init()
 # Definindo o titulo e o icon para a janela onde o jogo será executado
-pygame.display.set_caption("Jogo maneirasso")
-icone = pygame.image.load("projeto/assets\icone-placeholder.png")
+pygame.display.set_caption("Dungeon Sword")
+icone = pygame.image.load("projeto\sprites_folder\sprite_06.png")
 pygame.display.set_icon(icone)
 
 
@@ -27,7 +26,7 @@ class Game:
         # Decidindo uma fonte para a UI, e criando a instancia de mapa, inimigo e jogador
         fonte = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
         mapa = Mapa()
-        numero_inimigos = random.randint(3, 7)
+        numero_inimigos = random.randint(1, 3)
         for _ in range(numero_inimigos):
             inimigo = Enemy(mapa)
             Enemy.lista_inimigos_presentes.append(inimigo)
@@ -67,7 +66,8 @@ class Game:
                     inimigo.atualizar(jogador, mapa)
                 jogador.atualizar(mapa)
                 if len(Enemy.lista_inimigos_presentes) == 0:
-                    numero_inimigos = random.randint(3, 7)
+                    Enemy.onda += 1
+                    numero_inimigos = random.randint(Enemy.onda, 2 + Enemy.onda)
                     for _ in range(numero_inimigos):
                         inimigo = Enemy(mapa)
                         Enemy.lista_inimigos_presentes.append(inimigo)
