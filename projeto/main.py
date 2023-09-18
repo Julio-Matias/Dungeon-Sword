@@ -69,7 +69,6 @@ class Game:
                 TELA.blit(sup_pontuacao, (205,100))
                 TELA.blit(HUD.hud, (2,2))
                 TELA.blit(sup_vida, (225,43))
-
                 #Se o jogador morrer ele vai mostrar a tela de morte
                 if jogador.vida == 0:
                     TELA.blit(Tela_morte.tela_morte, (1,1))

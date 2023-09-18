@@ -104,29 +104,29 @@ class Player:
             self.morreu = True
     def atualizar(self, mapa):
         self.morte()
-        if not self.pode_atacar:
-            # Coloca o ataque na tela
-            if 0 < self.ataque_alfa:
-                TELA.blit(self.im_ataque, self.ataque_hitbox)
-                self.ataque_alfa -= 63.75
-                self.im_ataque.set_alpha(self.ataque_alfa)
-            else:
-                self.ataque_hitbox = pygame.Rect((0,0), (0,0))
-        if self.pode_atacar:
-            self.ataque_alfa = 255
         if not self.morreu:
             # Isso vai atualizar o jogador, vendo se o ele fez algum input, sofreu dano, se movimentou ou atacou, e após isso tudo, coloca sua superficies na tela
             self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
             # Efeito de piscar caso o personagem sofra dano
+            TELA.blit(self.imagem, self.hitbox)
+            # Coloca o ataque na tela
+            if not self.pode_atacar:
+                if 0 < self.ataque_alfa:
+                    TELA.blit(self.im_ataque, self.ataque_hitbox)
+                    self.ataque_alfa -= 65.5
+                    self.im_ataque.set_alpha(self.ataque_alfa)
+                else:
+                    self.ataque_hitbox = pygame.Rect((0,0), (0,0))
+            if self.pode_atacar:
+                self.ataque_alfa = 255
             if self.sofreu_dano and self.alfa == 255:
                 self.alfa = 150
                 self.imagem.set_alpha(self.alfa)
             elif self.alfa < 255:
                 self.alfa = 255
                 self.imagem.set_alpha(self.alfa)
-            TELA.blit(self.imagem, self.hitbox)
-            self.movimento(self.velocidade, mapa)
             self.input()
+            self.movimento(self.velocidade, mapa)
         else:
             # Se o personagem morrer ele não aparece na tela porque ele morreu :(
             self.hitbox = pygame.Rect((0,0), (0,0))
