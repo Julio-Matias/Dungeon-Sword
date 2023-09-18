@@ -74,11 +74,8 @@ class Game:
                 if jogador.vida == 0:
                     TELA.blit(Tela_morte.tela_morte, (1,1))
                     TELA.blit(sup_pontuacao, (600,400))
-            
                 # Debug
-                #debug(jogador.olhando_direcao, 'Direção:')         
-                debug((inimigo.sofreu_dano), 'Pode sofrer dano:')
-                #debug((jogador.vida), 'Vida jogador:', 60)
+
                 # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
                 pygame.display.update()
                 # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
