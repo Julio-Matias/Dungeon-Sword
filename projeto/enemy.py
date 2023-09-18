@@ -26,9 +26,10 @@ class Enemy:
     def __init__(self, mapa):
         # Caracteristicas do inimigo
         self.vida = VIDA_INIMIGO 
+        self.alfa = 255
         self.animation_frames = Enemy.lista_slime["animation"]
         self.current_frame = "00"  # Comece com o primeiro quadro
-        self.frame_delay = 60  # Ajuste a taxa de quadros da animação
+        self.frame_delay = FPS  # Ajuste a taxa de quadros da animação
         self.image = self.animation_frames[self.current_frame]
         self.rect = self.image.get_rect()
         # Já nasce em um lugar aleatorio que não seja um obstaculo
@@ -36,10 +37,15 @@ class Enemy:
         self.y, self.x = local_spawn.top, local_spawn.left
         self.velocidade = 5
         self.hitbox = self.image.get_rect(topleft=(self.x, self.y)) 
+        self.sofreu_dano = False
     def acertado_por_ataque(self, jogador):
         # Checa se a caixa de colisão do ataque do jogador encostou nele e faz o inimgo sofrer dano. 
-        if jogador.ataque_hitbox.colliderect(self.hitbox):
+        if jogador.ataque_hitbox.colliderect(self.hitbox) and not self.sofreu_dano:
             self.vida -= 1
+            self.alfa = 0
+            self.sofreu_dano = True
+        elif not jogador.ataque_hitbox.colliderect(self.hitbox):
+            self.sofreu_dano = False
     def causou_dano(self, jogador):
         # Checa se o inimigo encostou no jogador e faz o jogador sofrer dano
         if self.hitbox.colliderect(jogador.hitbox) and not jogador.sofreu_dano:
@@ -96,8 +102,11 @@ class Enemy:
             jogador.pontuacao += 1
         else:
             self.seguir_jogador(jogador, mapa)
-
+        self.image.set_alpha(self.alfa)
         TELA.blit(self.image, self.hitbox)
+        if self.alfa < 255:
+            self.alfa += 25.5
+        
         
 """# Caracteristicas da programação dos inimigos
 from settings import * 

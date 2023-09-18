@@ -18,7 +18,8 @@ class Player:
     olhando_direcao = 'baixo'
     def __init__(self):
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
-        self.alpha = 255
+        self.alfa = 255
+        self.ataque_alfa = 255
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         self.direcao = pygame.math.Vector2()
@@ -26,6 +27,7 @@ class Player:
         self.pode_atacar = True
         self.sofreu_dano = False
         self.morreu = False
+        self.im_ataque = pygame.transform.rotate(Superficie.im_ataque, 270)
     def input(self):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
@@ -86,44 +88,47 @@ class Player:
             # Checa a ultima direção em que o personagem se moveu para definir onde a caixa de colisão do ataque irá aparecer e rotaciona a imagem do ataque para ficar de acordo
             if self.olhando_direcao == 'direita':
                 self.ataque_hitbox = pygame.Rect((self.hitbox.right, self.hitbox.centery - ALTURA_ATAQUE/2), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                im_ataque_direcionado = pygame.transform.flip(Superficie.im_ataque, False, False)
+                self.im_ataque = pygame.transform.flip(Superficie.im_ataque, False, False)
             elif self.olhando_direcao == 'esquerda':
                 self.ataque_hitbox = pygame.Rect((self.hitbox.left - LARGURA_ATAQUE, self.hitbox.centery - ALTURA_ATAQUE/2), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                im_ataque_direcionado = pygame.transform.flip(Superficie.im_ataque, True, False)
+                self.im_ataque = pygame.transform.flip(Superficie.im_ataque, True, False)
             elif self.olhando_direcao == 'baixo':
                 self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - LARGURA_ATAQUE/2, self.hitbox.bottom), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                im_ataque_direcionado = pygame.transform.rotate(Superficie.im_ataque, 270)
+                self.im_ataque = pygame.transform.rotate(Superficie.im_ataque, 270)
             elif self.olhando_direcao == 'cima':
                 self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - LARGURA_ATAQUE/2, self.hitbox.top - ALTURA_ATAQUE), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                im_ataque_direcionado = pygame.transform.rotate(Superficie.im_ataque, 90)
-            # Coloca o ataque na tela
-            TELA.blit(im_ataque_direcionado, self.ataque_hitbox)
+                self.im_ataque = pygame.transform.rotate(Superficie.im_ataque, 90)
     def morte(self):
         # Se o jogador chegar a 0 de Vida o jogo acaba
         if self.vida <= 0:
             self.morreu = True
     def atualizar(self, mapa):
         self.morte()
+        if not self.pode_atacar:
+            # Coloca o ataque na tela
+            if 0 < self.ataque_alfa:
+                TELA.blit(self.im_ataque, self.ataque_hitbox)
+                self.ataque_alfa -= 63.75
+                self.im_ataque.set_alpha(self.ataque_alfa)
+            else:
+                self.ataque_hitbox = pygame.Rect((0,0), (0,0))
+        if self.pode_atacar:
+            self.ataque_alfa = 255
         if not self.morreu:
             # Isso vai atualizar o jogador, vendo se o ele fez algum input, sofreu dano, se movimentou ou atacou, e após isso tudo, coloca sua superficies na tela
-            self.ataque_hitbox = pygame.Rect((0,0), (0,0))
             self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
             # Efeito de piscar caso o personagem sofra dano
-            if self.sofreu_dano and self.alpha == 255:
-                self.alpha = 0
-                self.imagem.set_alpha(self.alpha)
-            elif self.sofreu_dano and self.alpha == 0:
-                self.alpha = 255
-                self.imagem.set_alpha(self.alpha)
-            else:
-                self.alpha = 255
-                self.imagem.set_alpha(self.alpha)
+            if self.sofreu_dano and self.alfa == 255:
+                self.alfa = 150
+                self.imagem.set_alpha(self.alfa)
+            elif self.alfa < 255:
+                self.alfa = 255
+                self.imagem.set_alpha(self.alfa)
             TELA.blit(self.imagem, self.hitbox)
             self.movimento(self.velocidade, mapa)
             self.input()
         else:
             # Se o personagem morrer ele não aparece na tela porque ele morreu :(
-            self.ataque_hitbox = pygame.Rect((0,0), (0,0))
-            self.hitbox = self.imagem.get_rect(topleft=(0, 0))
+            self.hitbox = pygame.Rect((0,0), (0,0))
         
         

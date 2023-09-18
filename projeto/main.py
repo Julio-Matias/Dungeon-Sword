@@ -38,7 +38,6 @@ class Game:
                 TELA.fill('Black')
                 # Cria o mapa do jogo
                 mapa.desenhar_mapa()
-                
                 # Vai checar quais eventos estão ocorrendo por dentro
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -53,10 +52,8 @@ class Game:
                         jogador.sofreu_dano = False
                         pygame.time.set_timer(EVENTO_INTERVALO_DANO, 0)
                 # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
-                
                 TELA.blit(Coletaveis.sword, (900,100)) #insere coletável da espada
                 TELA.blit(Coletaveis.shield,(200,500)) #insere coletável do escudo
-                
                 # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
                 for inimigo in Enemy.lista_inimigos_presentes:
                     inimigo.atualizar(jogador, mapa)
@@ -80,7 +77,7 @@ class Game:
             
                 # Debug
                 #debug(jogador.olhando_direcao, 'Direção:')         
-                #debug((inimigo.vida), 'Vida inimigo:', 30)
+                debug((inimigo.sofreu_dano), 'Pode sofrer dano:')
                 #debug((jogador.vida), 'Vida jogador:', 60)
                 # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
                 pygame.display.update()
