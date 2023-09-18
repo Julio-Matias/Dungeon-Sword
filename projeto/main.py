@@ -5,6 +5,7 @@ from settings import *
 from sys import exit
 from player import Player
 from level import Mapa
+from enemy_slime import Enemy_slime
 from enemy import Enemy
 from debug import debug
 from collectibles import Coletaveis
@@ -27,6 +28,7 @@ class Game:
         fonte = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
         mapa = Mapa()
         inimigo = Enemy(mapa)
+        inimigo_slime= Enemy_slime(mapa)
         jogador = Player()
         # Rodando o loop do jogo
         while True: 
@@ -55,6 +57,7 @@ class Game:
                 
                 # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
                 inimigo.atualizar(jogador, mapa)
+                inimigo_slime.atualizar(jogador, mapa)
                 jogador.atualizar(mapa)
 
                 #A hud no momento esta só como uma imagem para conter o contador de vida e de quantos abates foram feitos"

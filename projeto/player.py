@@ -31,17 +31,25 @@ class Player:
         if teclas[pygame.K_w] or teclas[pygame.K_UP]:
             self.direcao.y = -1
             self.olhando_direcao = 'cima'
+            self.imagem = pygame.image.load('projeto/assets\playerback-placeholder.png')
+            self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         elif teclas[pygame.K_s] or teclas[pygame.K_DOWN]:
             self.direcao.y = 1
             self.olhando_direcao = 'baixo'
+            self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
+            self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         else:
             self.direcao.y = 0
         if teclas[pygame.K_a] or teclas[pygame.K_LEFT]:
             self.direcao.x = -1
             self.olhando_direcao = 'esquerda'
+            self.imagem = pygame.image.load('projeto/assets\playerleft-placeholder.png')
+            self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         elif teclas[pygame.K_d] or teclas[pygame.K_RIGHT]:
             self.direcao.x = +1
             self.olhando_direcao = 'direita'
+            self.imagem = pygame.image.load('projeto/assets\playerright-placeholder.png')
+            self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         else:
             self.direcao.x = 0
         # Caso o jogador pressione espaço ele ataca
