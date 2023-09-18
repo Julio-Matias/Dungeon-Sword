@@ -8,7 +8,7 @@ from player import Player
 from level import Mapa
 from enemy import Enemy
 from debug import debug
-from collectibles import Coletaveis
+from collectibles import Espada, Escudo
 from hud import HUD
 from tela_morte import Tela_morte
 # Inicializando o PyGame
@@ -32,6 +32,8 @@ class Game:
             inimigo = Enemy(mapa)
             Enemy.lista_inimigos_presentes.append(inimigo)
         jogador = Player()
+        espada = Espada()
+        escudo = Escudo()
         # Rodando o loop do jogo
         while True: 
                 # Isso vai 'limpar' a tela de fundo, para que as imagens que aparecem na tela não fiquem permanentemente nela 
@@ -52,8 +54,14 @@ class Game:
                         jogador.sofreu_dano = False
                         pygame.time.set_timer(EVENTO_INTERVALO_DANO, 0)
                 # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
-                TELA.blit(Coletaveis.sword, (900,100)) #insere coletável da espada
-                TELA.blit(Coletaveis.shield,(200,500)) #insere coletável do escudo
+                espada.coletar(jogador)
+                if not espada.coletado:
+                    TELA.blit(espada.sword, espada.hitbox) #insere coletável da espada
+
+                escudo.coletar(jogador)
+                if not escudo.coletado:
+                    TELA.blit(escudo.shield, escudo.hitbox)
+
                 # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
                 for inimigo in Enemy.lista_inimigos_presentes:
                     inimigo.atualizar(jogador, mapa)
