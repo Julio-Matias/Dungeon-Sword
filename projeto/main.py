@@ -28,8 +28,6 @@ class Game:
         mapa = Mapa()
         mapa.proxima_fase()
         jogador = Player()
-        espada = Espada()
-        escudo = Escudo()
         porta = Portal()
         # Rodando o loop do jogo
         while True: 
@@ -50,35 +48,33 @@ class Game:
                     elif event.type == EVENTO_INTERVALO_DANO:
                         jogador.sofreu_dano = False
                         pygame.time.set_timer(EVENTO_INTERVALO_DANO, 0)
-                # Inserindo uma superficie em cima do display. A os valores representam as cordenadas da superficie sobre o display. O ponto de origem é sempre no canto superior esquerdo
-                espada.coletar(jogador)
-                if not espada.coletado:
-                    TELA.blit(espada.sword, espada.hitbox) #insere coletável da espada
-
-                escudo.coletar(jogador)
-                if not escudo.coletado:
-                    TELA.blit(escudo.shield, escudo.hitbox)
+                for coletavel in Coletaveis.lista_coletaveis:
+                    TELA.blit(coletavel.imagem, coletavel.hitbox) #insere coletáveis
+                    coletavel.coletar(jogador)
 
                 # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
                 for inimigo in Enemy.lista_inimigos_presentes:
                     inimigo.atualizar(jogador, mapa)
-                jogador.atualizar(mapa)
                 if len(Enemy.lista_inimigos_presentes) == 0:
                     TELA.blit(porta.imagem, porta.hitbox)
                     if porta.hitbox.colliderect(jogador.hitbox):
                         mapa.proxima_fase()
+                jogador.atualizar(mapa)
                 #A hud no momento esta só como uma imagem para conter o contador de vida e de quantos abates foram feitos"
                 sup_vida= fonte_hud.render(f'{jogador.vida}', False, "Yellow")
                 sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, 'White')
                 sup_nivel = fonte.render(f'Nivel: {Enemy.onda}', False, 'White')
+                sup_espada = fonte.render(f'Espada: {jogador.nivel_espada}', False, 'White')
                 TELA.blit(sup_pontuacao, (205,100))
-                TELA.blit(sup_nivel, (100,150))
+                TELA.blit(sup_nivel, (80,150))
+                TELA.blit(sup_espada, (50,200))
                 TELA.blit(HUD.hud, (2,2))
                 TELA.blit(sup_vida, (225,43))
                 #Se o jogador morrer ele vai mostrar a tela de morte
                 if jogador.vida == 0:
                     TELA.blit(Tela_morte.tela_morte, (1,1))
                     TELA.blit(sup_pontuacao, (600,400))
+                    TELA.blit(sup_nivel, ( 550,450))
                 # Debug
                 # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
                 pygame.display.update()

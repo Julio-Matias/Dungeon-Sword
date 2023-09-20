@@ -20,7 +20,7 @@ class Player:
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
         self.alfa = 255
         self.ataque_alfa = 255
-        self.dano = 1
+        self.nivel_espada = 0
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
         self.direcao = pygame.math.Vector2()
@@ -85,7 +85,7 @@ class Player:
         if self.pode_atacar:
             # Caso possa atacar ele ataca, mas entra em um intervalo de alguns milisegundos em que ele não pode atacar 
             self.pode_atacar = False
-            pygame.time.set_timer(EVENTO_INTERVALO_ATAQUE, INTERVALO_ATAQUE)
+            pygame.time.set_timer(EVENTO_INTERVALO_ATAQUE, self.intervalo_ataque)
             # Checa a ultima direção em que o personagem se moveu para definir onde a caixa de colisão do ataque irá aparecer e rotaciona a imagem do ataque para ficar de acordo
             if self.olhando_direcao == 'direita':
                 self.ataque_hitbox = pygame.Rect((self.hitbox.right, self.hitbox.centery - ALTURA_ATAQUE/2), (LARGURA_ATAQUE, ALTURA_ATAQUE))
@@ -108,6 +108,10 @@ class Player:
         if not self.morreu:
             # Isso vai atualizar o jogador, vendo se o ele fez algum input, sofreu dano, se movimentou ou atacou, e após isso tudo, coloca sua superficies na tela
             self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
+            if self.nivel_espada < 5:
+                self.intervalo_ataque = 500 - self.nivel_espada * 50
+            else:
+                self.intervalo_ataque = 250
             # Efeito de piscar caso o personagem sofra dano
             if self.sofreu_dano and self.alfa == 255:
                 self.alfa = 100
@@ -120,7 +124,7 @@ class Player:
             if not self.pode_atacar:
                 if 0 < self.ataque_alfa:
                     TELA.blit(self.im_ataque, self.ataque_hitbox)
-                    self.ataque_alfa -= 65.5
+                    self.ataque_alfa -= 85
                     self.im_ataque.set_alpha(self.ataque_alfa)
                 else:
                     self.ataque_hitbox = pygame.Rect((0,0), (0,0))

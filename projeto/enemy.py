@@ -2,10 +2,11 @@
 from settings import *
 import pygame
 import random
+from collectibles import Coletaveis
 pygame.init()
 
 class Enemy:
-    onda = 1
+    onda = 0
     lista_inimigos_presentes = []
     lista_slime = {"animation": {
     "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
@@ -41,7 +42,7 @@ class Enemy:
     def acertado_por_ataque(self, jogador):
         # Checa se a caixa de colisão do ataque do jogador encostou nele e faz o inimgo sofrer dano. 
         if jogador.ataque_hitbox.colliderect(self.hitbox) and not self.sofreu_dano:
-            self.vida -= jogador.dano
+            self.vida -= 1
             self.alfa = 0
             self.sofreu_dano = True
         elif not jogador.ataque_hitbox.colliderect(self.hitbox):
@@ -53,6 +54,8 @@ class Enemy:
             # Após sofrer dano o jogador se torna invulneravel por alguns segundos
             pygame.time.set_timer(EVENTO_INTERVALO_DANO, INTERVALO_DANO)
             jogador.vida -= 1
+            if jogador.nivel_espada > 0:
+                jogador.nivel_espada -= 1
     def seguir_jogador(self, jogador, mapa): 
         self.velocidade = 1 
         # Faz o calculo da direção do inimigo pro player
@@ -74,6 +77,14 @@ class Enemy:
             self.x -= direcao_x * self.velocidade 
             self.y -= direcao_y * self.velocidade 
     def morte(self): 
+        posicao = self.x, self.y
+        n_aleatorio = random.randint(0, 10)
+        if n_aleatorio <= 3:
+            espada = Coletaveis(posicao, 'espada')
+            Coletaveis.lista_coletaveis.append(espada)
+        elif 3 < n_aleatorio <= 4:
+            escudo = Coletaveis(posicao, 'escudo')
+            Coletaveis.lista_coletaveis.append(escudo)
         Enemy.lista_inimigos_presentes.remove(self)
     def colisao_obstaculos(self, mapa):
         # Checa se, para todos os obstaculos da fase há ou não colisão com o jogador

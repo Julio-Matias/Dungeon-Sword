@@ -3,31 +3,30 @@ import pygame
 
 pygame.init()
 
-class Espada:
-    def __init__(self):
-        self.sword = pygame.image.load('projeto/assets/espada.png') 
-        self.sword = pygame.transform.scale(self.sword, (25, 50))
-        self.hitbox = self.sword.get_rect(topleft=(900, 100))
+class Coletaveis:
+    lista_coletaveis = []
+    def __init__(self, posicao, tipo):
+        if tipo == 'espada':
+            self.tipo = 'espada'
+            self.imagem = pygame.image.load('projeto/assets/espada.png') 
+            self.imagem = pygame.transform.scale(self.imagem, (25, 50))
+        elif tipo == 'escudo':
+            self.tipo = 'escudo'
+            self.imagem = pygame.image.load('projeto/assets/escudo.png')
+            self.imagem = pygame.transform.scale(self.imagem, (80,50))
+        self.hitbox = self.imagem.get_rect(topleft=(posicao))
         self.coletado = False
 
     def coletar(self, jogador):
         if self.hitbox.colliderect(jogador.hitbox):
             self.hitbox = pygame.Rect((0,0), (0,0))
             self.coletado = True
-            jogador.dano += 1
-class Escudo:
-
-    def __init__(self):
-        self.shield = pygame.image.load('projeto/assets/escudo.png')
-        self.shield = pygame.transform.scale(self.shield, (80,50))
-        self.hitbox = self.shield.get_rect(topleft=(150, 200))
-        self.coletado = False
-
-    def coletar(self, jogador):
-        if self.hitbox.colliderect(jogador.hitbox):
-            self.hitbox = pygame.Rect((0,0), (0,0))
-            self.coletado = True
-            jogador.vida += 1
+            Coletaveis.lista_coletaveis.remove(self)
+            if self.tipo == 'espada':
+                jogador.nivel_espada += 1
+            elif self.tipo == 'escudo':
+                jogador.vida += 1
+            
 class Portal:
     tamanho_porta = TAMANHO_TILE * 1.5
     def __init__(self):

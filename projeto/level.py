@@ -16,11 +16,18 @@ class Tile:
 
 class Mapa:
     def __init__(self):
+        self.index_mapa_anterior = 0
         self.mapa_tiles = []
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
     def proxima_fase(self):
         Enemy.onda += 1
-        mapa_atual = LISTA_MAPAS[random.randint(0, len(LISTA_MAPAS) - 1)]
+        if self.index_mapa_anterior == 0:
+            mapa_atual = LISTA_MAPAS[random.randint(self.index_mapa_anterior + 1, len(LISTA_MAPAS) - 1)]
+        elif self.index_mapa_anterior == len(LISTA_MAPAS) - 1:
+            mapa_atual = LISTA_MAPAS[random.randint(0, len(LISTA_MAPAS) - 2)]
+        else:
+            mapa_atual = LISTA_MAPAS[random.choice([random.randint(0, self.index_mapa_anterior - 1),random.randint(self.index_mapa_anterior + 1, len(LISTA_MAPAS) - 1)])]
+        self.index_mapa_anterior = LISTA_MAPAS.index(mapa_atual)
         self.mapa_tiles = []
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
         self.montar_mapa(mapa_atual)
