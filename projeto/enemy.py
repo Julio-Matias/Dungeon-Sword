@@ -32,7 +32,6 @@ class Enemy:
         self.current_frame = "00"  # Comece com o primeiro quadro
         self.frame_delay = FPS  # Ajuste a taxa de quadros da animação
         self.image = self.animation_frames[self.current_frame]
-        self.rect = self.image.get_rect()
         # Já nasce em um lugar aleatorio que não seja um obstaculo
         local_spawn = mapa.tipo_tiles['Spawner'][random.randint(0, len(mapa.tipo_tiles['Spawner']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left

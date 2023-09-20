@@ -11,8 +11,8 @@ class Player:
     pontuacao = 0
     vida = 3
     # Posição inicial do jogador
-    x_jogador = LARGURA_TELA/2
-    y_jogador = ALTURA_TELA/2
+    x_jogador = (LARGURA_TELA - LARGURA_JOGADOR)/2
+    y_jogador = (ALTURA_TELA - ALTURA_JOGADOR)/2
     # Movimento
     velocidade = 7.5
     olhando_direcao = 'baixo'

@@ -7,7 +7,7 @@ from player import Player
 from level import Mapa
 from enemy import Enemy
 from debug import debug
-from collectibles import Espada, Escudo
+from collectibles import *
 from hud import HUD
 from tela_morte import Tela_morte
 # Inicializando o PyGame
@@ -26,13 +26,11 @@ class Game:
         # Decidindo uma fonte para a UI, e criando a instancia de mapa, inimigo e jogador
         fonte = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
         mapa = Mapa()
-        numero_inimigos = random.randint(1, 3)
-        for _ in range(numero_inimigos):
-            inimigo = Enemy(mapa)
-            Enemy.lista_inimigos_presentes.append(inimigo)
+        mapa.proxima_fase()
         jogador = Player()
         espada = Espada()
         escudo = Escudo()
+        porta = Portal()
         # Rodando o loop do jogo
         while True: 
                 # Isso vai 'limpar' a tela de fundo, para que as imagens que aparecem na tela não fiquem permanentemente nela 
@@ -66,15 +64,15 @@ class Game:
                     inimigo.atualizar(jogador, mapa)
                 jogador.atualizar(mapa)
                 if len(Enemy.lista_inimigos_presentes) == 0:
-                    Enemy.onda += 1
-                    numero_inimigos = random.randint(Enemy.onda, 2 + Enemy.onda)
-                    for _ in range(numero_inimigos):
-                        inimigo = Enemy(mapa)
-                        Enemy.lista_inimigos_presentes.append(inimigo)
+                    TELA.blit(porta.imagem, porta.hitbox)
+                    if porta.hitbox.colliderect(jogador.hitbox):
+                        mapa.proxima_fase()
                 #A hud no momento esta só como uma imagem para conter o contador de vida e de quantos abates foram feitos"
                 sup_vida= fonte_hud.render(f'{jogador.vida}', False, "Yellow")
                 sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, 'White')
+                sup_nivel = fonte.render(f'Nivel: {Enemy.onda}', False, 'White')
                 TELA.blit(sup_pontuacao, (205,100))
+                TELA.blit(sup_nivel, (100,150))
                 TELA.blit(HUD.hud, (2,2))
                 TELA.blit(sup_vida, (225,43))
                 #Se o jogador morrer ele vai mostrar a tela de morte
@@ -82,7 +80,6 @@ class Game:
                     TELA.blit(Tela_morte.tela_morte, (1,1))
                     TELA.blit(sup_pontuacao, (600,400))
                 # Debug
-
                 # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
                 pygame.display.update()
                 # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
