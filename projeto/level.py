@@ -3,6 +3,7 @@ import pygame
 from graphics import Superficie
 from settings import *
 from enemy import Enemy
+from player import Player
 import random
 # Aqui é onde seria a criação de mapa
 
@@ -35,6 +36,12 @@ class Mapa:
         for _ in range(numero_inimigos):
             inimigo = Enemy(self)
             Enemy.lista_inimigos_presentes.append(inimigo)
+    def reiniciar_jogo(self, jogador):
+        jogador = Player()
+        Enemy.onda =  0
+        Enemy.lista_inimigos_presentes = []
+        self.proxima_fase()
+        return jogador
     def montar_mapa(self, mapa):
         for y, linha in enumerate(mapa):
             for x, tile in enumerate(linha):

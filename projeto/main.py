@@ -1,6 +1,6 @@
 import pygame
 import random
-from graphics import fonte_hud
+from graphics import Superficie
 from settings import *
 from sys import exit
 from player import Player
@@ -28,9 +28,6 @@ start_botao = Button((LARGURA_TELA/2 ) , 9* ALTURA_TELA /10 - (restart_img.get_h
 exit_botao = Button((LARGURA_TELA/2 - exit_img.get_width()) , 9* ALTURA_TELA /10 - (restart_img.get_height()/2), exit_img, 0.75) 
 restart_botao = Button(LARGURA_TELA/2,  9* ALTURA_TELA /10 - (restart_img.get_height()/2) ,restart_img, 0.3)
 
-
-imagem_jogo = pygame.image.load('projeto/assets/imagem_jogo.jpg').convert_alpha()
-
 class Game:
     def __init__(self):
         # Criando um objeto de relógio que ajudara a controlar o tempo percorrido no jogo
@@ -43,6 +40,7 @@ class Game:
         mapa.proxima_fase()
         jogador = Player()
         porta = Portal()
+        hud = HUD()
         # Rodando o loop do jogo
         while True: 
                 # Isso vai 'limpar' a tela de fundo, para que as imagens que aparecem na tela não fiquem permanentemente nela 
@@ -52,7 +50,7 @@ class Game:
                 # Vai checar quais eventos estão ocorrendo por dentro
                 if jogo_pausado:
                     #ir para menu
-                    TELA.blit(imagem_jogo, (LARGURA_TELA/2 - imagem_jogo.get_width()/2, ALTURA_TELA/2 - imagem_jogo.get_height()/2))
+                    TELA.blit(Superficie.im_jogo, (LARGURA_TELA/2 - Superficie.im_jogo.get_width()/2, ALTURA_TELA/2 - Superficie.im_jogo.get_height()/2))
                     if start_botao.draw(TELA):# se o botao foi pressionado executa ação
                         jogo_pausado = False
                     if exit_botao.draw(TELA):
@@ -68,34 +66,12 @@ class Game:
                             mapa.proxima_fase()
                     jogador.atualizar(mapa)
                     #A hud no momento esta só como uma imagem para conter o contador de vida e de quantos abates foram feitos"
-                    sup_vida= fonte_hud.render(f'{jogador.vida}', False, "Yellow")
-                    sup_pontuacao = fonte.render(f'{jogador.pontuacao}', False, 'White')
-                    sup_nivel = fonte.render(f'Nivel: {Enemy.onda}', False, 'White')
-                    sup_espada = fonte.render(f'Espada: {jogador.nivel_espada}', False, 'White')
-                    sup_msg = fonte.render(f'Aperte "M" para o Menu', False, 'white')
-                    TELA.blit(sup_pontuacao, (205,100))
-                    TELA.blit(sup_nivel, (80,150))
-                    TELA.blit(sup_espada, (50,200))
-                    TELA.blit(HUD.hud, (2,2))
-                    TELA.blit(sup_vida, (225,43))
-                    TELA.blit(sup_msg,(400,20))
+                    hud.exibir_hud(jogador, Enemy)
                     #Se o jogador morrer ele vai mostrar a tela de morte
-                    if jogador.vida == 0:
-                        TELA.blit(imagem_jogo, (LARGURA_TELA/2 - imagem_jogo.get_width()/2, ALTURA_TELA/2 - imagem_jogo.get_height()/2))
-                        TELA.blit(Tela_morte.tela_morte, (1,1))
-                        TELA.blit(sup_pontuacao, (600,400))
-                        TELA.blit(sup_nivel, ( 550,450))
+                    if jogador.morreu:
+                        Tela_morte().exibir_tela_morte(hud)
                         if restart_botao.draw(TELA):
-                            jogador.pontuacao = 0
-                            Enemy.onda =  0
-                            jogador.nivel_espada = 0
-                            jogador.vida = 3
-                            jogador.morreu = False
-                            Enemy.lista_inimigos_presentes = []
-                            mapa.proxima_fase()
-                            jogador.x_jogador = (LARGURA_TELA - LARGURA_JOGADOR)/2
-                            jogador.y_jogador = (ALTURA_TELA - ALTURA_JOGADOR)/2
-                            
+                            jogador = mapa.reiniciar_jogo(jogador)
                         if exit_botao.draw(TELA):
                             break 
                     # Debug

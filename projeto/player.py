@@ -1,34 +1,35 @@
 from graphics import Superficie
 from settings import *
-from level import Mapa
 import pygame
 pygame.init()
 
 # Posição do jogador
 # Criando uma class de player que vai conter as caracteristicas do personagem do jogador
 class Player: 
-    # Caracteristicas do jogador
-    pontuacao = 0
-    vida = 3
-    # Posição inicial do jogador
-    x_jogador = (LARGURA_TELA - LARGURA_JOGADOR)/2
-    y_jogador = (ALTURA_TELA - ALTURA_JOGADOR)/2
-    # Movimento
+    # Constantes do jogador
     velocidade = 7.5
-    olhando_direcao = 'baixo'
     def __init__(self):
+        # Caracteristicas iniciais do jogador
+        self.pontuacao = 0
+        self.vida = 3
+        # Posição e movimento inicial do jogador
+        self.x_jogador = (LARGURA_TELA - LARGURA_JOGADOR)/2
+        self.y_jogador = (ALTURA_TELA - ALTURA_JOGADOR)/2
+        self.direcao = pygame.math.Vector2()
+        self.olhando_direcao = 'baixo'
+        # sprite inicial do jogador
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
+        self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
+        self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
+        self.ataque_hitbox = pygame.Rect((0,0), (0,0))
+        # transparencia inicial
         self.alfa = 255
         self.ataque_alfa = 255
         self.nivel_espada = 0
-        self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
-        self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
-        self.direcao = pygame.math.Vector2()
-        self.ataque_hitbox = pygame.Rect((0,0), (0,0))
+        # Outros
         self.pode_atacar = True
         self.sofreu_dano = False
         self.morreu = False
-        self.im_ataque = pygame.transform.rotate(Superficie.im_ataque, 270)
     def input(self):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
