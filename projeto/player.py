@@ -74,14 +74,7 @@ class Player:
         # Caso o jogador pressione espaço ele ataca
         # Quando o jogador pressionar o espaço, agora tem o som :)
         if teclas[pygame.K_SPACE]:
-            if not Audios.audio_playing:
-                Audios.ataque_sem_espada.play()
-                Audios.audio_playing = True
             self.ataque()
-        else:
-            Audios.audio_playing = False
-        
-              
 
     def movimento(self, velocidade, mapa):
         # Impede que o vetor de direção fique com uma resultade maior que 1, senão o jogador conseguiria se mover mais rápido que o normal quando fosse na diagonal 
@@ -108,6 +101,9 @@ class Player:
         if self.pode_atacar:
             # Caso possa atacar ele ataca, mas entra em um intervalo de alguns milisegundos em que ele não pode atacar 
             self.pode_atacar = False
+            if not Audios.audio_playing:
+                Audios.ataque_sem_espada.play()
+                Audios.audio_playing = True
             pygame.time.set_timer(EVENTO_INTERVALO_ATAQUE, self.intervalo_ataque)
             # Checa a ultima direção em que o personagem se moveu para definir onde a caixa de colisão do ataque irá aparecer e rotaciona a imagem do ataque para ficar de acordo
             if self.olhando_direcao == 'direita':
@@ -122,6 +118,8 @@ class Player:
             elif self.olhando_direcao == 'cima':
                 self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - LARGURA_ATAQUE/2, self.hitbox.top - ALTURA_ATAQUE), (LARGURA_ATAQUE, ALTURA_ATAQUE))
                 self.im_ataque = pygame.transform.rotate(Superficie.im_ataque, 90)
+        else:
+            Audios.audio_playing = False
     def morte(self):
         # Se o jogador chegar a 0 de Vida o jogo acaba
         if self.vida <= 0:
