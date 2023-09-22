@@ -15,6 +15,7 @@ class Coletaveis:
             self.tipo = 'escudo'
             self.imagem = pygame.image.load('projeto/assets/escudo.png')
             self.imagem = pygame.transform.scale(self.imagem, (80,50))
+        self.lista_coletaveis.append(self)
         self.hitbox = self.imagem.get_rect(topleft=(posicao))
         self.coletado = False
 
@@ -41,7 +42,7 @@ class Coletaveis:
 class Portal:
     tamanho_porta = TAMANHO_TILE * 1.5
     def __init__(self):
+        self.colisao = True
         self.imagem = pygame.image.load('projeto/assets/porta.png')
         self.imagem = pygame.transform.scale(self.imagem, (self.tamanho_porta, self.tamanho_porta))
         self.hitbox = self.imagem.get_rect(topleft=((LARGURA_TELA- self.tamanho_porta)/2, (ALTURA_TELA - self.tamanho_porta)/2))
-        self.coletado = False

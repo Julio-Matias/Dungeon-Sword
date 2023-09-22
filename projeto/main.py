@@ -36,8 +36,8 @@ class Game:
         mapa = Mapa()
         mapa.proxima_fase(Coletaveis)
         jogador = Player()
-        porta = Portal()
         hud = HUD()
+        porta = Portal()
         # Rodando o loop do jogo
         while True: 
                 # Isso vai 'limpar' a tela de fundo, para que as imagens que aparecem na tela não fiquem permanentemente nela 
@@ -63,7 +63,7 @@ class Game:
                         if start_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.start_img.get_width()/2) ,  ALTURA_TELA  - Superficie.start_img.get_height() + 20):# se o botao foi pressionado executa ação
                             jogo_pausado = False
                         if restart_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
-                            jogador = mapa.reiniciar_jogo(jogador)
+                            jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
                             jogo_pausado = False
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             break
@@ -74,15 +74,15 @@ class Game:
                         inimigo.atualizar(jogador, mapa)
                     if len(Enemy.lista_inimigos_presentes) == 0:
                         TELA.blit(porta.imagem, porta.hitbox)
-                        colisao = True
-                        if not porta.hitbox.colliderect(jogador.hitbox):
-                            colisao = False
-                        elif porta.hitbox.colliderect(jogador.hitbox) and not colisao:
+                        if porta.hitbox.colliderect(jogador.hitbox) and not porta.colisao:
                             mapa.proxima_fase(Coletaveis)
+                            porta.colisao = True
                             #som ao mudar de fase
                             if not Audios.audio_playing:
                                 Audios.proximafase.play()
                                 Audios.audio_playing = True
+                        elif not porta.hitbox.colliderect(jogador.hitbox):
+                            porta.colisao = False
                         else:
                             Audios.audio_playing = False
                     jogador.atualizar(mapa)

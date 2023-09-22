@@ -41,7 +41,7 @@ class Mapa:
         jogador = Player()
         Enemy.onda =  0
         Enemy.lista_inimigos_presentes = []
-        self.proxima_fase()
+        self.proxima_fase(Coletaveis)
         return jogador
     def montar_mapa(self, mapa):
         for y, linha in enumerate(mapa):

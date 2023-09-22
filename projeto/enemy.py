@@ -81,10 +81,8 @@ class Enemy:
         n_aleatorio = random.randint(0, 20)
         if 15 <= n_aleatorio < 18:
             espada = Coletaveis(posicao, 'espada')
-            Coletaveis.lista_coletaveis.append(espada)
         elif 18 < n_aleatorio <= 20:
             escudo = Coletaveis(posicao, 'escudo')
-            Coletaveis.lista_coletaveis.append(escudo)
         Enemy.lista_inimigos_presentes.remove(self)
         Audios.morte_inimigo.play()
     def colisao_obstaculos(self, mapa):
