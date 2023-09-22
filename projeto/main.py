@@ -44,15 +44,11 @@ class Game:
         hud = HUD()
         # Rodando o loop do jogo
         while True: 
-                
-
                 # Isso vai 'limpar' a tela de fundo, para que as imagens que aparecem na tela não fiquem permanentemente nela 
                 TELA.fill('Black')
                 # Cria o mapa do jogo
                 mapa.desenhar_mapa()
-                # Vai checar quais eventos estão ocorrendo por dentro
-
-                
+                # Vai checar quais eventos estão ocorrendo por dentro                
                 if jogo_pausado:
 
                     if inicio_jogo:
@@ -96,7 +92,7 @@ class Game:
                     #Se o jogador morrer ele vai mostrar a tela de morte
                     if jogador.morreu:
                         pygame.mixer.music.set_volume(0)
-                        Tela_morte().exibir_tela_morte(hud)
+                        Tela_morte().exibir_tela_morte(hud, jogador)
                         # se o jogador morrer, ele vai tocar o som de gamer over 
                         if not Audios.audio_playing:
                             Audios.gameover.play()
