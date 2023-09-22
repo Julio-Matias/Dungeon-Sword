@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from audios import *
 
 class Button():
     def __init__(self, x, y, image, scale) : #recebe como parametro as coordenadas x y, a imagem do botao e a escala da imagem
@@ -24,4 +25,7 @@ class Button():
             click = True
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicado = False
+        
+        if click:
+           Audios.click.play()
         return click

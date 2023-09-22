@@ -3,6 +3,7 @@ from settings import *
 import pygame
 import random
 from collectibles import Coletaveis
+from audios import *
 pygame.init()
 
 class Enemy:
@@ -51,6 +52,7 @@ class Enemy:
         # Checa se o inimigo encostou no jogador e faz o jogador sofrer dano
         if self.hitbox.colliderect(jogador.hitbox) and not jogador.sofreu_dano:
             jogador.sofreu_dano = True
+            Audios.dano.play()
             # Após sofrer dano o jogador se torna invulneravel por alguns segundos
             pygame.time.set_timer(EVENTO_INTERVALO_DANO, INTERVALO_DANO)
             jogador.vida -= 1
@@ -86,6 +88,7 @@ class Enemy:
             escudo = Coletaveis(posicao, 'escudo')
             Coletaveis.lista_coletaveis.append(escudo)
         Enemy.lista_inimigos_presentes.remove(self)
+        Audios.morte_inimigo.play()
     def colisao_obstaculos(self, mapa):
         # Checa se, para todos os obstaculos da fase há ou não colisão com o jogador
         colidiu = False

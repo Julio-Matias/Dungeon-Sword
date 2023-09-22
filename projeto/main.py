@@ -20,14 +20,14 @@ pygame.display.set_caption("Dungeon Sword")
 icone = pygame.image.load("projeto\sprites_folder\sprite_06.png")
 pygame.display.set_icon(icone)
 
-#carregando imagens dos botoes
-start_img = pygame.image.load('projeto/assets/start_btn.png').convert_alpha()
-exit_img = pygame.image.load('projeto/assets/exit_btn.png').convert_alpha()
-restart_img = pygame.image.load('projeto/assets/restart_btn.png').convert_alpha()
 #instanciando os botoes, atribuindo a eles a classe Button de Botao
-start_botao = Button((LARGURA_TELA/2 ) , 9* ALTURA_TELA /10 - (restart_img.get_height()/2), start_img, 0.75)#args: pos x, pos y , img, escala
-exit_botao = Button((LARGURA_TELA/2 - exit_img.get_width()) , 9* ALTURA_TELA /10 - (restart_img.get_height()/2), exit_img, 0.75) 
-restart_botao = Button(LARGURA_TELA/2,  9* ALTURA_TELA /10 - (restart_img.get_height()/2) ,restart_img, 0.3)
+start_botao = Button((LARGURA_TELA/2 - Superficie.start_img.get_width()/2) ,  ALTURA_TELA  - Superficie.start_img.get_height() + 20, Superficie.start_img, 0.75)#args: pos x, pos y , img, escala
+exit_botao = Button((LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2), Superficie.exit_img, 0.75) 
+restart_botao = Button(LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2) ,Superficie.restart_img, 0.3)
+#carregando musica de background e executando em loop
+bcg_msc= pygame.mixer.music.load('projeto/assets/audio/bcg_msc.mp3')
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.15)
 
 class Game:
     def __init__(self):
@@ -44,20 +44,27 @@ class Game:
         hud = HUD()
         # Rodando o loop do jogo
         while True: 
+                
+
                 # Isso vai 'limpar' a tela de fundo, para que as imagens que aparecem na tela não fiquem permanentemente nela 
                 TELA.fill('Black')
                 # Cria o mapa do jogo
                 mapa.desenhar_mapa()
                 # Vai checar quais eventos estão ocorrendo por dentro
+
+                
                 if jogo_pausado:
                     #ir para menu
+                    pygame.mixer.music.set_volume(0)
                     TELA.blit(Superficie.im_jogo, (LARGURA_TELA/2 - Superficie.im_jogo.get_width()/2, ALTURA_TELA/2 - Superficie.im_jogo.get_height()/2))
                     if start_botao.draw(TELA):# se o botao foi pressionado executa ação
                         jogo_pausado = False
+                    if restart_botao.draw(TELA):
+                        jogador = mapa.reiniciar_jogo(jogador)
                     if exit_botao.draw(TELA):
                         break
                 else: 
-                    
+                    pygame.mixer.music.set_volume(0.15)
                     # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
                     for inimigo in Enemy.lista_inimigos_presentes:
                         inimigo.atualizar(jogador, mapa)
@@ -76,12 +83,14 @@ class Game:
                     hud.exibir_hud(jogador, Enemy)
                     #Se o jogador morrer ele vai mostrar a tela de morte
                     if jogador.morreu:
+                        pygame.mixer.music.set_volume(0)
                         Tela_morte().exibir_tela_morte(hud)
                         # se o jogador morrer, ele vai tocar o som de gamer over 
                         if not Audios.audio_playing:
                             Audios.gameover.play()
                             pygame.time.wait(1000)
                             Audios.audio_playing = True
+                        
                         if restart_botao.draw(TELA):
                             jogador = mapa.reiniciar_jogo(jogador)
                         if exit_botao.draw(TELA):

@@ -11,5 +11,9 @@ class Superficie:
     im_parede = pygame.image.load("projeto/assets\parede-placeholder.png")
     im_chao = pygame.image.load("projeto/assets\chao-placeholder.jpg")
     im_jogo = pygame.image.load('projeto/assets/imagem_jogo.jpg').convert_alpha()
+    #carregando imagens dos botoes
+    start_img = pygame.image.load('projeto/assets/start_btn.png').convert_alpha()
+    exit_img = pygame.image.load('projeto/assets/exit_btn.png').convert_alpha()
+    restart_img = pygame.image.load('projeto/assets/restart_btn.png').convert_alpha()
     def __init__(self) -> None:
         pass
