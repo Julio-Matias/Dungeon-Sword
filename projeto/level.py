@@ -1,6 +1,6 @@
 from typing import Any
 import pygame
-from graphics import Superficie
+from audiovisual import Superficie
 from settings import *
 from enemy import Enemy
 from player import Player
@@ -20,7 +20,7 @@ class Mapa:
         self.index_mapa_anterior = 0
         self.mapa_tiles = []
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
-    def proxima_fase(self):
+    def proxima_fase(self, Coletaveis):
         Enemy.onda += 1
         if self.index_mapa_anterior == 0:
             mapa_atual = LISTA_MAPAS[random.randint(self.index_mapa_anterior + 1, len(LISTA_MAPAS) - 1)]
@@ -32,16 +32,17 @@ class Mapa:
         self.mapa_tiles = []
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
         self.montar_mapa(mapa_atual)
+        Coletaveis.lista_coletaveis = []
         numero_inimigos = random.randint(Enemy.onda, 2 + Enemy.onda)
         for _ in range(numero_inimigos):
             inimigo = Enemy(self)
             Enemy.lista_inimigos_presentes.append(inimigo)
-    def reiniciar_jogo(self, jogador):
+    def reiniciar_jogo(self, jogador, Coletaveis):
         jogador = Player()
         Enemy.onda =  0
         Enemy.lista_inimigos_presentes = []
+        Coletaveis.lista_coletaveis = []
         self.proxima_fase()
-        
         return jogador
     def montar_mapa(self, mapa):
         for y, linha in enumerate(mapa):

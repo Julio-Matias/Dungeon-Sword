@@ -1,5 +1,5 @@
 from settings import *
-from audios import Audios
+from audiovisual import Audios
 import pygame
 
 pygame.init()

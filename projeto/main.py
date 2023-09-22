@@ -1,6 +1,5 @@
 import pygame
-import random
-from graphics import Superficie
+from audiovisual import Superficie, Audios
 from settings import *
 from sys import exit
 from player import Player
@@ -8,10 +7,7 @@ from level import Mapa
 from enemy import Enemy
 from debug import debug
 from collectibles import *
-from hud import HUD
-from tela_morte import Tela_morte
-from Botao import *
-from audios import Audios
+from interface import HUD, Tela_morte, Button
 
 # Inicializando o PyGame
 pygame.init()
@@ -38,7 +34,7 @@ class Game:
         inicio_jogo = True
         # Decidindo uma fonte para a UI, e criando a instancia de mapa, inimigo e jogador
         mapa = Mapa()
-        mapa.proxima_fase()
+        mapa.proxima_fase(Coletaveis)
         jogador = Player()
         porta = Portal()
         hud = HUD()
@@ -78,8 +74,11 @@ class Game:
                         inimigo.atualizar(jogador, mapa)
                     if len(Enemy.lista_inimigos_presentes) == 0:
                         TELA.blit(porta.imagem, porta.hitbox)
-                        if porta.hitbox.colliderect(jogador.hitbox):
-                            mapa.proxima_fase()
+                        colisao = True
+                        if not porta.hitbox.colliderect(jogador.hitbox):
+                            colisao = False
+                        elif porta.hitbox.colliderect(jogador.hitbox) and not colisao:
+                            mapa.proxima_fase(Coletaveis)
                             #som ao mudar de fase
                             if not Audios.audio_playing:
                                 Audios.proximafase.play()
@@ -99,7 +98,7 @@ class Game:
                             pygame.time.wait(1000)
                             Audios.audio_playing = True
                         if restart_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
-                            jogador = mapa.reiniciar_jogo(jogador)
+                            jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             break 
                     # Debug

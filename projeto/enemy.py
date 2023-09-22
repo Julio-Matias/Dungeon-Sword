@@ -3,7 +3,7 @@ from settings import *
 import pygame
 import random
 from collectibles import Coletaveis
-from audios import *
+from audiovisual import Audios
 pygame.init()
 
 class Enemy:
