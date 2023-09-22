@@ -130,7 +130,7 @@ class Player:
             # Isso vai atualizar o jogador, vendo se o ele fez algum input, sofreu dano, se movimentou ou atacou, e após isso tudo, coloca sua superficies na tela
             self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
             if self.nivel_espada < 5:
-                self.intervalo_ataque = 500 - self.nivel_espada * 50
+                self.intervalo_ataque = 450 - self.nivel_espada * 40
             else:
                 self.intervalo_ataque = 250
             # Efeito de piscar caso o personagem sofra dano

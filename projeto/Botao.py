@@ -3,15 +3,15 @@ from settings import *
 from audios import *
 
 class Button():
-    def __init__(self, x, y, image, scale) : #recebe como parametro as coordenadas x y, a imagem do botao e a escala da imagem
+    def __init__(self, image, scale) : #recebe como parametro as coordenadas x y, a imagem do botao e a escala da imagem
         altura_botao = image.get_height()
         largura_botao =  image.get_width()
         self.image = pygame.transform.scale(image, (int(largura_botao *scale), int(altura_botao * scale)))
         self.rect = self.image.get_rect() #retangulo da img
-        self.rect.topleft = (x,y)
         self.clicado = False
     
-    def draw(self, surface): #desenha na tela o botao e verifica se o mouse clicou nele a partir da posição e do click do mouse, retorna true para clicado
+    def draw(self, surface, x, y): #desenha na tela o botao e verifica se o mouse clicou nele a partir da posição e do click do mouse, retorna true para clicado
+        self.rect.topleft = (x, y)
         click = False
         #desenhar botao na tela
         surface.blit(self.image, (self.rect.x, self.rect.y))
