@@ -80,11 +80,11 @@ class Enemy:
             self.y -= direcao_y * self.velocidade 
     def morte(self): 
         posicao = self.x, self.y
-        n_aleatorio = random.randint(0, 10)
-        if n_aleatorio <= 3:
+        n_aleatorio = random.randint(0, 100)
+        if n_aleatorio <= 20:
             espada = Coletaveis(posicao, 'espada')
             Coletaveis.lista_coletaveis.append(espada)
-        elif 3 < n_aleatorio <= 4:
+        elif 20 < n_aleatorio <= 25:
             escudo = Coletaveis(posicao, 'escudo')
             Coletaveis.lista_coletaveis.append(escudo)
         Enemy.lista_inimigos_presentes.remove(self)

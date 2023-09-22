@@ -35,8 +35,8 @@ class Game:
         self.relogio = pygame.time.Clock()
     def running(self):
         jogo_pausado = True
+        inicio_jogo = True
         # Decidindo uma fonte para a UI, e criando a instancia de mapa, inimigo e jogador
-        fonte = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
         mapa = Mapa()
         mapa.proxima_fase()
         jogador = Player()
@@ -61,6 +61,7 @@ class Game:
                         jogo_pausado = False
                     if restart_botao.draw(TELA):
                         jogador = mapa.reiniciar_jogo(jogador)
+                        jogo_pausado = False
                     if exit_botao.draw(TELA):
                         break
                 else: 
