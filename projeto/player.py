@@ -1,5 +1,6 @@
 from graphics import Superficie
 from settings import *
+from audios import Audios
 import pygame
 pygame.init()
 
@@ -59,8 +60,14 @@ class Player:
         else:
             self.direcao.x = 0
         # Caso o jogador pressione espaço ele ataca
+        # Quando o jogador pressionar o espaço, agora tem o som :)
         if teclas[pygame.K_SPACE]:
+            if not Audios.audio_playing:
+                Audios.ataque_sem_espada.play()
+                Audios.audio_playing = True
             self.ataque()
+        else:
+            Audios.audio_playing = False
     def movimento(self, velocidade, mapa):
         # Impede que o vetor de direção fique com uma resultade maior que 1, senão o jogador conseguiria se mover mais rápido que o normal quando fosse na diagonal 
         if self.direcao.magnitude() != 0:

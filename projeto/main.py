@@ -11,6 +11,7 @@ from collectibles import *
 from hud import HUD
 from tela_morte import Tela_morte
 from Botao import *
+from audios import Audios
 
 # Inicializando o PyGame
 pygame.init()
@@ -64,12 +65,23 @@ class Game:
                         TELA.blit(porta.imagem, porta.hitbox)
                         if porta.hitbox.colliderect(jogador.hitbox):
                             mapa.proxima_fase()
+                            #som ao mudar de fase
+                            if not Audios.audio_playing:
+                                Audios.proximafase.play()
+                                Audios.audio_playing = True
+                        else:
+                            Audios.audio_playing = False
                     jogador.atualizar(mapa)
                     #A hud no momento esta só como uma imagem para conter o contador de vida e de quantos abates foram feitos"
                     hud.exibir_hud(jogador, Enemy)
                     #Se o jogador morrer ele vai mostrar a tela de morte
                     if jogador.morreu:
                         Tela_morte().exibir_tela_morte(hud)
+                        # se o jogador morrer, ele vai tocar o som de gamer over 
+                        if not Audios.audio_playing:
+                            Audios.gameover.play()
+                            pygame.time.wait(1000)
+                            Audios.audio_playing = True
                         if restart_botao.draw(TELA):
                             jogador = mapa.reiniciar_jogo(jogador)
                         if exit_botao.draw(TELA):
@@ -82,6 +94,11 @@ class Game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_m:
                             jogo_pausado = True
+                            if not Audios.audio_playing:
+                                Audios.pause.play()
+                                Audios.audio_playing = True
+                        else:
+                            Audios.audio_playing = False
                             
                     if event.type == pygame.QUIT:
                         pygame.quit()
@@ -98,7 +115,6 @@ class Game:
                     TELA.blit(coletavel.imagem, coletavel.hitbox) #insere coletáveis
                     coletavel.coletar(jogador)
 
-               
                 pygame.display.update()
 # Certificando que o jogo só será rodado nesse arquivo, e não caso ele seja importado ou algo do tipo
 if __name__ == '__main__':    

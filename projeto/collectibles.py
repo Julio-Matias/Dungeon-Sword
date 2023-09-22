@@ -1,4 +1,5 @@
 from settings import *
+from audios import Audios
 import pygame
 
 pygame.init()
@@ -26,6 +27,13 @@ class Coletaveis:
                 jogador.nivel_espada += 1
             elif self.tipo == 'escudo':
                 jogador.vida += 1
+            
+            #som quando coletar espada ou escudo
+            if not Audios.audio_playing:
+                Audios.coletar.play()
+                Audios.audio_playing = True
+        else:
+            Audios.audio_playing = False
             
 class Portal:
     tamanho_porta = TAMANHO_TILE * 1.5
