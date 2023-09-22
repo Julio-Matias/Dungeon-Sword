@@ -25,6 +25,9 @@ class Coletaveis:
             Coletaveis.lista_coletaveis.remove(self)
             if self.tipo == 'espada':
                 jogador.nivel_espada += 1
+                jogador.espada = True
+                jogador.largura_ataque, jogador.altura_ataque = TAMANHO_TILE * 2.5, TAMANHO_TILE * 2.5
+                pygame.time.set_timer(EVENTO_ESPADA, TEMPO_ESPADA)
             elif self.tipo == 'escudo':
                 jogador.vida += 1
             

@@ -21,7 +21,9 @@ class Player:
         # sprite inicial do jogador
         self.imagem = pygame.image.load('projeto/assets\playerfront-placeholder.png')
         self.imagem = pygame.transform.scale(self.imagem, (LARGURA_JOGADOR, ALTURA_JOGADOR))
+        self.sup_ataque = pygame.image.load('projeto/assets/ataque-placeholder.png')
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
+        self.largura_ataque, self.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
         self.ataque_hitbox = pygame.Rect((0,0), (0,0))
         # transparencia inicial
         self.alfa = 255
@@ -32,7 +34,7 @@ class Player:
         self.sofreu_dano = False
         self.morreu = False
         self.andando = False
-        
+        self.espada = False
     def input(self):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
         teclas = pygame.key.get_pressed()
@@ -99,25 +101,29 @@ class Player:
     def ataque(self):
         # Checa se o jogador está no intervalo de tempo em que não pode atacar
         if self.pode_atacar:
+            im_ataque = pygame.transform.scale(self.sup_ataque, (self.largura_ataque, self.altura_ataque))
             # Caso possa atacar ele ataca, mas entra em um intervalo de alguns milisegundos em que ele não pode atacar 
             self.pode_atacar = False
             if not Audios.audio_playing:
-                Audios.ataque_sem_espada.play()
+                if not self.espada:
+                    Audios.ataque_sem_espada.play()
+                else:
+                    Audios.ataque_espada.play()
                 Audios.audio_playing = True
-            pygame.time.set_timer(EVENTO_INTERVALO_ATAQUE, self.intervalo_ataque)
+            pygame.time.set_timer(EVENTO_INTERVALO_ATAQUE, INTERVALO_ATAQUE)
             # Checa a ultima direção em que o personagem se moveu para definir onde a caixa de colisão do ataque irá aparecer e rotaciona a imagem do ataque para ficar de acordo
             if self.olhando_direcao == 'direita':
-                self.ataque_hitbox = pygame.Rect((self.hitbox.right, self.hitbox.centery - ALTURA_ATAQUE/2), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                self.im_ataque = pygame.transform.flip(Superficie.im_ataque, False, False)
+                self.ataque_hitbox = pygame.Rect((self.hitbox.right, self.hitbox.centery - self.altura_ataque/2), (self.largura_ataque, self.altura_ataque))
+                self.im_ataque = pygame.transform.flip(im_ataque, False, False)
             elif self.olhando_direcao == 'esquerda':
-                self.ataque_hitbox = pygame.Rect((self.hitbox.left - LARGURA_ATAQUE, self.hitbox.centery - ALTURA_ATAQUE/2), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                self.im_ataque = pygame.transform.flip(Superficie.im_ataque, True, False)
+                self.ataque_hitbox = pygame.Rect((self.hitbox.left - self.largura_ataque, self.hitbox.centery - self.altura_ataque/2), (self.largura_ataque, self.altura_ataque))
+                self.im_ataque = pygame.transform.flip(im_ataque, True, False)
             elif self.olhando_direcao == 'baixo':
-                self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - LARGURA_ATAQUE/2, self.hitbox.bottom), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                self.im_ataque = pygame.transform.rotate(Superficie.im_ataque, 270)
+                self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - self.largura_ataque/2, self.hitbox.bottom), (self.largura_ataque, self.altura_ataque))
+                self.im_ataque = pygame.transform.rotate(im_ataque, 270)
             elif self.olhando_direcao == 'cima':
-                self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - LARGURA_ATAQUE/2, self.hitbox.top - ALTURA_ATAQUE), (LARGURA_ATAQUE, ALTURA_ATAQUE))
-                self.im_ataque = pygame.transform.rotate(Superficie.im_ataque, 90)
+                self.ataque_hitbox = pygame.Rect((self.hitbox.centerx - self.largura_ataque/2, self.hitbox.top - self.altura_ataque), (self.largura_ataque, self.altura_ataque))
+                self.im_ataque = pygame.transform.rotate(im_ataque, 90)
         else:
             Audios.audio_playing = False
     def morte(self):
@@ -129,10 +135,6 @@ class Player:
         if not self.morreu:
             # Isso vai atualizar o jogador, vendo se o ele fez algum input, sofreu dano, se movimentou ou atacou, e após isso tudo, coloca sua superficies na tela
             self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
-            if self.nivel_espada < 5:
-                self.intervalo_ataque = 450 - self.nivel_espada * 40
-            else:
-                self.intervalo_ataque = 250
             # Efeito de piscar caso o personagem sofra dano
             if self.sofreu_dano and self.alfa == 255:
                 self.alfa = 100

@@ -56,8 +56,6 @@ class Enemy:
             # Após sofrer dano o jogador se torna invulneravel por alguns segundos
             pygame.time.set_timer(EVENTO_INTERVALO_DANO, INTERVALO_DANO)
             jogador.vida -= 1
-            if jogador.nivel_espada > 0:
-                jogador.nivel_espada -= 1
     def seguir_jogador(self, jogador, mapa): 
         self.velocidade = 1 
         # Faz o calculo da direção do inimigo pro player
@@ -81,7 +79,7 @@ class Enemy:
     def morte(self): 
         posicao = self.x, self.y
         n_aleatorio = random.randint(0, 20)
-        if 17 <= n_aleatorio < 18:
+        if 15 <= n_aleatorio < 18:
             espada = Coletaveis(posicao, 'espada')
             Coletaveis.lista_coletaveis.append(espada)
         elif 18 < n_aleatorio <= 20:

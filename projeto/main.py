@@ -115,18 +115,21 @@ class Game:
                                 Audios.audio_playing = True
                         else:
                             Audios.audio_playing = False
-                            
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         exit()
                     # Ver função ataque do Player
-                    elif event.type == EVENTO_INTERVALO_ATAQUE:
+                    if event.type == EVENTO_INTERVALO_ATAQUE:
                         jogador.pode_atacar = True
                         pygame.time.set_timer(EVENTO_INTERVALO_ATAQUE, 0)
                     # Ver função causou_dano do Enemy
-                    elif event.type == EVENTO_INTERVALO_DANO:
+                    if event.type == EVENTO_INTERVALO_DANO:
                         jogador.sofreu_dano = False
                         pygame.time.set_timer(EVENTO_INTERVALO_DANO, 0)
+                    if event.type == EVENTO_ESPADA:
+                        jogador.espada = False
+                        jogador.largura_ataque, jogador.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
+                        pygame.time.set_timer(EVENTO_ESPADA, 0)
                 for coletavel in Coletaveis.lista_coletaveis:
                     TELA.blit(coletavel.imagem, coletavel.hitbox) #insere coletáveis
                     coletavel.coletar(jogador)
