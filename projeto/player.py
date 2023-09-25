@@ -83,15 +83,18 @@ class Player:
             self.direcao = self.direcao.normalize()
         # Move as coordenadas do jogador baseado na direção e velocidade
         self.x_jogador += self.direcao.x * velocidade
-        self.y_jogador += self.direcao.y * velocidade
-        # Atualiza a caixa de colisão para as novas coordenadas
         self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
-        # Vê se após esse movimento o jogador estaria dentro de um obstaculo, caso sim, ele volta. Isso impede que ele atravesse paredes
         if self.colisao_obstaculos(mapa):
             self.x_jogador -= self.direcao.x * velocidade 
+        self.y_jogador += self.direcao.y * velocidade
+        if self.colisao_obstaculos(mapa):
             self.y_jogador -= self.direcao.y * velocidade 
+        # Vê se após esse movimento o jogador estaria dentro de um obstaculo, caso sim, ele volta. Isso impede que ele atravesse paredes
+            
     def colisao_obstaculos(self, mapa):
         # Checa se, para todos os obstaculos da fase há ou não colisão com o jogador
+        # Atualiza a caixa de colisão para as novas coordenadas
+        self.hitbox = self.imagem.get_rect(topleft=(self.x_jogador, self.y_jogador))
         colidiu = False
         for tile in mapa.tipo_tiles['Parede']:
             if self.hitbox.colliderect(tile.hitbox):

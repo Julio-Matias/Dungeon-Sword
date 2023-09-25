@@ -69,13 +69,12 @@ class Enemy:
             direcao_y /= comprimento 
         # Vai atualizando as posições 
         self.x += direcao_x * self.velocidade 
-        self.y += direcao_y * self.velocidade 
-        # Muda a posição do hitbox pra ficar onde o inimigo vai estar 
-        self.hitbox = self.image.get_rect(topleft=(self.x, self.y)) 
-        # Vê se após esse movimento o inimigo estaria dentro de um obstaculo, caso sim, ele volta. Isso impede que ele atravesse paredes
         if self.colisao_obstaculos(mapa):
-            self.x -= direcao_x * self.velocidade 
-            self.y -= direcao_y * self.velocidade 
+            self.x -= direcao_x * self.velocidade
+        self.y += direcao_y * self.velocidade 
+        if self.colisao_obstaculos(mapa):
+            self.y -= direcao_y * self.velocidade
+        # Vê se após esse movimento o inimigo estaria dentro de um obstaculo, caso sim, ele volta. Isso impede que ele atravesse paredes
     def morte(self): 
         posicao = self.x, self.y
         n_aleatorio = random.randint(0, 20)
@@ -86,6 +85,8 @@ class Enemy:
         Enemy.lista_inimigos_presentes.remove(self)
         Audios.morte_inimigo.play()
     def colisao_obstaculos(self, mapa):
+        # Muda a posição do hitbox pra ficar onde o inimigo vai estar 
+        self.hitbox = self.image.get_rect(topleft=(self.x, self.y))
         # Checa se, para todos os obstaculos da fase há ou não colisão com o jogador
         colidiu = False
         for tile in mapa.tipo_tiles['Parede']:

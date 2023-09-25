@@ -1,4 +1,3 @@
-from typing import Any
 import pygame
 from audiovisual import Superficie
 from settings import *
