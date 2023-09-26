@@ -24,7 +24,10 @@ class Player:
             'direita': pygame.transform.scale(pygame.image.load('projeto/assets\playerright-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(),
             'esquerda': pygame.transform.scale(pygame.image.load('projeto/assets\playerleft-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()
         }
-        self.sup_ataque = pygame.image.load('projeto/assets/ataque-placeholder.png').convert_alpha()
+        self.sup_ataque = {
+            'False': pygame.image.load('projeto/assets/ataque-placeholder.png').convert_alpha(),
+            'True': pygame.image.load('projeto/assets/ataque-maior-placeholder.png').convert_alpha()
+        }
         self.hitbox = self.imagem[self.olhando_direcao].get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.largura_ataque, self.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
         self.ataque_hitbox = pygame.Rect((0,0), (0,0))
@@ -99,7 +102,7 @@ class Player:
     def ataque(self):
         # Checa se o jogador está no intervalo de tempo em que não pode atacar
         if self.pode_atacar:
-            im_ataque = pygame.transform.scale(self.sup_ataque, (self.largura_ataque, self.altura_ataque))
+            im_ataque = pygame.transform.scale(self.sup_ataque[str(self.espada)], (self.largura_ataque, self.altura_ataque))
             # Caso possa atacar ele ataca, mas entra em um intervalo de alguns milisegundos em que ele não pode atacar 
             self.pode_atacar = False
             if not Audios.audio_playing:
@@ -139,7 +142,7 @@ class Player:
                 self.imagem[self.olhando_direcao].set_alpha(self.alfa)
             elif self.alfa < 255:
                 self.alfa = 255
-                self.imagem[self.olhando_direcao].set_alpha(self.alfa)
+            self.imagem[self.olhando_direcao].set_alpha(self.alfa)
             TELA.blit(self.imagem[self.olhando_direcao], self.hitbox)
             # Coloca o ataque na tela
             if not self.pode_atacar:

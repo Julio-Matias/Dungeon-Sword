@@ -70,7 +70,7 @@ class Game:
                 else: 
                     pygame.mixer.music.set_volume(0.15)
                     # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
-                    for inimigo in Enemy.lista_inimigos_presentes:
+                    for inimigo in Enemy.lista_inimigos_presentes[:]:
                         inimigo.atualizar(jogador, mapa)
                     if len(Enemy.lista_inimigos_presentes) == 0:
                         TELA.blit(porta.imagem, porta.hitbox)
@@ -129,7 +129,7 @@ class Game:
                         jogador.espada = False
                         jogador.largura_ataque, jogador.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
                         pygame.time.set_timer(EVENTO_ESPADA, 0)
-                for coletavel in Coletaveis.lista_coletaveis:
+                for coletavel in Coletaveis.lista_coletaveis[:]:
                     TELA.blit(coletavel.imagem, coletavel.hitbox) #insere coletáveis
                     coletavel.coletar(jogador)
 
