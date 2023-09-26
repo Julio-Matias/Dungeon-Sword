@@ -38,8 +38,8 @@ class HUD:
 
 class Tela_morte:
     #classe deteminando a imagem da tela de morte e o que vai ser exibido nela
-    tela_morte = pygame.image.load('projeto/assets/frase.png') 
-    img_inimigo = pygame.image.load('projeto\sprites_folder\sprite_07.png')
+    tela_morte = pygame.image.load('projeto/assets/frase.png').convert_alpha()
+    img_inimigo = pygame.image.load('projeto\sprites_folder\sprite_07.png').convert_alpha()
     img_inimigo = pygame.transform.scale(img_inimigo, (40, 40))
     def exibir_tela_morte(self, hud, jogador):
         sup_inimigos = hud.fonte2.render(f': {jogador.pontuacao}', False, 'White')

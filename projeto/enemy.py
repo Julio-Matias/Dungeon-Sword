@@ -10,21 +10,21 @@ class Enemy:
     onda = 0
     lista_inimigos_presentes = []
     lista_slime = {"animation": {
-    "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "01": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_01.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "02": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_02.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "03": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_03.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "04": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_04.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "05": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_05.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "06": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_06.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "07": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_07.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "08": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_08.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "09": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_09.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "10": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_10.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "11": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_11.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "12": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_12.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "13": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_13.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)),
-    "14": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_14.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO))
+    "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "01": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_01.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "02": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_02.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "03": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_03.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "04": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_04.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "05": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_05.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "06": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_06.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "07": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_07.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "08": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_08.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "09": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_09.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "10": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_10.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "11": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_11.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "12": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_12.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "13": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_13.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "14": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_14.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha()
     }}
     def __init__(self, mapa):
         # Caracteristicas do inimigo
