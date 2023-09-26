@@ -69,9 +69,15 @@ class Game:
                             break
                 else: 
                     pygame.mixer.music.set_volume(0.15)
-                    # Isso vai atualizar o jogador e o inimigo, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
+                    # Isso vai atualizar o jogador e o inimigo e os coletaveis, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
                     for inimigo in Enemy.lista_inimigos_presentes[:]:
                         inimigo.atualizar(jogador, mapa)
+                    jogador.atualizar(mapa)
+                    hud.exibir_hud(jogador, Enemy)
+                    for coletavel in Coletaveis.lista_coletaveis[:]:
+                        TELA.blit(coletavel.imagem, coletavel.hitbox) #insere coletáveis
+                        coletavel.coletar(jogador)
+                    # Checa se todos os inimigos morrerram
                     if len(Enemy.lista_inimigos_presentes) == 0:
                         TELA.blit(porta.imagem, porta.hitbox)
                         if porta.hitbox.colliderect(jogador.hitbox) and not porta.colisao:
@@ -85,10 +91,6 @@ class Game:
                             porta.colisao = False
                         else:
                             Audios.audio_playing = False
-                    jogador.atualizar(mapa)
-                    #A hud no momento esta só como uma imagem para conter o contador de vida e de quantos abates foram feitos"
-                    hud.exibir_hud(jogador, Enemy)
-                    #Se o jogador morrer ele vai mostrar a tela de morte
                     if jogador.morreu:
                         pygame.mixer.music.set_volume(0)
                         Tela_morte().exibir_tela_morte(hud, jogador)
@@ -102,7 +104,6 @@ class Game:
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             break 
                     # Debug
-                    # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
                     # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
                     self.relogio.tick(FPS)
                 for event in pygame.event.get():
@@ -129,10 +130,7 @@ class Game:
                         jogador.espada = False
                         jogador.largura_ataque, jogador.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
                         pygame.time.set_timer(EVENTO_ESPADA, 0)
-                for coletavel in Coletaveis.lista_coletaveis[:]:
-                    TELA.blit(coletavel.imagem, coletavel.hitbox) #insere coletáveis
-                    coletavel.coletar(jogador)
-
+                # Atualizando o que aparece na tela a cada "Tick" (Tick é uma única atualização que ocorre na simulação do jogo)
                 pygame.display.update()
 # Certificando que o jogo só será rodado nesse arquivo, e não caso ele seja importado ou algo do tipo
 if __name__ == '__main__':    
