@@ -70,10 +70,6 @@ class Game:
                 else: 
                     pygame.mixer.music.set_volume(0.15)
                     # Isso vai atualizar o jogador e o inimigo e os coletaveis, vendo se o jogador fez algum input, se o jogador ou o inimigo sofreu dano, e movimentando ambos, e após isso tudo, coloca suas superficies na tela
-                    for inimigo in Enemy.lista_inimigos_presentes[:]:
-                        inimigo.atualizar(jogador, mapa)
-                    jogador.atualizar(mapa)
-                    hud.exibir_hud(jogador, Enemy)
                     for coletavel in Coletaveis.lista_coletaveis[:]:
                         TELA.blit(coletavel.imagem, coletavel.hitbox) #insere coletáveis
                         coletavel.coletar(jogador)
@@ -91,6 +87,10 @@ class Game:
                             porta.colisao = False
                         else:
                             Audios.audio_playing = False
+                    jogador.atualizar(mapa)
+                    for inimigo in Enemy.lista_inimigos_presentes[:]:
+                        inimigo.atualizar(jogador, mapa)
+                    hud.exibir_hud(jogador, Enemy)
                     if jogador.morreu:
                         pygame.mixer.music.set_volume(0)
                         Tela_morte().exibir_tela_morte(hud, jogador)
