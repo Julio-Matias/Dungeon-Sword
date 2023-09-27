@@ -4,7 +4,7 @@ from settings import *
 from sys import exit
 from player import Player
 from level import Mapa
-from enemy import Enemy
+from enemy import Enemy 
 from debug import debug
 from collectibles import *
 from interface import HUD, Tela_morte, Button
@@ -93,7 +93,7 @@ class Game:
                     hud.exibir_hud(jogador, Enemy)
                     if jogador.morreu:
                         pygame.mixer.music.set_volume(0)
-                        Tela_morte().exibir_tela_morte(hud, jogador)
+                        Tela_morte().exibir_tela_morte(hud)
                         # se o jogador morrer, ele vai tocar o som de gamer over 
                         if not Audios.audio_playing:
                             Audios.gameover.play()

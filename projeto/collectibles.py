@@ -10,11 +10,11 @@ class Coletaveis:
         if tipo == 'espada':
             self.tipo = 'espada'
             self.imagem = pygame.image.load('projeto/assets/espada.png') 
-            self.imagem = pygame.transform.scale(self.imagem, (25, 50))
+            self.imagem = pygame.transform.scale(self.imagem, (21, 50))
         elif tipo == 'escudo':
             self.tipo = 'escudo'
             self.imagem = pygame.image.load('projeto/assets/escudo.png')
-            self.imagem = pygame.transform.scale(self.imagem, (80,50))
+            self.imagem = pygame.transform.scale(self.imagem, (40,40))
         self.lista_coletaveis.append(self)
         self.hitbox = self.imagem.get_rect(topleft=(posicao))
         self.coletado = False
@@ -40,9 +40,10 @@ class Coletaveis:
             Audios.audio_playing = False
             
 class Portal:
-    tamanho_porta = TAMANHO_TILE * 1.5
+    altura_porta = TAMANHO_TILE * 1.5
+    largura_porta = TAMANHO_TILE * 0.93
     def __init__(self):
         self.colisao = True
         self.imagem = pygame.image.load('projeto/assets/porta.png')
-        self.imagem = pygame.transform.scale(self.imagem, (self.tamanho_porta, self.tamanho_porta))
-        self.hitbox = self.imagem.get_rect(topleft=((LARGURA_TELA- self.tamanho_porta)/2, (ALTURA_TELA - self.tamanho_porta)/2))
+        self.imagem = pygame.transform.scale(self.imagem, (self.largura_porta, self.altura_porta))
+        self.hitbox = self.imagem.get_rect(topleft=((LARGURA_TELA- self.largura_porta)/2, (ALTURA_TELA - self.altura_porta)/2))

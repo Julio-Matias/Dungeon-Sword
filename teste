@@ -1,5 +1,5 @@
 import pygame
-from colorama import init, Fore #biblioteca de cores
+ #biblioteca de cores
 
 #initialising pygame
 pygame.init()
@@ -7,8 +7,6 @@ pygame.init()
 #defining size of game window
 tela = pygame.display.set_mode((800,600))
 
-#inicia o colorama
-init(autoreset=True)
 
 #cores
 VERMELHO = (255, 0, 0)
