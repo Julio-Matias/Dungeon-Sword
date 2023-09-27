@@ -22,9 +22,9 @@ class HUD:
         self.sup_espada = self.fonte2.render(f'{jogador.nivel_espada}', False, 'White')
         self.sup_msg = self.fonte2.render(f'Aperte "M" para o Menu', False, 'white')
         self.sup_msg.set_alpha(120)
-        TELA.blit(self.sup_pontuacao, (195,105))
+        TELA.blit(self.sup_pontuacao, (190,105))
         TELA.blit(self.sup_nivel, (90, 148))
-        TELA.blit(self.sup_espada, (205,148))
+        TELA.blit(self.sup_espada, (207,148))
         TELA.blit(self.imagem[str(jogador.espada)], (2,2))
         TELA.blit(self.sup_vida, (225,43))
         TELA.blit(self.sup_msg,(400,20))
@@ -42,9 +42,11 @@ class Tela_morte:
     def exibir_tela_morte(self, hud):
         TELA.blit(Superficie.im_jogo, (LARGURA_TELA/2 - Superficie.im_jogo.get_width()/2, ALTURA_TELA/2 - Superficie.im_jogo.get_height()/2))
         TELA.blit(Tela_morte.tela_morte, (1,1))
-        TELA.blit(self.inimigos_derrotados, (545, 385))
+        TELA.blit(self.inimigos_derrotados, (455, 385))
+        TELA.blit(self.espadas_coletadas, (620, 393))
         TELA.blit(self.nivel, (545, 440))
-        TELA.blit(hud.sup_pontuacao, (600, 392))
+        TELA.blit(hud.sup_espada, (675, 392))
+        TELA.blit(hud.sup_pontuacao, (510, 392))
         TELA.blit(hud.sup_nivel, (610, 440))
 
 
