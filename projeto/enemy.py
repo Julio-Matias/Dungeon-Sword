@@ -58,7 +58,10 @@ class Enemy:
         # Já nasce em um lugar aleatorio que não seja um obstaculo
         local_spawn = mapa.tipo_tiles['Spawner'][random.randint(0, len(mapa.tipo_tiles['Spawner']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left
-        self.velocidade = 5
+        if tipo == 'ghost':
+            self.velocidade = 7.5
+        else:
+            self.velocidade = 5
         self.hitbox = self.image.get_rect(topleft=(self.x, self.y)) 
         self.sofreu_dano = False
     def acertado_por_ataque(self, jogador):
@@ -98,19 +101,18 @@ class Enemy:
             if self.colisao_obstaculos(mapa):
                 self.y -= direcao_y * self.velocidade
         # Vê se após esse movimento o inimigo estaria dentro de um obstaculo, caso sim, ele volta. Isso impede que ele atravesse paredes
-    def morte(self): 
+    def morte(self, jogador): 
+        jogador.pontuacao += 1
         posicao = self.x, self.y
         n_aleatorio = random.randint(0, 20)
-        if Enemy.onda <= 20:
-            if 14 <= n_aleatorio < 17:
-                espada = Coletaveis(posicao, 'espada')
-            elif 17 < n_aleatorio <= 20:
-                escudo = Coletaveis(posicao, 'escudo')
-        else:
-            if 17 <= n_aleatorio < 19:
-                espada = Coletaveis(posicao, 'espada')
-            elif 19 < n_aleatorio <= 20:
-                escudo = Coletaveis(posicao, 'escudo')
+        if 14 <= n_aleatorio <= 17 and not jogador.espada:
+            espada = Coletaveis(posicao, 'espada')
+        elif 16 <= n_aleatorio <= 17:
+            espada = Coletaveis(posicao, 'espada')
+        elif 17 < n_aleatorio <= 20 and jogador.vida < 10:
+            escudo = Coletaveis(posicao, 'escudo')
+        elif 19 < n_aleatorio <= 20:
+            escudo = Coletaveis(posicao, 'escudo')
         Enemy.lista_inimigos_presentes.remove(self)
         Audios.morte_inimigo.play()
     def colisao_obstaculos(self, mapa):
@@ -137,8 +139,7 @@ class Enemy:
             self.frame_delay -= 1
         self.acertado_por_ataque(jogador)
         if self.vida <= 0:
-            self.morte()
-            jogador.pontuacao += 1
+            self.morte(jogador)
         else:
             self.seguir_jogador(jogador, mapa)
         self.image.set_alpha(self.alfa)

@@ -38,12 +38,12 @@ class Mapa:
                 inimigo = Enemy(self, 'slime')
                 Enemy.lista_inimigos_presentes.append(inimigo)
         else:
-            numero_inimigos = Enemy.onda - 10
-            for _ in range(numero_inimigos):
+            numero_ghost = Enemy.onda - 5 // 5
+            for _ in range(numero_ghost):
                 inimigo = Enemy(self, 'ghost')
                 Enemy.lista_inimigos_presentes.append(inimigo)
-            numero_inimigos = numero_inimigos = random.randint(Enemy.onda - 5, 3 + Enemy.onda)
-            for _ in range(numero_inimigos):
+            numero_slime = numero_inimigos = random.randint(Enemy.onda - numero_ghost, 2 + Enemy.onda - numero_ghost)
+            for _ in range(numero_slime):
                 inimigo = Enemy(self, 'slime')
                 Enemy.lista_inimigos_presentes.append(inimigo)
     def reiniciar_jogo(self, jogador, Coletaveis):
