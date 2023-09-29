@@ -7,7 +7,7 @@ from audiovisual import Audios
 pygame.init()
 
 class Enemy:
-    onda = 10
+    onda = 0
     lista_inimigos_presentes = []
     lista_slime = {"animation": {
     "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
