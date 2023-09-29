@@ -69,3 +69,11 @@ Interável      |     Ação    |
 
 
 ## Desafios/Experiência:
+
+
+## Imagens do jogo:
+
+<img src="/projeto/assets/gameover.png">
+<img src="/projeto/assets/menu.png">
+<img src="/projeto/assets/game.png">
+<img src="/projeto/assets/telainicial.png">
