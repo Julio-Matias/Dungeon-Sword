@@ -32,10 +32,20 @@ class Mapa:
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
         self.montar_mapa(mapa_atual)
         Coletaveis.lista_coletaveis = []
-        numero_inimigos = random.randint(Enemy.onda, 2 + Enemy.onda)
-        for _ in range(numero_inimigos):
-            inimigo = Enemy(self)
-            Enemy.lista_inimigos_presentes.append(inimigo)
+        if Enemy.onda <= 10:
+            numero_inimigos = random.randint(Enemy.onda, 2 + Enemy.onda)
+            for _ in range(numero_inimigos):
+                inimigo = Enemy(self, 'slime')
+                Enemy.lista_inimigos_presentes.append(inimigo)
+        else:
+            numero_inimigos = Enemy.onda - 10
+            for _ in range(numero_inimigos):
+                inimigo = Enemy(self, 'ghost')
+                Enemy.lista_inimigos_presentes.append(inimigo)
+            numero_inimigos = numero_inimigos = random.randint(Enemy.onda - 5, 3 + Enemy.onda)
+            for _ in range(numero_inimigos):
+                inimigo = Enemy(self, 'slime')
+                Enemy.lista_inimigos_presentes.append(inimigo)
     def reiniciar_jogo(self, jogador, Coletaveis):
         jogador = Player()
         Enemy.onda =  0

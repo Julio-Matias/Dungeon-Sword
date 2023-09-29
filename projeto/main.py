@@ -15,7 +15,6 @@ pygame.init()
 pygame.display.set_caption("Dungeon Sword")
 icone = pygame.image.load("projeto\sprites_folder\sprite_06.png")
 pygame.display.set_icon(icone)
-
 #instanciando os botoes, atribuindo a eles a classe Button de Botao
 start_botao = Button(Superficie.start_img, 0.75)#args: pos x, pos y , img, escala
 exit_botao = Button(Superficie.exit_img, 0.75) 

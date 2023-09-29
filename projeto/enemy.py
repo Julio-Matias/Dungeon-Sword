@@ -7,7 +7,7 @@ from audiovisual import Audios
 pygame.init()
 
 class Enemy:
-    onda = 0
+    onda = 10
     lista_inimigos_presentes = []
     lista_slime = {"animation": {
     "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
@@ -26,11 +26,32 @@ class Enemy:
     "13": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_13.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
     "14": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_14.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha()
     }}
-    def __init__(self, mapa):
+    lista_ghost = {"animation": {
+    "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "01": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_01.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "02": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_02.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "03": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_03.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "04": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_04.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "05": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_05.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "06": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_06.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "07": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_07.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "08": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_08.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "09": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_09.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "10": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_10.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "11": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_11.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "12": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_12.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "13": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_13.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
+    "14": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/ghost_14.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha()
+    }}
+    def __init__(self, mapa, tipo):
         # Caracteristicas do inimigo
         self.vida = VIDA_INIMIGO 
+        self.tipo = tipo
         self.alfa = 255
-        self.animation_frames = Enemy.lista_slime["animation"]
+        if self.tipo == 'ghost':
+            self.animation_frames = Enemy.lista_ghost["animation"]
+        else:
+            self.animation_frames = Enemy.lista_slime["animation"]
         self.current_frame = "00"  # Comece com o primeiro quadro
         self.frame_delay = FPS  # Ajuste a taxa de quadros da animação
         self.image = self.animation_frames[self.current_frame]
@@ -69,19 +90,27 @@ class Enemy:
             direcao_y /= comprimento 
         # Vai atualizando as posições 
         self.x += direcao_x * self.velocidade 
-        if self.colisao_obstaculos(mapa):
-            self.x -= direcao_x * self.velocidade
+        if self.tipo != 'ghost':
+            if self.colisao_obstaculos(mapa):
+                self.x -= direcao_x * self.velocidade
         self.y += direcao_y * self.velocidade 
-        if self.colisao_obstaculos(mapa):
-            self.y -= direcao_y * self.velocidade
+        if self.tipo != 'ghost':
+            if self.colisao_obstaculos(mapa):
+                self.y -= direcao_y * self.velocidade
         # Vê se após esse movimento o inimigo estaria dentro de um obstaculo, caso sim, ele volta. Isso impede que ele atravesse paredes
     def morte(self): 
         posicao = self.x, self.y
         n_aleatorio = random.randint(0, 20)
-        if 15 <= n_aleatorio < 18:
-            espada = Coletaveis(posicao, 'espada')
-        elif 18 < n_aleatorio <= 20:
-            escudo = Coletaveis(posicao, 'escudo')
+        if Enemy.onda <= 20:
+            if 14 <= n_aleatorio < 17:
+                espada = Coletaveis(posicao, 'espada')
+            elif 17 < n_aleatorio <= 20:
+                escudo = Coletaveis(posicao, 'escudo')
+        else:
+            if 17 <= n_aleatorio < 19:
+                espada = Coletaveis(posicao, 'espada')
+            elif 19 < n_aleatorio <= 20:
+                escudo = Coletaveis(posicao, 'escudo')
         Enemy.lista_inimigos_presentes.remove(self)
         Audios.morte_inimigo.play()
     def colisao_obstaculos(self, mapa):
@@ -107,7 +136,6 @@ class Enemy:
         else:
             self.frame_delay -= 1
         self.acertado_por_ataque(jogador)
-
         if self.vida <= 0:
             self.morte()
             jogador.pontuacao += 1
