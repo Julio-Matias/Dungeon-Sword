@@ -59,12 +59,12 @@ class Game:
                             break
                     #ir para menu
                     else:
-                        if start_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.start_img.get_width()/2) ,   ALTURA_TELA /2 + 80):# se o botao foi pressionado executa ação
+                        if start_botao.draw(TELA, LARGURA_TELA/2 - Superficie.start_img.get_width()/2 + 37,   ALTURA_TELA /2 - 140):# se o botao foi pressionado executa ação
                             jogo_pausado = False
-                        if restart_botao.draw(TELA, LARGURA_TELA/2,  ALTURA_TELA /2 - 30):
+                        if restart_botao.draw(TELA, LARGURA_TELA/2 - Superficie.start_img.get_width()/2 - 10,  ALTURA_TELA /2 - 30):
                             jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
                             jogo_pausado = False
-                        if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) ,  ALTURA_TELA /2 - 30):
+                        if exit_botao.draw(TELA, LARGURA_TELA/2 - Superficie.start_img.get_width()/2 + 50,  ALTURA_TELA /2 + 80):
                             break
                 else: 
                     pygame.mixer.music.set_volume(0.15)
