@@ -12,13 +12,13 @@ class HUD:
     fonte1 = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 75)
     fonte2 = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
 
-    def exibir_hud(self, jogador, Enemy):
+    def exibir_hud(self, jogador, Mapa):
         pygame.transform.scale(self.imagem[str(jogador.espada)], (280, 200))
         self.imagem[str(jogador.espada)].set_alpha(180)
         # Elementos da hud
         self.sup_vida= self.fonte1.render(f'{jogador.vida}', False, "Yellow")
         self.sup_pontuacao = self.fonte2.render(f'{jogador.pontuacao}', False, 'White')
-        self.sup_nivel = self.fonte2.render(f'{Enemy.onda}', False, 'White')
+        self.sup_nivel = self.fonte2.render(f'{Mapa.nivel}', False, 'White')
         self.sup_espada = self.fonte2.render(f'{jogador.nivel_espada}', False, 'White')
         self.sup_msg = self.fonte2.render(f'Aperte "M" para o Menu', False, 'white')
         self.sup_msg.set_alpha(120)

@@ -5,7 +5,6 @@ from sys import exit
 from player import Player
 from level import Mapa
 from enemy import Enemy 
-from debug import debug
 from collectibles import *
 from interface import HUD, Tela_morte, Button
 
@@ -45,7 +44,6 @@ class Game:
                 mapa.desenhar_mapa()
                 # Vai checar quais eventos estão ocorrendo por dentro                
                 if jogo_pausado:
-
                     if inicio_jogo:
                         pygame.mixer.music.set_volume(0)
                         TELA.blit(Superficie.im_jogo, (LARGURA_TELA/2 - Superficie.im_jogo.get_width()/2, ALTURA_TELA/2 - Superficie.im_jogo.get_height()/2))
@@ -89,7 +87,7 @@ class Game:
                     jogador.atualizar(mapa)
                     for inimigo in Enemy.lista_inimigos_presentes[:]:
                         inimigo.atualizar(jogador, mapa)
-                    hud.exibir_hud(jogador, Enemy)
+                    hud.exibir_hud(jogador, mapa)
                     if jogador.morreu:
                         pygame.mixer.music.set_volume(0)
                         Tela_morte().exibir_tela_morte(hud)
@@ -102,7 +100,6 @@ class Game:
                             jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             break 
-                    # Debug
                     # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
                     self.relogio.tick(FPS)
                 for event in pygame.event.get():

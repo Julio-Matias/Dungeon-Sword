@@ -7,7 +7,6 @@ from audiovisual import Audios
 pygame.init()
 
 class Enemy:
-    onda = 0
     lista_inimigos_presentes = []
     lista_slime = {"animation": {
     "00": pygame.transform.scale(pygame.image.load("projeto/sprites_folder/sprite_00.png"),(LARGURA_INIMIGO,ALTURA_INIMIGO)).convert_alpha(),
@@ -58,10 +57,10 @@ class Enemy:
         # Já nasce em um lugar aleatorio que não seja um obstaculo
         local_spawn = mapa.tipo_tiles['Spawner'][random.randint(0, len(mapa.tipo_tiles['Spawner']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left
-        if tipo == 'ghost':
-            self.velocidade = 7.5
+        if self.tipo == 'ghost':
+            self.velocidade = 2
         else:
-            self.velocidade = 5
+            self.velocidade = 1
         self.hitbox = self.image.get_rect(topleft=(self.x, self.y)) 
         self.sofreu_dano = False
     def acertado_por_ataque(self, jogador):
@@ -81,7 +80,6 @@ class Enemy:
             pygame.time.set_timer(EVENTO_INTERVALO_DANO, INTERVALO_DANO)
             jogador.vida -= 1
     def seguir_jogador(self, jogador, mapa): 
-        self.velocidade = 1 
         # Faz o calculo da direção do inimigo pro player
         direcao_x = jogador.x_jogador - self.x 
         direcao_y = jogador.y_jogador - self.y 

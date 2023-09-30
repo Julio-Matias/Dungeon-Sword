@@ -14,7 +14,7 @@ class Coletaveis:
         elif tipo == 'escudo':
             self.tipo = 'escudo'
             self.imagem = pygame.image.load('projeto/assets/escudo.png')
-            self.imagem = pygame.transform.scale(self.imagem, (40,40))
+            self.imagem = pygame.transform.scale(self.imagem, (40,34))
         self.lista_coletaveis.append(self)
         self.hitbox = self.imagem.get_rect(topleft=(posicao))
         self.coletado = False

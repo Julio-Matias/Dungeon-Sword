@@ -16,11 +16,12 @@ class Tile:
 
 class Mapa:
     def __init__(self):
+        self.nivel = 0
         self.index_mapa_anterior = 0
         self.mapa_tiles = []
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
     def proxima_fase(self, Coletaveis):
-        Enemy.onda += 1
+        self.nivel += 1
         if self.index_mapa_anterior == 0:
             mapa_atual = LISTA_MAPAS[random.randint(self.index_mapa_anterior + 1, len(LISTA_MAPAS) - 1)]
         elif self.index_mapa_anterior == len(LISTA_MAPAS) - 1:
@@ -32,23 +33,23 @@ class Mapa:
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
         self.montar_mapa(mapa_atual)
         Coletaveis.lista_coletaveis = []
-        if Enemy.onda <= 10:
-            numero_inimigos = random.randint(Enemy.onda, 2 + Enemy.onda)
+        if self.nivel <= 10:
+            numero_inimigos = random.randint(self.nivel, 2 + self.nivel)
             for _ in range(numero_inimigos):
                 inimigo = Enemy(self, 'slime')
                 Enemy.lista_inimigos_presentes.append(inimigo)
         else:
-            numero_ghost = Enemy.onda - 5 // 5
+            numero_ghost = (self.nivel - 5) // 5
             for _ in range(numero_ghost):
                 inimigo = Enemy(self, 'ghost')
                 Enemy.lista_inimigos_presentes.append(inimigo)
-            numero_slime = numero_inimigos = random.randint(Enemy.onda - numero_ghost, 2 + Enemy.onda - numero_ghost)
+            numero_slime = numero_inimigos = random.randint(self.nivel - numero_ghost, 2 + self.nivel - numero_ghost)
             for _ in range(numero_slime):
                 inimigo = Enemy(self, 'slime')
                 Enemy.lista_inimigos_presentes.append(inimigo)
     def reiniciar_jogo(self, jogador, Coletaveis):
         jogador = Player()
-        Enemy.onda =  0
+        self.nivel =  0
         Enemy.lista_inimigos_presentes = []
         self.proxima_fase(Coletaveis)
         return jogador
