@@ -63,7 +63,14 @@ Interável      |     Ação    |
 
 
 ## Conceitos e Aplicação:
-> 
+> É possível ver ao longo do código, aplicações de diversos conceitos ensinados durante o semestre. Nota-se com uma certa frequência o uso de Comandos condicionais, Laços de repetição, Listas, Tuplas, Dicionários, Funções e principalmente, programação orientada a objeto.
+>
+> Sendo assim, a utilização de laços de repetição torna-se evidente logo no arquivo principal, "main.py", aquele que executa o jogo, que por sua vez, ocorre dentro de um laço "while", e dentro desse laço, há vários laços do tipo "for", testando se ocorre algum evento durante o jogo, assim como um Comando condicional "if", dentro do loop principal, que checa se o jogo está pausado ou não, e assim mostrando a respectiva tela.
+>
+>  As listas também estão muito presentes, podendo ser encontradas no gerenciamento dos inimigos, coletáveis e também nas criações dos mapas, que são listas de strings, formando uma matriz e a partir disso, renderizando as imagens. As tuplas cumprem um papel essencial em algumas partes do código, armazenando informações imutáveis utilizadas em várias partes do projeto.
+>
+> E por fim, a parte mais importante do projeto, a utilização da programação orientada à objeto. Utilizamos os conceitos de módulos, classes, objetos, métodos e atributos em quase todo o código. A utilização de classes e programação orientada a objetos se tornou essencial para o projeto, visto que esse conceito foi utilizado extensivamente durante todo o código. As classes foram muito úteis para a organização dos métodos e seus atributos, além de facilitar a importação dos mesmos. Além disso, a criação de objetos utilizando classes foi usada para a criação do jogador, dos inimigos, dos coletáveis e dos mapas. Sem classes isso se tornaria inviável, pois todos esses objetos eram criados e atualizados durante toda a criação do jogo.
+
   
 ## Organização do código:
 
