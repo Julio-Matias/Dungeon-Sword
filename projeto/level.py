@@ -33,13 +33,13 @@ class Mapa:
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
         self.montar_mapa(mapa_atual)
         Coletaveis.lista_coletaveis = []
-        if self.nivel <= 10:
+        if self.nivel <= 5:
             numero_inimigos = random.randint(self.nivel, 2 + self.nivel)
             for _ in range(numero_inimigos):
                 inimigo = Enemy(self, 'slime')
                 Enemy.lista_inimigos_presentes.append(inimigo)
         else:
-            numero_ghost = (self.nivel - 5) // 5
+            numero_ghost = self.nivel // 5
             for _ in range(numero_ghost):
                 inimigo = Enemy(self, 'ghost')
                 Enemy.lista_inimigos_presentes.append(inimigo)

@@ -58,7 +58,7 @@ class Enemy:
         local_spawn = mapa.tipo_tiles['Spawner'][random.randint(0, len(mapa.tipo_tiles['Spawner']) - 1)].hitbox
         self.y, self.x = local_spawn.top, local_spawn.left
         if self.tipo == 'ghost':
-            self.velocidade = 2
+            self.velocidade = 1.5
         else:
             self.velocidade = 1
         self.hitbox = self.image.get_rect(topleft=(self.x, self.y)) 

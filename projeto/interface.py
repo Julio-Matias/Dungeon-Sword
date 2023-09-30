@@ -16,18 +16,16 @@ class HUD:
         pygame.transform.scale(self.imagem[str(jogador.espada)], (280, 200))
         self.imagem[str(jogador.espada)].set_alpha(180)
         # Elementos da hud
-        self.sup_vida= self.fonte1.render(f'{jogador.vida}', False, "Yellow")
-        self.sup_pontuacao = self.fonte2.render(f'{jogador.pontuacao}', False, 'White')
-        self.sup_nivel = self.fonte2.render(f'{Mapa.nivel}', False, 'White')
-        self.sup_espada = self.fonte2.render(f'{jogador.nivel_espada}', False, 'White')
-        self.sup_msg = self.fonte2.render(f'Aperte "M" para o Menu', False, 'white')
-        self.sup_msg.set_alpha(120)
+        self.sup_vida= Superficie.fonte1.render(f'{jogador.vida}', False, "Yellow")
+        self.sup_pontuacao = Superficie.fonte2.render(f'{jogador.pontuacao}', False, 'White')
+        self.sup_nivel = Superficie.fonte2.render(f'{Mapa.nivel}', False, 'White')
+        self.sup_espada = Superficie.fonte2.render(f'{jogador.nivel_espada}', False, 'White')
         TELA.blit(self.sup_pontuacao, (190,105))
         TELA.blit(self.sup_nivel, (90, 148))
         TELA.blit(self.sup_espada, (207,148))
         TELA.blit(self.imagem[str(jogador.espada)], (2,2))
         TELA.blit(self.sup_vida, (225,43))
-        TELA.blit(self.sup_msg,(400,20))
+        TELA.blit(Superficie.sup_msg,(400,20))
 
 
 class Tela_morte:

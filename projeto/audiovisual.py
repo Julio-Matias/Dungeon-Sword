@@ -4,10 +4,17 @@ from settings import *
 pygame.init()
 
 class Superficie:
+    # Fontes para as superficies
+    fonte1 = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 75)
+    fonte2 = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
+    fonte3 = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 150)
 # Uma superficie é a forma de inserir uma imagem no display. Aqui estou criando uma superficie de teste e dando uma cor a ela para que ela aparece contra o fundo preto
     im_parede = pygame.image.load("projeto/assets\parede-placeholder.png").convert_alpha()
     im_chao = pygame.image.load("projeto/assets\chao-placeholder.jpg").convert_alpha()
     im_jogo = pygame.transform.scale(pygame.image.load('projeto/assets/background-placeholder.png').convert_alpha(), (LARGURA_TELA, ALTURA_TELA))
+    titulo_jogo = fonte3.render(f'Dungeon Sword', False, 'white')
+    sup_msg = fonte2.render(f'Aperte "M" para o Menu', False, 'white')
+    sup_msg.set_alpha(120)
     #carregando imagens dos botoes
     start_img = pygame.image.load('projeto/assets/start_btn.png').convert_alpha()
     exit_img = pygame.image.load('projeto/assets/exit_btn.png').convert_alpha()
