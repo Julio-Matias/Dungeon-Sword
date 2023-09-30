@@ -74,7 +74,30 @@ Interável      |     Ação    |
 
   
 ## Organização do código:
+O código foi estruturado Orientado à objetos e utilizou o recurso de loop para a lógica do jogo acontecer. As classes e funções importantes foram:
 
+- *Player()*:
+> Player é o personagem jogável, e é responsável por receber os inputs de locomoção  e ataque, também derrota do jogador, atualização quando o jogador perde e também sua colisão com as paredes
+- *Coletaveis()*:
+> A classe Coletaveis se da aos itens que o player pode pegar durante sua jogatina, que são as espadas e os escudos
+- *Portal()*:
+> É por onde o player conseguir sseguir para o próximo nível
+- *Mapa()*:
+> Define onde é possível os inimigos nascerem e também os cria , o que é chão e o que é parede
+- *HUD()*:
+> Mostra na tela as pontuações, vida e itens coletados pelo player além de mudar quando o player ganha um buff
+- *Button()*:
+> Faz com que seja possivel interagir com os botões visíveis na tela
+- *def montar_mapa()*
+> Essa função analisa a matriz de construção do mapa, e utiliza uma outra classe chamada Tile, que gera retângulos utilizando o PyGame na uma posição relativa da matriz baseada em seu índice e com um tipo a esse retângulo, que irá definir se esse objeto será possível de ser atravessado pelo jogador e inimigos comuns ou não e também define uma imagem a esse objeto. 
+- *Game()*:
+> Cria o loop de jogo e define onde cada elemento do jogo vai ser colocado e a cada tick ele analisa onde os inimigos estão e timer 
+- *Enemy()*:
+> Define o tipo de inimigo que vai ser gerado a partir do parâmetro "tipo" que define qual dos dois inimigos será
+- *Superficie()*:
+> Carrega as imagens do Chão, da Parede e do Jogo
+- *Audios()*:
+> Carrega os áudios do jogo  
 
 ## Desafios/Experiência:
 
