@@ -19,8 +19,7 @@ Sinopse:
 | ------------------- | ------------------- |
 |  **mvsl2**|   |
 |  **jmps2** e **vgls** | Criação dos coletáveis, imagens e efeitos sonoros.  |
-|  **pvmc** |   |
-|  **gpg** |   |
+|  **gpg** e **pvmc** |  Criação dos inimigos e vetores para seguir o player, criação do player, movimentação e colisão, sprite do jogador, ataque do jogador, interação com o ataque, coleta dos objetos, multiplos inimigos  |
 |  **fbms** |  Criação da tela de menu/pause, botões e efeitos sonoros.  |
 
 
