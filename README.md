@@ -103,7 +103,7 @@ O código foi estruturado Orientado à objetos e utilizou o recurso de loop para
 
 ## Imagens do jogo:
 
-<img src="/projeto/assets/gameover.png">
-<img src="/projeto/assets/menu.png">
-<img src="/projeto/assets/game.png">
-<img src="/projeto/assets/telainicial.png">
+<img src="/projeto/assets/relatorio/gameover.png">
+<img src="/projeto/assets/relatorio/menu.png">
+<img src="/projeto/assets/relatorio/game.png">
+<img src="/projeto/assets/relatorio/telainicial.png">

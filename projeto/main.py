@@ -23,7 +23,7 @@ restart_botao = Button(Superficie.restart_img, 0.3)
 #carregando musica de background e executando em loop
 bcg_msc= pygame.mixer.music.load('projeto/assets/audio/bcg_msc.mp3')
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.15)
+pygame.mixer.music.set_volume(0.50)
 
 class Game:
     def __init__(self):
@@ -68,7 +68,6 @@ class Game:
                             pygame.quit()
                             exit()
                 else: 
-                    pygame.mixer.music.set_volume(0.15)
                     # Checa se todos os inimigos morrerram
                     if len(Enemy.lista_inimigos_presentes) == 0:
                         TELA.blit(porta.imagem, porta.hitbox)
@@ -104,6 +103,8 @@ class Game:
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             pygame.quit()
                             exit() 
+                    else:
+                        pygame.mixer.music.set_volume(0.5)
                     # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
                     self.relogio.tick(FPS)
                 for event in pygame.event.get():

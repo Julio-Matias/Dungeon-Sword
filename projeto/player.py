@@ -21,14 +21,14 @@ class Player:
         self.contador_animacao = 0
         # sprites do jogador
         self.imagem = {
-            'baixo': [pygame.transform.scale(pygame.image.load('projeto/assets\playerfront-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerfront-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
-            'cima': [pygame.transform.scale(pygame.image.load('projeto/assets\playerback-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerback-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
-            'direita': [pygame.transform.scale(pygame.image.load('projeto/assets\playerright-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerright-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
-            'esquerda': [pygame.transform.scale(pygame.image.load('projeto/assets\playerleft-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerleft-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()]
+            'baixo': [pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player/playerfront-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player\playerfront-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
+            'cima': [pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player/playerback-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player\playerback-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
+            'direita': [pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player/playerright-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player\playerright-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
+            'esquerda': [pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player/playerleft-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\sprites_folder\sprites_player\playerleft-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()]
         }
         self.sup_ataque = {
-            'False': pygame.image.load('projeto/assets/ataque-placeholder.png').convert_alpha(),
-            'True': pygame.image.load('projeto/assets/ataque-maior-placeholder.png').convert_alpha()
+            'False': pygame.image.load('projeto/assets/sprites_folder\sprites_player/ataque-placeholder.png').convert_alpha(),
+            'True': pygame.image.load('projeto/assets/sprites_folder\sprites_player/ataque-maior-placeholder.png').convert_alpha()
         }
         self.hitbox = self.imagem[self.olhando_direcao][self.idx_animacao].get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.largura_ataque, self.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
