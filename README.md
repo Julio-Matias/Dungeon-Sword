@@ -55,11 +55,12 @@ Interável      |     Ação    |
 
 ## Bibliotecas e Ferramentas:
 
-|      Biblioteca e ferramentas      |     Aplicação     |
+|      Biblioteca, Ferramentas e Frameworks      |     Aplicação     |
 | ------------------- | ------------------- |
-|  PyGame  |   |
-|  Random  |  |
-|  Sys |   |
+|  PyGame  |  A biblioteca pygame é a principal de nosso projeto, pois ela tem funções específicas que facilitam na criação do jogo, principalmente na questão da renderização de objetos e as interações entre eles. |
+|  Random  | A biblioteca "Random" foi utilizada em três partes do código, utilizando a função "Randint", que sorteia um número inteiro dentro de um intervalo definido, fizemos as mecânicas da chance de "dropar" itens dos inimigos, o lugar onde nascem os inimigos e a quantidade de inimigos em cada fase. |
+|  Sys |  Da biblioteca "Sys", foi utilizada a função "exit", que serve para encerrar o processo do programa. |
+|  Piskel |  O site "Piskel" foi muito utilizado para criação e manutenção dos sprites do jogo, do player, do mapa, do inimigo... |
 
 
 ## Conceitos e Aplicação:
