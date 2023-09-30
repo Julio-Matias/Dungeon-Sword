@@ -34,8 +34,8 @@ class Mapa:
         self.montar_mapa(mapa_atual)
         Coletaveis.lista_coletaveis = []
         if self.nivel <= 5:
-            numero_inimigos = random.randint(self.nivel, 2 + self.nivel)
-            for _ in range(numero_inimigos):
+            numero_slime = random.randint(self.nivel, 2 + self.nivel)
+            for _ in range(numero_slime):
                 inimigo = Enemy(self, 'slime')
                 Enemy.lista_inimigos_presentes.append(inimigo)
         else:
@@ -43,7 +43,7 @@ class Mapa:
             for _ in range(numero_ghost):
                 inimigo = Enemy(self, 'ghost')
                 Enemy.lista_inimigos_presentes.append(inimigo)
-            numero_slime = numero_inimigos = random.randint(self.nivel - numero_ghost, 2 + self.nivel - numero_ghost)
+            numero_slime = random.randint(self.nivel - numero_ghost, 2 + self.nivel - numero_ghost)
             for _ in range(numero_slime):
                 inimigo = Enemy(self, 'slime')
                 Enemy.lista_inimigos_presentes.append(inimigo)

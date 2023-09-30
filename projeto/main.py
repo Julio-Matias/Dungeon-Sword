@@ -8,6 +8,8 @@ from enemy import Enemy
 from collectibles import *
 from interface import HUD, Tela_morte, Button
 
+
+
 # Inicializando o PyGame
 pygame.init()
 # Definindo o titulo e o icon para a janela onde o jogo será executado

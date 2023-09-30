@@ -17,18 +17,20 @@ class Player:
         self.y_jogador = (ALTURA_TELA - ALTURA_JOGADOR)/2
         self.direcao = pygame.math.Vector2()
         self.olhando_direcao = 'baixo'
+        self.idx_animacao = 0
+        self.contador_animacao = 0
         # sprites do jogador
         self.imagem = {
-            'baixo': pygame.transform.scale(pygame.image.load('projeto/assets\playerfront-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(),
-            'cima': pygame.transform.scale(pygame.image.load('projeto/assets\playerback-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(),
-            'direita': pygame.transform.scale(pygame.image.load('projeto/assets\playerright-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(),
-            'esquerda': pygame.transform.scale(pygame.image.load('projeto/assets\playerleft-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()
+            'baixo': [pygame.transform.scale(pygame.image.load('projeto/assets\playerfront-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerfront-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
+            'cima': [pygame.transform.scale(pygame.image.load('projeto/assets\playerback-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerback-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
+            'direita': [pygame.transform.scale(pygame.image.load('projeto/assets\playerright-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerright-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()],
+            'esquerda': [pygame.transform.scale(pygame.image.load('projeto/assets\playerleft-placeholder.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha(), pygame.transform.scale(pygame.image.load('projeto/assets\playerleft-placeholder2.png'), (LARGURA_JOGADOR, ALTURA_JOGADOR)).convert_alpha()]
         }
         self.sup_ataque = {
             'False': pygame.image.load('projeto/assets/ataque-placeholder.png').convert_alpha(),
             'True': pygame.image.load('projeto/assets/ataque-maior-placeholder.png').convert_alpha()
         }
-        self.hitbox = self.imagem[self.olhando_direcao].get_rect(topleft=(self.x_jogador, self.y_jogador))
+        self.hitbox = self.imagem[self.olhando_direcao][self.idx_animacao].get_rect(topleft=(self.x_jogador, self.y_jogador))
         self.largura_ataque, self.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5
         self.ataque_hitbox = pygame.Rect((0,0), (0,0))
         # transparencia inicial
@@ -40,6 +42,7 @@ class Player:
         self.sofreu_dano = False
         self.morreu = False
         self.andando = False
+        self.andando_intervalo = 10
         self.espada = False
     def input(self):
         # Checa quais as teclas que estão sendo pressionadas e baseado nisso faz o personagem se mover
@@ -48,41 +51,49 @@ class Player:
         if teclas[pygame.K_w] or teclas[pygame.K_UP]:
             self.direcao.y = -1
             self.olhando_direcao = 'cima'
-            self.andando = True
             
         elif teclas[pygame.K_s] or teclas[pygame.K_DOWN]:
             self.direcao.y = 1
             self.olhando_direcao = 'baixo'
-            self.andando = True
             
         else:
             self.direcao.y = 0
-            self.andando = False
+            
         if teclas[pygame.K_a] or teclas[pygame.K_LEFT]:
             self.direcao.x = -1
             self.olhando_direcao = 'esquerda'
-            self.andando = True
             
         elif teclas[pygame.K_d] or teclas[pygame.K_RIGHT]:
             self.direcao.x = +1
             self.olhando_direcao = 'direita'
-            self.andando = True
-            
         else:
             self.direcao.x = 0
-            self.andando = False
         # Caso o jogador pressione espaço ele ataca
         # Quando o jogador pressionar o espaço, agora tem o som :)
         if teclas[pygame.K_SPACE]:
             self.ataque()
 
     def movimento(self, velocidade, mapa):
+        # Animações de andar
+        if self.andando:
+            self.contador_animacao += 1
+        else:
+            self.contador_animacao = 0
+            self.idx_animacao = 0
+        if self.contador_animacao > self.andando_intervalo:
+            self.contador_animacao = 0
+            self.idx_animacao += 1
+            if self.idx_animacao >= 2:
+                self.idx_animacao = 0
         # Impede que o vetor de direção fique com uma resultade maior que 1, senão o jogador conseguiria se mover mais rápido que o normal quando fosse na diagonal 
         if self.direcao.magnitude() != 0:
             self.direcao = self.direcao.normalize()
+            self.andando = True
+        else:
+            self.andando = False
         # Move as coordenadas do jogador baseado na direção e velocidade
         self.x_jogador += self.direcao.x * velocidade
-        self.hitbox = self.imagem[self.olhando_direcao].get_rect(topleft=(self.x_jogador, self.y_jogador))
+        self.hitbox = self.imagem[self.olhando_direcao][self.idx_animacao].get_rect(topleft=(self.x_jogador, self.y_jogador))
         if self.colisao_obstaculos(mapa):
             self.x_jogador -= self.direcao.x * velocidade 
         self.y_jogador += self.direcao.y * velocidade
@@ -93,7 +104,7 @@ class Player:
     def colisao_obstaculos(self, mapa):
         # Checa se, para todos os obstaculos da fase há ou não colisão com o jogador
         # Atualiza a caixa de colisão para as novas coordenadas
-        self.hitbox = self.imagem[self.olhando_direcao].get_rect(topleft=(self.x_jogador, self.y_jogador))
+        self.hitbox = self.imagem[self.olhando_direcao][self.idx_animacao].get_rect(topleft=(self.x_jogador, self.y_jogador))
         colidiu = False
         for tile in mapa.tipo_tiles['Parede']:
             if self.hitbox.colliderect(tile.hitbox):
@@ -135,15 +146,14 @@ class Player:
         self.morte()
         if not self.morreu:
             # Isso vai atualizar o jogador, vendo se o ele fez algum input, sofreu dano, se movimentou ou atacou, e após isso tudo, coloca sua superficies na tela
-            self.hitbox = self.imagem[self.olhando_direcao].get_rect(topleft=(self.x_jogador, self.y_jogador))
+            self.hitbox = self.imagem[self.olhando_direcao][self.idx_animacao].get_rect(topleft=(self.x_jogador, self.y_jogador))
             # Efeito de piscar caso o personagem sofra dano
             if self.sofreu_dano and self.alfa == 255:
-                self.alfa = 100
-                self.imagem[self.olhando_direcao].set_alpha(self.alfa)
+                self.alfa = 55
             elif self.alfa < 255:
                 self.alfa = 255
-            self.imagem[self.olhando_direcao].set_alpha(self.alfa)
-            TELA.blit(self.imagem[self.olhando_direcao], self.hitbox)
+            self.imagem[self.olhando_direcao][self.idx_animacao].set_alpha(self.alfa)
+            TELA.blit(self.imagem[self.olhando_direcao][self.idx_animacao], self.hitbox)
             # Coloca o ataque na tela
             if not self.pode_atacar:
                 if 0 < self.ataque_alfa:
