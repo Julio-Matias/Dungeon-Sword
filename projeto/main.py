@@ -23,7 +23,6 @@ restart_botao = Button(Superficie.restart_img, 0.3)
 #carregando musica de background e executando em loop
 bcg_msc= pygame.mixer.music.load('projeto/assets/audio/bcg_msc.mp3')
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.50)
 
 class Game:
     def __init__(self):
@@ -96,7 +95,6 @@ class Game:
                         # se o jogador morrer, ele vai tocar o som de gamer over 
                         if not Audios.audio_playing:
                             Audios.gameover.play()
-                            pygame.time.wait(1000)
                             Audios.audio_playing = True
                         if restart_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
