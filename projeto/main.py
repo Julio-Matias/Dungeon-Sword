@@ -50,13 +50,13 @@ class Game:
                     pygame.mixer.music.set_volume(0)
                     if inicio_jogo:
                         TELA.blit(Superficie.titulo_jogo, (LARGURA_TELA/2 - Superficie.titulo_jogo.get_width()/2, 250))
-                        
                         if start_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):# se o botao foi pressionado executa ação
                             jogo_pausado = False
                             inicio_jogo = False
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             inicio_jogo = False
-                            break
+                            pygame.quit()
+                            exit()
                     #ir para menu
                     else:
                         if start_botao.draw(TELA, LARGURA_TELA/2 - Superficie.start_img.get_width()/2 + 37,   ALTURA_TELA /2 - 140):# se o botao foi pressionado executa ação
@@ -65,7 +65,8 @@ class Game:
                             jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
                             jogo_pausado = False
                         if exit_botao.draw(TELA, LARGURA_TELA/2 - Superficie.start_img.get_width()/2 + 50,  ALTURA_TELA /2 + 80):
-                            break
+                            pygame.quit()
+                            exit()
                 else: 
                     pygame.mixer.music.set_volume(0.15)
                     # Checa se todos os inimigos morrerram
@@ -101,7 +102,8 @@ class Game:
                         if restart_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
-                            break 
+                            pygame.quit()
+                            exit() 
                     # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
                     self.relogio.tick(FPS)
                 for event in pygame.event.get():
