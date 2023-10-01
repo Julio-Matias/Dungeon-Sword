@@ -20,6 +20,7 @@ class Mapa:
         self.index_mapa_anterior = 0
         self.mapa_tiles = []
         self.tipo_tiles = {'Parede': [], 'Chão': [], 'Spawner': []}
+    # Escolhe uma fase aleatóriamente, monta ela baseado na matriz e gera os inimigos nos lugares adequados aleatoriamente
     def proxima_fase(self, Coletaveis):
         self.nivel += 1
         if self.index_mapa_anterior == 0:

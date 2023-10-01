@@ -1,9 +1,12 @@
 # DungeonSword
 Sinopse:
-> Dungeon Sword é um jogo de visão top-down desenvolvido utilizando a biblioteca Pygame, inspirado em jogos como Zelda, Enter The Gungeon e Soul Knight, de onde foram tiradas algumas mecânicas e sprites. O nosso herói Chico, comerciante de espadas, entra numa masmorra onde enfrenta os irmãos Bob, bolinhas de gosma aparentemente dóceis, porém extremamente tóxicas. Ao matar um inimigo, este pode deixar espadas ou escudos que podem ser coletados por Chico, para aumentar o alcance de seu ataque e aumentar sua vida, respectivamente. Inicialmente, Chico tem 3 vidas, que podem aumentar ou diminuir durante o combate, com a colisão com os inimigos e a coleta de escudos, caso o número de vidas de Chico chegue a 0, significa que ele morreu e o jogo se encerra. O objetivo do jogo é conseguir sempre a maior pontuação possível que é contabilizada ao abater um inimigo. O número de inimigos aumenta conforme o nível aumenta, correspondente ao número de fases, representadas pelas portas.
+> Dungeon Sword é um jogo de visão top-down desenvolvido utilizando a biblioteca Pygame, inspirado em jogos como Zelda, Enter The Gungeon e Soul Knight, de onde foram tiradas algumas mecânicas e sprites. O nosso herói Chico, comerciante de espadas, entra numa masmorra onde enfrenta os irmãos Bob, bolinhas de gosma aparentemente dóceis, porém extremamente tóxicas, ou os fantasmas Ghostavo, que são mais rápidos e atravessam paredes. Ao matar um inimigo, este pode deixar espadas e escudos que podem ser coletados por Chico, para aumentar o alcance de seu ataque e aumentar sua vida, respectivamente. Inicialmente, Chico tem 3 vidas, que podem aumentar ou diminuir durante o combate, com a colisão com os inimigos e a coleta de escudos, caso o número de vidas de Chico chegue a 0, significa que ele morreu e o jogo se encerra. O objetivo do jogo é conseguir sempre a maior pontuação possível que é contabilizada ao abater um inimigo. O número de inimigos aumenta conforme o nível aumenta, correspondente ao número de fases, representadas pelas portas.
+
+
 
 
 ## Equipe:
+
 
 - Marcus Vinícius (mvsl2)
 - Júlio Matias (jmps2)
@@ -13,7 +16,10 @@ Sinopse:
 - Filipe Bezerra (fbms)
 
 
+
+
 ## Divisão de tarefas:
+
 
 |      Equipes      |     Atribuições     |
 | ------------------- | ------------------- |
@@ -23,16 +29,23 @@ Sinopse:
 |  **fbms** |  Criação da tela de menu/pause, botões e efeitos sonoros.  |
 
 
+
+
 ## Como Rodar o Jogo:
 > 1º - Basta Ter o Python e o Pygame instalados em sua Máquina.
 >
-> 2º - Clonar este repositório ou baixar o aquivo zip.
+> 2º - Clonar este repositório ou baixar o arquivo zip.
 >
-> 3º - Rodar o arquivo main.py.
+> 3º - Abrir a pasta Dungeon-Sword ou Dungeon-Sword-Main em um editor de código como VS CODE ou PyCharm
 >
+> 4º - Rodar o arquivo main.py.
+>
+
+
 
 
 ## Controles:
+
 
 Jogador      |     Teclas    |
 | ------------------- | ------------------- |
@@ -41,9 +54,12 @@ Jogador      |     Teclas    |
 |  **Menu/Pause** | M |
 
 
+
+
 ## Itens:
 
-Interável      |     Ação    |
+
+Obj. Interativo     |     Ação    |
 | ------------------- | ------------------- |
 |  **Espada**|  Aumenta o alcance do ataque durante um breve período. |
 |  **Escudo** | Aumenta a vida do jogador em 1. |
@@ -51,7 +67,10 @@ Interável      |     Ação    |
 |  **Inimigos** | Ao colidir com herói, tira uma vida dele, e ao colidir com o ataque do herói, perde uma de suas vidas. |
 
 
+
+
 ## Bibliotecas e Ferramentas:
+
 
 |      Biblioteca, Ferramentas e Frameworks      |     Aplicação     |
 | ------------------- | ------------------- |
@@ -59,6 +78,8 @@ Interável      |     Ação    |
 |  Random  | A biblioteca "Random" foi utilizada em três partes do código, utilizando a função "Randint", que sorteia um número inteiro dentro de um intervalo definido, fizemos as mecânicas da chance de "dropar" itens dos inimigos, o lugar onde nascem os inimigos e a quantidade de inimigos em cada fase. |
 |  Sys |  Da biblioteca "Sys", foi utilizada a função "exit", que serve para encerrar o processo do programa. |
 |  Piskel |  O site "Piskel" foi muito utilizado para criação e manutenção dos sprites do jogo, do player, do mapa, do inimigo... |
+
+
 
 
 ## Conceitos e Aplicação:
@@ -70,39 +91,47 @@ Interável      |     Ação    |
 >
 > E por fim, a parte mais importante do projeto, a utilização da programação orientada à objeto. Utilizamos os conceitos de módulos, classes, objetos, métodos e atributos em quase todo o código. A utilização de classes e programação orientada a objetos se tornou essencial para o projeto, visto que esse conceito foi utilizado extensivamente durante todo o código. As classes foram muito úteis para a organização dos métodos e seus atributos, além de facilitar a importação dos mesmos. Além disso, a criação de objetos utilizando classes foi usada para a criação do jogador, dos inimigos, dos coletáveis e dos mapas. Sem classes isso se tornaria inviável, pois todos esses objetos eram criados e atualizados durante toda a criação do jogo.
 
-  
+
+ 
 ## Organização do código:
 O código foi estruturado Orientado à objetos e utilizou o recurso de loop para a lógica do jogo acontecer. As classes e funções importantes foram:
+
 
 - *Player()*:
 > Player é o personagem jogável, e é responsável por receber os inputs de locomoção  e ataque, também derrota do jogador, atualização quando o jogador perde e também sua colisão com as paredes
 - *Coletaveis()*:
-> A classe Coletaveis se da aos itens que o player pode pegar durante sua jogatina, que são as espadas e os escudos
+> A classe Coletaveis se da aos itens que o player pode pegar durante sua jogatina que influenciam, que são as espadas e os escudos
 - *Portal()*:
-> É por onde o player conseguir sseguir para o próximo nível
+> Gera o coletável que serve para o jogador passar para o próximo nível. Ele funcionava de forma diferente aos outros coletáveis, então fizemos uma classe separada para isso.
 - *HUD()*:
 > Mostra na tela as pontuações, vida e itens coletados pelo player além de mudar quando o player ganha um buff
 - *Button()*:
-> Faz com que seja possivel interagir com os botões visíveis na tela
+> Faz com que seja possível interagir com os botões visíveis na tela
 - *Mapa()*:
-> Define onde é possível os inimigos nascerem e também os cria , o que é chão e o que é parede
+> Essa classe escolhe um mapa aleatoriamente, monta o mapa escolhido e cria os inimigos a cada nível como mostrado a seguir.
 - *def montar_mapa()*
-> Essa função analisa a matriz de construção do mapa, e utiliza uma outra classe chamada Tile, que gera retângulos utilizando o PyGame na uma posição relativa da matriz baseada em seu índice e com um tipo a esse retângulo, que irá definir se esse objeto será possível de ser atravessado pelo jogador e inimigos comuns ou não e também define uma imagem a esse objeto. 
+> Essa função analisa a matriz de construção do mapa, e utiliza uma outra classe chamada Tile, que gera imagens e retângulos utilizando o PyGame na uma posição relativa da matriz baseada em seu índice e com um tipo definido pelo elemento analisado da matriz, que irá definir a imagem desse objeto e se esse objeto será um obstáculo (impedindo o jogador e inimigos comuns de o atravessarem), um lugar onde inimigos poderão aparecer ou apenas visual.
 - *def proxima_fase()*
 > Após todos os inimigos de um nível serem derrotados e o jogador entrar na porta que é criada, essa função escolhe um mapa diferente aleatoriamente entre os 11 mapas que existem no jogo, e gera novos inimigos em posições aleatórias do mapa.
 - *Game()*:
-> Cria o loop de jogo e define onde cada elemento do jogo vai ser colocado e a cada tick ele analisa onde os inimigos estão e timer 
+> Cria o loop de jogo e define onde cada elemento do jogo vai ser colocado e a cada tick ele analisa onde os inimigos estão e timer
 - *Enemy()*:
-> Define o tipo de inimigo que vai ser gerado a partir do parâmetro "tipo" que define qual dos dois inimigos será
+> Define o tipo de inimigo que vai ser gerado a partir do parâmetro "tipo" que define qual dos dois inimigos será: O Slime, que é o inimigo mais comum, ou o Ghost, que é aparece em um número menor, mas é mais rápido que o Slime e consegue atravessar paredes.
 - *Superficie()*:
-> Carrega as imagens do Chão, da Parede e do Jogo
+> Carrega as imagens do Chão, da Parede, dos Menus, e as fontes que podem ser utilizadas para criar mensagens
 - *Audios()*:
-> Carrega os áudios do jogo  
+> Carrega os áudios do jogo e define seu volume
+
 
 ## Desafios/Experiência:
+O principal desafio que sentimos durante a realização desse projeto foi aprender a utilizar ferramentas e conceitos nunca antes vistos, como a biblioteca do PyGame e programação orientada a objeto. Contudo, foi muito útil aprender como usar essas funcionalidades, porque elas permitem realizar tarefas muito mais avançadas que não imaginávamos no começo do curso.
+
+
+Além disso, tivemos outros desafios menores durante a realização do projeto, mas que foram resolvidos na medida em que aprendemos mais como o PyGame funciona, como impedir que o jogador e os inimigos atravessassem obstáculos, desenvolver uma forma do inimigo seguir o jogador, programar animações, e organizar os menus.
 
 
 ## Imagens do jogo:
+
 
 <img src="/projeto/assets/relatorio/gameover.png">
 <img src="/projeto/assets/relatorio/menu.png">
