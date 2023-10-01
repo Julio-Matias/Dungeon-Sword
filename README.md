@@ -78,9 +78,9 @@ O código foi estruturado Orientado à objetos e utilizou o recurso de loop para
 - *Player()*:
 > Player é o personagem jogável, e é responsável por receber os inputs de locomoção  e ataque, também derrota do jogador, atualização quando o jogador perde e também sua colisão com as paredes
 - *Coletaveis()*:
-> A classe Coletaveis se da aos itens que o player pode pegar durante sua jogatina, que são as espadas e os escudos
+> A classe Coletaveis se da aos itens que o player pode pegar durante sua jogatina que influenciam, que são as espadas e os escudos
 - *Portal()*:
-> É por onde o player conseguir sseguir para o próximo nível
+> Gera o coletável que serve para o jogador passar para o próximo nível. Ele funcionava de forma diferente aos outros coletaveis então fizemos uma classe separada para isso.
 - *Mapa()*:
 > Define onde é possível os inimigos nascerem e também os cria , o que é chão e o que é parede
 - *HUD()*:
@@ -99,7 +99,9 @@ O código foi estruturado Orientado à objetos e utilizou o recurso de loop para
 > Carrega os áudios do jogo  
 
 ## Desafios/Experiência:
+O principal desafio que sentimos durante a realização desse projeto foi aprender a utilizar ferramentas e conceitos nunca antes vistos como a biblioteca do PyGame e programação orientada a objeto. Contudo, foi muito útil aprender como usar essas funcionalidades, porque elas permitem realizar tarefas muito mais avançadas que não imaginavamos no começo do curso. 
 
+Além disso, tivemos outros desafios menores durante a realização do projeto, mas que foram resolvidos na medida em que aprendiamos mais como o PyGame funciona, como impedir que o jogador e os inimigos atravessassem obstáculos, desenvolver uma forma do inimigo seguir o jogador, programar animações, e organizar os menus.
 
 ## Imagens do jogo:
 
