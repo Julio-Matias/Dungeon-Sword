@@ -9,7 +9,6 @@ from collectibles import *
 from interface import HUD, Tela_morte, Button
 
 
-
 # Inicializando o PyGame
 pygame.init()
 # Definindo o titulo e o icon para a janela onde o jogo será executado
@@ -49,6 +48,7 @@ class Game:
                     pygame.mixer.music.set_volume(0)
                     if inicio_jogo:
                         TELA.blit(Superficie.titulo_jogo, (LARGURA_TELA/2 - Superficie.titulo_jogo.get_width()/2, 250))
+                        # Gera os botões para começar ou fechar o jogo
                         if start_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):# se o botao foi pressionado executa ação
                             jogo_pausado = False
                             inicio_jogo = False
@@ -58,6 +58,7 @@ class Game:
                             exit()
                     #ir para menu
                     else:
+                        # Gera os botões para continuar, recomeçar ou fechar o jogo
                         if start_botao.draw(TELA, LARGURA_TELA/2 - Superficie.start_img.get_width()/2 + 37,   ALTURA_TELA /2 - 140):# se o botao foi pressionado executa ação
                             jogo_pausado = False
                         if restart_botao.draw(TELA, LARGURA_TELA/2 - Superficie.start_img.get_width()/2 - 10,  ALTURA_TELA /2 - 30):
@@ -88,14 +89,17 @@ class Game:
                     jogador.atualizar(mapa)
                     for inimigo in Enemy.lista_inimigos_presentes[:]:
                         inimigo.atualizar(jogador, mapa)
+                    # Exibe informações importates ao jogador
                     hud.exibir_hud(jogador, mapa)
                     if jogador.morreu:
                         pygame.mixer.music.set_volume(0)
+                        # Exibe todas as informações da tela morte
                         Tela_morte().exibir_tela_morte(hud)
                         # se o jogador morrer, ele vai tocar o som de gamer over 
                         if not Audios.audio_playing:
                             Audios.gameover.play()
                             Audios.audio_playing = True
+                        # Gera os botões para recomeçar ou fechar o jogo
                         if restart_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
                             jogador = mapa.reiniciar_jogo(jogador, Coletaveis)
                         if exit_botao.draw(TELA, (LARGURA_TELA/2 - Superficie.exit_img.get_width()) , 9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):
@@ -105,6 +109,7 @@ class Game:
                         pygame.mixer.music.set_volume(0.5)
                     # Limitando o número máximo de 'ticks'/'frames' por segundo a 60 para evitar que ocorra atualizações excessivas
                     self.relogio.tick(FPS)
+                # Checando eventos para permitir fechar ou pausar o jogo, e para definir se intervalos já passaram
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_m:
@@ -125,6 +130,7 @@ class Game:
                     if event.type == EVENTO_INTERVALO_DANO:
                         jogador.sofreu_dano = False
                         pygame.time.set_timer(EVENTO_INTERVALO_DANO, 0)
+                    # Durante esse periodo a espada do jogador tem seu alcance aumentado
                     if event.type == EVENTO_ESPADA:
                         jogador.espada = False
                         jogador.largura_ataque, jogador.altura_ataque = TAMANHO_TILE * 1.5, TAMANHO_TILE * 1.5

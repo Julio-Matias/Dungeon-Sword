@@ -17,19 +17,18 @@ Sinopse:
 
 |      Equipes      |     Atribuições     |
 | ------------------- | ------------------- |
-|  **mvsl2**|   |
+|  **mvsl2**| Criação dos mapas a partir de matrizes, animações do jogador e do inimigo, criação de sprites |
 |  **jmps2** e **vgls** | Criação dos coletáveis, imagens e efeitos sonoros.  |
-|  **gpg** e **pvmc** |  Criação dos inimigos e vetores para seguir o player, criação do player, movimentação e colisão, sprite do jogador, ataque do jogador, interação com o ataque, coleta dos objetos, multiplos inimigos  |
+|  **gpg** e **pvmc** |  Criação dos inimigos e vetores para seguir o player, criação do player, movimentação e colisão, sprite do jogador, ataque do jogador, interação com o ataque, coleta dos objetos, multiplos inimigos, e mudança de mapas ao passar de nível  |
 |  **fbms** |  Criação da tela de menu/pause, botões e efeitos sonoros.  |
 
 
 ## Como Rodar o Jogo:
 > 1º - Basta Ter o Python e o Pygame instalados em sua Máquina.
 >
-> 
 > 2º - Clonar este repositório ou baixar o aquivo zip.
 >
->3º - Rodar o arquivo main.py.
+> 3º - Rodar o arquivo main.py.
 >
 
 
@@ -47,9 +46,9 @@ Jogador      |     Teclas    |
 Interável      |     Ação    |
 | ------------------- | ------------------- |
 |  **Espada**|  Aumenta o alcance do ataque durante um breve período. |
-|  **Escudo** | Ganha uma vida. |
+|  **Escudo** | Aumenta a vida do jogador em 1. |
 |  **Porta** | Passa de fase. |
-|  **Inimigos** | Ao colidir com herói, tira uma vida dele. |
+|  **Inimigos** | Ao colidir com herói, tira uma vida dele, e ao colidir com o ataque do herói, perde uma de suas vidas. |
 
 
 ## Bibliotecas e Ferramentas:
@@ -81,14 +80,16 @@ O código foi estruturado Orientado à objetos e utilizou o recurso de loop para
 > A classe Coletaveis se da aos itens que o player pode pegar durante sua jogatina, que são as espadas e os escudos
 - *Portal()*:
 > É por onde o player conseguir sseguir para o próximo nível
-- *Mapa()*:
-> Define onde é possível os inimigos nascerem e também os cria , o que é chão e o que é parede
 - *HUD()*:
 > Mostra na tela as pontuações, vida e itens coletados pelo player além de mudar quando o player ganha um buff
 - *Button()*:
 > Faz com que seja possivel interagir com os botões visíveis na tela
+- *Mapa()*:
+> Define onde é possível os inimigos nascerem e também os cria , o que é chão e o que é parede
 - *def montar_mapa()*
 > Essa função analisa a matriz de construção do mapa, e utiliza uma outra classe chamada Tile, que gera retângulos utilizando o PyGame na uma posição relativa da matriz baseada em seu índice e com um tipo a esse retângulo, que irá definir se esse objeto será possível de ser atravessado pelo jogador e inimigos comuns ou não e também define uma imagem a esse objeto. 
+- *def proxima_fase()*
+> Após todos os inimigos de um nível serem derrotados e o jogador entrar na porta que é criada, essa função escolhe um mapa diferente aleatoriamente entre os 11 mapas que existem no jogo, e gera novos inimigos em posições aleatórias do mapa.
 - *Game()*:
 > Cria o loop de jogo e define onde cada elemento do jogo vai ser colocado e a cada tick ele analisa onde os inimigos estão e timer 
 - *Enemy()*:

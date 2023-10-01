@@ -72,7 +72,6 @@ class Player:
         # Quando o jogador pressionar o espaço, agora tem o som :)
         if teclas[pygame.K_SPACE]:
             self.ataque()
-
     def movimento(self, velocidade, mapa):
         # Animações de andar
         if self.andando:
