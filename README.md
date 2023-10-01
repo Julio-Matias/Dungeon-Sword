@@ -25,7 +25,7 @@ Sinopse:
 | ------------------- | ------------------- |
 |  **mvsl2**| Criação dos mapas a partir de matrizes, animações do jogador e do inimigo, criação de sprites |
 |  **jmps2** e **vgls** | Criação dos coletáveis, imagens e efeitos sonoros.  |
-|  **gpg** e **pvmc** |  Criação dos inimigos e vetores para seguir o player, criação do player, movimentação e colisão, sprite do jogador, ataque do jogador, interação com o ataque, coleta dos objetos, multiplos inimigos, e mudança de mapas ao passar de nível  |
+|  **gpg** e **pvmc** |  Criação dos inimigos e vetores para seguir o player, criação do player, movimentação e colisão, sprite do jogador, ataque do jogador, interação com o ataque, coleta dos objetos, múltiplos inimigos, e mudança de mapas ao passar de nível  |
 |  **fbms** |  Criação da tela de menu/pause, botões e efeitos sonoros.  |
 
 
