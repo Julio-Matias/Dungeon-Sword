@@ -103,11 +103,9 @@ class Enemy:
         jogador.pontuacao += 1
         posicao = self.x, self.y
         n_aleatorio = random.randint(0, 20)
-        if 14 <= n_aleatorio <= 17 and not jogador.espada:
+        if 10 < n_aleatorio <= 15:
             espada = Coletaveis(posicao, 'espada')
-        elif 16 <= n_aleatorio <= 17:
-            espada = Coletaveis(posicao, 'espada')
-        elif 17 < n_aleatorio <= 20 and jogador.vida < 10:
+        if 15 < n_aleatorio <= 20 and jogador.vida < 10:
             escudo = Coletaveis(posicao, 'escudo')
         elif 19 < n_aleatorio <= 20:
             escudo = Coletaveis(posicao, 'escudo')
