@@ -51,8 +51,8 @@ class Enemy:
             self.animation_frames = Enemy.lista_ghost["animation"]
         else:
             self.animation_frames = Enemy.lista_slime["animation"]
-        self.current_frame = "00"  # Comece com o primeiro quadro
-        self.frame_delay = FPS  # Ajuste a taxa de quadros da animação
+        self.current_frame = "00"  # Comeca com o primeiro quadro
+        self.frame_delay = 10 # Define a quantidade de 'ticks' necessária para mudar cada animação
         self.image = self.animation_frames[self.current_frame]
         # Já nasce em um lugar aleatorio que não seja um obstaculo
         local_spawn = mapa.tipo_tiles['Spawner'][random.randint(0, len(mapa.tipo_tiles['Spawner']) - 1)].hitbox
@@ -125,12 +125,12 @@ class Enemy:
         self.causou_dano(jogador)
         self.hitbox = self.image.get_rect(topleft=(self.x, self.y))
         if self.frame_delay <= 0:
-            # Avance para o próximo quadro
+            # Avanca para o próximo quadro
             current_index = int(self.current_frame)
             current_index = (current_index + 1) % 15  # 15 é o número total de quadros
             self.current_frame = f"{current_index:02d}"
             self.image = self.animation_frames[self.current_frame]
-            self.frame_delay = 10  # Reinicie o contador de atraso
+            self.frame_delay = 10  # Reinicia o contador de atraso
         else:
             self.frame_delay -= 1
         self.acertado_por_ataque(jogador)

@@ -111,14 +111,14 @@ class Game:
                     self.relogio.tick(FPS)
                 # Checando eventos para permitir fechar ou pausar o jogo, e para definir se intervalos já passaram
                 for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
+                    if event.type == pygame.KEYDOWN and not (jogador.morreu or jogo_pausado):
                         if event.key == pygame.K_m:
                             jogo_pausado = True
                             if not Audios.audio_playing:
                                 Audios.pause.play()
                                 Audios.audio_playing = True
-                        else:
-                            Audios.audio_playing = False
+                    elif not jogador.morreu:
+                        Audios.audio_playing = False
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         exit()
