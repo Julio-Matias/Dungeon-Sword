@@ -47,7 +47,7 @@ class Game:
                     TELA.blit(Superficie.im_jogo, (LARGURA_TELA/2 - Superficie.im_jogo.get_width()/2, ALTURA_TELA/2 - Superficie.im_jogo.get_height()/2))
                     pygame.mixer.music.set_volume(0)
                     if inicio_jogo:
-                        TELA.blit(Superficie.titulo_jogo, (LARGURA_TELA/2 - Superficie.titulo_jogo.get_width()/2, 250))
+                        TELA.blit(Superficie.im_titulo, (LARGURA_TELA/2 - Superficie.im_titulo.get_width()/2 - 20, ALTURA_TELA/2 - Superficie.im_titulo.get_height()/2 + 100))
                         # Gera os botões para começar ou fechar o jogo
                         if start_botao.draw(TELA, LARGURA_TELA/2,  9* ALTURA_TELA /10 - (Superficie.restart_img.get_height()/2)):# se o botao foi pressionado executa ação
                             jogo_pausado = False
