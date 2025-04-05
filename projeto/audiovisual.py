@@ -4,7 +4,7 @@ from settings import *
 pygame.init()
 
 class Superficie:
-    # Fontes para as superficies
+    # Fontes para as superficiess
     fonte1 = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 75)
     fonte2 = pygame.font.Font('projeto/assets/fonts\Pixeltype.ttf', 50)
 # Uma superficie é a forma de inserir uma imagem no display. Aqui estou criando uma superficie de teste e dando uma cor a ela para que ela aparece contra o fundo preto
